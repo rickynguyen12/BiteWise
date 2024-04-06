@@ -1,0 +1,94 @@
+.say-goodbye-to {
+  margin: 0;
+}
+.overpaying-for {
+  margin: 0;
+  white-space: pre-wrap;
+}
+.say-goodbye-to-container {
+  position: relative;
+  font-weight: 500;
+}
+.say-goodbye-to-overpaying-for-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.frame-wrapper1 {
+  width: 608px;
+  position: relative;
+  height: 270px;
+  font-size: var(--font-size-41xl);
+  color: var(--color-gray-200);
+}
+.discover-the-tastiest {
+  width: 712px;
+  position: relative;
+  line-height: 25px;
+  font-family: var(--font-inter);
+  display: inline-block;
+}
+.enter-an-item-or-restaurant-wrapper {
+  width: 622px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-base) var(--padding-6xl);
+}
+.get-started2 {
+  position: relative;
+  font-weight: 600;
+}
+.frame-parent8,
+.sign-in2 {
+  display: flex;
+  flex-direction: row;
+}
+.sign-in2 {
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gray-200);
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base) var(--padding-6xl);
+  color: var(--color-snow);
+}
+.frame-parent8 {
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-100);
+  font-family: var(--font-inter);
+}
+.san-jose {
+  position: relative;
+}
+.find-meals-near-your-area-parent,
+.group-parent1,
+.san-jose-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+}
+.find-meals-near-your-area-parent,
+.group-parent1 {
+  flex-direction: column;
+  gap: var(--gap-11xl);
+}
+.group-parent1 {
+  text-align: left;
+  font-size: var(--h4-size);
+  color: var(--color-darkslategray);
+  font-family: var(--font-poppins);
+}
