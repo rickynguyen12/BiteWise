@@ -3,66 +3,66 @@ import "./FrameComponent2.css";
 
 const FrameComponent2 = ({
   rectangle26,
-  davidAndEmilysPatisserie,
-  frenchPatisserie,
-  vector,
+  notYourMothersFalafel,
+  faasosWrapsRolls,
   prop,
-  group,
   mins,
-  vector1,
-  prop1,
-  propLeft,
-  propTop,
+  propAlignSelf,
   propWidth,
-  propTextTransform,
+  propPadding,
+  propAlignSelf1,
+  propHeight,
+  propMinWidth,
+  propMinWidth1,
 }) => {
   const frameDivStyle = useMemo(() => {
     return {
-      left: propLeft,
-      top: propTop,
-    };
-  }, [propLeft, propTop]);
-
-  const rectangleIconStyle = useMemo(() => {
-    return {
+      alignSelf: propAlignSelf,
       width: propWidth,
+      padding: propPadding,
     };
-  }, [propWidth]);
+  }, [propAlignSelf, propWidth, propPadding]);
 
-  const divStyle = useMemo(() => {
+  const notYourMothersStyle = useMemo(() => {
     return {
-      textTransform: propTextTransform,
+      alignSelf: propAlignSelf1,
+      height: propHeight,
     };
-  }, [propTextTransform]);
+  }, [propAlignSelf1, propHeight]);
+
+  const faasosWrapsStyle = useMemo(() => {
+    return {
+      minWidth: propMinWidth,
+    };
+  }, [propMinWidth]);
+
+  const div2Style = useMemo(() => {
+    return {
+      minWidth: propMinWidth1,
+    };
+  }, [propMinWidth1]);
 
   return (
-    <div className="frame-wrapper2" style={frameDivStyle}>
-      <div className="rectangle-parent1">
-        <img
-          className="rectangle-icon"
-          alt=""
-          src={rectangle26}
-          style={rectangleIconStyle}
-        />
-        <div className="david-and-emilys">{davidAndEmilysPatisserie}</div>
-        <div className="french-patisserie-parent">
-          <div className="french-patisserie">{frenchPatisserie}</div>
-          <div className="vector-parent1">
-            <img className="vector-icon7" alt="" src={vector} />
-            <div className="div3" style={divStyle}>
-              {prop}
-            </div>
+    <div className="rectangle-container" style={frameDivStyle}>
+      <img className="frame-child1" alt="" src={rectangle26} />
+      <div className="not-your-mothers" style={notYourMothersStyle}>
+        {notYourMothersFalafel}
+      </div>
+      <div className="faasos-wraps-rolls-wrapper">
+        <div className="faasos-wraps" style={faasosWrapsStyle}>
+          {faasosWrapsRolls}
+        </div>
+      </div>
+      <div className="antdesignstarfilled-parent">
+        <div className="antdesignstarfilled">
+          <img className="data-aggregator-icon" alt="" src="/vector-10.svg" />
+          <div className="div2" style={div2Style}>
+            {prop}
           </div>
         </div>
-        <div className="frame-parent9">
-          <div className="group-parent2">
-            <img className="group-icon2" alt="" src={group} />
-            <div className="div3">{mins}</div>
-          </div>
-          <div className="group-parent2">
-            <img className="vector-icon8" alt="" src={vector1} />
-            <div className="div3">{prop1}</div>
-          </div>
+        <div className="group-group">
+          <img className="group-icon1" alt="" src="/group.svg" />
+          <div className="mins1">{mins}</div>
         </div>
       </div>
     </div>

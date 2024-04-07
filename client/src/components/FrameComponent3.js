@@ -1,101 +1,75 @@
-import { Button } from "@mui/material";
+import { useMemo } from "react";
 import "./FrameComponent3.css";
 
-const FrameComponent3 = () => {
+const FrameComponent3 = ({
+  rectangle26,
+  davidAndEmilysPatisserie,
+  frenchPatisserie,
+  prop,
+  mins,
+  prop1,
+  propWidth,
+  propMinWidth,
+  propTextTransform,
+  propMinWidth1,
+}) => {
+  const rectangleIconStyle = useMemo(() => {
+    return {
+      width: propWidth,
+    };
+  }, [propWidth]);
+
+  const frenchPatisserieStyle = useMemo(() => {
+    return {
+      minWidth: propMinWidth,
+    };
+  }, [propMinWidth]);
+
+  const divStyle = useMemo(() => {
+    return {
+      textTransform: propTextTransform,
+    };
+  }, [propTextTransform]);
+
+  const div1Style = useMemo(() => {
+    return {
+      minWidth: propMinWidth1,
+    };
+  }, [propMinWidth1]);
+
   return (
-    <div className="group-parent1">
-      <div className="frame-wrapper1">
-        <div className="say-goodbye-to-overpaying-for-wrapper">
-          <div className="say-goodbye-to-container">
-            <p className="say-goodbye-to">Say goodbye to</p>
-            <p className="overpaying-for">overpaying for your</p>
-            <p className="say-goodbye-to">{`favorite meals `}</p>
+    <div className="frame-wrapper3">
+      <div className="rectangle-group">
+        <img
+          className="rectangle-icon"
+          loading="lazy"
+          alt=""
+          src={rectangle26}
+          style={rectangleIconStyle}
+        />
+        <div className="david-and-emilys">{davidAndEmilysPatisserie}</div>
+        <div className="data-aggregator">
+          <div className="french-patisserie" style={frenchPatisserieStyle}>
+            {frenchPatisserie}
+          </div>
+          <div className="input-processor">
+            <img className="output-handler-icon" alt="" src="/vector-2.svg" />
+            <div className="div" style={divStyle}>
+              {prop}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="discover-the-tastiest">
-        Discover the tastiest deals with BiteWise! Let us do the legwork - from
-        DoorDash to Uber Eats, we compare rates so you can savor every bite
-        without breaking the bank. Join BiteWise today and feast smarter!
-      </div>
-      <div className="frame-parent8">
-        <div className="enter-an-item-or-restaurant-wrapper">
-          <div className="say-goodbye-to-container">
-            Enter an item or restaurant
+        <div className="frame-parent6">
+          <div className="group-parent">
+            <img className="group-icon" alt="" src="/group.svg" />
+            <div className="mins">{mins}</div>
           </div>
-        </div>
-        <div className="sign-in2">
-          <div className="get-started2">Get Started</div>
-        </div>
-      </div>
-      <div className="find-meals-near-your-area-parent">
-        <div className="say-goodbye-to-container">
-          Find meals near your area
-        </div>
-        <div className="san-jose-parent">
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            San Jose
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            Seattle
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            Los Angeles
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            Atlanta
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            Phoenix
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            New York
-          </Button>
-          <Button
-            className="san-jose"
-            disableElevation={true}
-            color="success"
-            variant="text"
-            sx={{ borderRadius: "0px 0px 0px 0px" }}
-          >
-            and more!
-          </Button>
+          <div className="vector-parent">
+            <img className="vector-icon2" alt="" src="/vector-3.svg" />
+            <div className="div1" style={div1Style}>
+              {prop1}
+            </div>
+          </div>
         </div>
       </div>
     </div>
