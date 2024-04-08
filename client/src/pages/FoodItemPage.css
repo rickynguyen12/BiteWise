@@ -1,0 +1,126 @@
+.food-item-inner {
+  background-color: #333;
+  top: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: left;
+  padding: 0px var(--padding-xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.restaurant-info {
+  width: 100%;
+  top: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: left;
+  padding: 0px var(--padding-xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.restaurant-photo {
+  width: 256px;
+  height: 256px;
+  position: relative;
+  border-radius: var(--br-3xs);
+  object-fit: cover;
+  margin: 30px;
+}
+
+.restaurant-name {
+  align-self: left;
+  position: relative;
+  font-size: var(--font-size-l);
+  text-transform: capitalize;
+  font-weight: 500;
+  color: white;
+  margin-top: 100px;
+}
+
+.restaurant-details {
+  width: 100%;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: left;
+  padding: 0px var(--padding-xl);
+  box-sizing: border-box;
+  max-width: 100%;
+  position: relative;
+  text-transform: lowercase;
+  font-weight: 500;
+  color: white;
+  line-height: normal;
+}
+
+.food-item {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-41xl) 0px 0px;
+  box-sizing: border-box;
+  letter-spacing: normal;
+}
+
+.menu {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-41xl) 0px 0px;
+  box-sizing: border-box;
+  letter-spacing: normal;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+}
+
+.rating img {
+  margin-right: 5px;
+}
+
+.french-patisserie {
+  position: relative;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+
+.rating,
+.delivery-time,
+.cost {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.info-container {
+  display: flex;
+}
+
+.rating::after,
+.delivery-time::after {
+  content: "";
+  width: 1px;
+  height: 40px;
+  background-color: white;
+  margin: 0 20px;
+}

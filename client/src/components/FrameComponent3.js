@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import {Link} from "react-router-dom";
 import "./FrameComponent3.css";
 
 const FrameComponent3 = ({
@@ -40,6 +41,7 @@ const FrameComponent3 = ({
   return (
     <div className="frame-wrapper3">
       <div className="rectangle-group">
+        <Link to="/david-and-emilys">
         <img
           className="rectangle-icon"
           loading="lazy"
@@ -47,6 +49,7 @@ const FrameComponent3 = ({
           src={rectangle26}
           style={rectangleIconStyle}
         />
+        </Link>
         <div className="david-and-emilys">{davidAndEmilysPatisserie}</div>
         <div className="data-aggregator">
           <div className="french-patisserie" style={frenchPatisserieStyle}>

@@ -9,6 +9,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
+import FoodItemPage from "./pages/FoodItemPage";
 
 function App() {
   const action = useNavigationType();
@@ -67,6 +68,7 @@ function App() {
         path="/register-as-store-owner"
         element={<RegisterAsStoreOwner />}
       />
+      <Route path="/david-and-emilys" element={<FoodItemPage />} />
     </Routes>
   );
 }
