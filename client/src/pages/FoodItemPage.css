@@ -40,7 +40,7 @@
   text-transform: capitalize;
   font-weight: 500;
   color: white;
-  margin-top: 100px;
+  margin-top: 70px;
 }
 
 .restaurant-details {
@@ -57,7 +57,7 @@
   text-transform: lowercase;
   font-weight: 500;
   color: white;
-  line-height: normal;
+  line-height: 0.7;
 }
 
 .food-item {
@@ -80,18 +80,51 @@
   background-color: var(--color-white);
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding: var(--padding-41xl) 0px 0px;
+  justify-content: flex-space;
+  padding: var(--padding-41xl) 0px 100px;
   box-sizing: border-box;
   letter-spacing: normal;
 }
 
 .menu-items {
+  flex: 1;
+  padding-left: 70px;
+  border-left: 1px solid #ccc;
+}
+
+.menu-item h3 {
+  margin: 0;
+}
+
+.menu-item {
   display: flex;
-  flex-direction: column;
-  padding-left: 100px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.add-button {
+  margin-right: 100px;
+  margin-left: 100px;
+  background-color: var(--color-white);
+  color: #29a679;
+  box-shadow: 0 2px 4px #6a756d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.menu-category {
+  cursor: pointer;
+  padding-left: 200px;
+  margin-right: 70px;
 }
 
 .rating img {
@@ -123,4 +156,65 @@
   height: 40px;
   background-color: white;
   margin: 0 20px;
+}
+
+.frame-parent5 {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+  max-width: 100%;
+}
+.frame-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-sm);
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+.cart {
+  position: relative;
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-41xl) 0px 0px;
+  box-sizing: border-box;
+  letter-spacing: normal;
+  padding-right: 70px;
+}
+
+.cart h2 {
+  margin: 0;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.cart-item {
+  flex: 1;
+  padding-left: 70px;
+  border-left: 1px solid #ccc;
+}
+
+.place-order {
+  background-color: #28943a;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
 }
