@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
@@ -8,6 +8,7 @@ const FoodItemPage = () => {
   const davidAndEmilysPatisserie = {
     name: "David and Emily's Patisserie",
     photo: "/rectangle-26@2x.png",
+    type: "french patisserie",
     rating: 4.2,
     deliveryTime: "15 mins",
     cost: "$$",
@@ -21,18 +22,21 @@ const FoodItemPage = () => {
             description:
               "Freshly baked croissant made from flaky layers of buttery dough",
             price: "$5.00",
+            category: "Pastries",
           },
           {
             id: 2,
             name: "Pain au Chocolat",
             description: "Buttery pastry with chocolate filling",
             price: "$5.50",
+            category: "Pastries",
           },
           {
             id: 3,
             name: "Ham & Cheese Pastry",
             description: "Flaky pastry filled with ham and cheese.",
             price: "$5.00",
+            category: "Pastries",
           },
           {
             id: 4,
@@ -40,6 +44,7 @@ const FoodItemPage = () => {
             description:
               "Pastry filled with cream cheese and topped with sliced almonds.",
             price: "$4.50",
+            category: "Pastries",
           },
         ],
       },
@@ -51,12 +56,14 @@ const FoodItemPage = () => {
             name: "Chocolate Chip Cookie",
             description: "The classic, loaded with chocolate chips.",
             price: "$2.00",
+            category: "Cookies",
           },
           {
             id: 2,
             name: "Double Chocolate Cookie",
             description: "Chocolate cookie with chocolate chips.",
             price: "$2.50",
+            category: "Cookies",
           },
           {
             id: 3,
@@ -64,6 +71,7 @@ const FoodItemPage = () => {
             description:
               "Traditional flavors of cinnamon, oatmeal and sweet raisins.",
             price: "$2.00",
+            category: "Cookies",
           },
         ],
       },
@@ -76,6 +84,7 @@ const FoodItemPage = () => {
             description:
               "Layers of vanilla cake, with cream, strawberries, blueberries, and raspberries.",
             price: "$34.00",
+            category: "Cake",
           },
           {
             id: 2,
@@ -83,6 +92,7 @@ const FoodItemPage = () => {
             description:
               "3 Layer Chocolate Cake, Chocolate Buttercream Filling.",
             price: "$30.00",
+            category: "Cake",
           },
           {
             id: 3,
@@ -90,6 +100,7 @@ const FoodItemPage = () => {
             description:
               "3 Layer Chocolate Cake, Whipped Cream Filling with Strawberry.",
             price: "$32.00",
+            category: "Cake",
           },
         ],
       },
@@ -100,11 +111,62 @@ const FoodItemPage = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleAddToCart = (item) => {
-    setSelectedItems([...selectedItems, item]);
+  const [totalCost, setTotalCost] = useState(0);
+
+  useEffect(() => {
+    const newTotalCost = selectedItems.reduce(
+      (acc, item) =>
+        acc + parseFloat(item.price.replace("$", "")) * item.quantity,
+      0
+    );
+    setTotalCost(newTotalCost);
+  }, [selectedItems]);
+
+  const addToCart = (item, category) => {
+    const existingItem = selectedItems.findIndex(
+      (selectedItem) =>
+        selectedItem.id === item.id && selectedItem.category === category
+    );
+    if (existingItem !== -1) {
+      const updated = [...selectedItems];
+      selectedItems[existingItem].quantity += 1;
+      setSelectedItems(updated);
+    } else {
+      setSelectedItems([...selectedItems, { ...item, quantity: 1, category }]);
+    }
   };
 
-  const handlePlaceOrder = () => {};
+  const removeFromCart = (itemId, category) => {
+    const updated = selectedItems.map((item) => {
+      if (
+        item.id === itemId &&
+        item.category === category &&
+        item.quantity > 0
+      ) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setSelectedItems(updated);
+  };
+
+  const goToPlaceOrder = () => {
+    fetch(`/place_order/${davidAndEmilysPatisserie.name}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to place order");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // If the request is successful, redirect the user to the food platform
+        window.location.href = data.redirectUrl; // Assuming the backend returns the redirect URL
+      })
+      .catch((error) => {
+        // Handle any errors, such as if the restaurant is not found
+        console.error("Error placing order:", error);
+      });
+  };
 
   return (
     <div className="food-item">
@@ -121,7 +183,7 @@ const FoodItemPage = () => {
               <h2>{davidAndEmilysPatisserie.name}</h2>
             </div>
             <div className="french-patisserie">
-              <p>french patisserie</p>
+              <p>{davidAndEmilysPatisserie.type}</p>
             </div>
             <div className="info-container">
               <div className="rating">
@@ -199,21 +261,55 @@ const FoodItemPage = () => {
                     <p>{item.description}</p>
                     <p>{item.price}</p>
                   </div>
-                  <button class="add-button">Add +</button>
+                  <button
+                    className="add-button"
+                    onClick={() => addToCart(item, item.category)}
+                  >
+                    Add +
+                  </button>
                 </div>
               ))}
         </div>
         <div className="cart">
           <h2>Cart</h2>
-          <p> from David and Emily's Patisserie</p>
+          <p>
+            from{" "}
+            <div className="cart-name">{davidAndEmilysPatisserie.name}</div>
+          </p>
           <div className="cart-items">
             {selectedItems.map((item, index) => (
               <div key={index} className="cart-item">
-                {item.name} - {item.price}
+                <div className="cart-item-info">
+                  <div>
+                    <h3>{item.name}</h3>
+                  </div>
+                  <div>
+                    <p>{item.price}</p>
+                  </div>
+                </div>
+                <div className="cart-item-quantity">
+                  <button
+                    className="quantity-button"
+                    onClick={() => removeFromCart(item.id, item.category)}
+                  >
+                    –
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    className="quantity-button"
+                    onClick={() => addToCart(item, item.category)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             ))}
           </div>
-          <button onClick={handlePlaceOrder} className="place-order">
+          <div className="cart-total">
+            <h2>Subtotal</h2>
+            <h3>${totalCost.toFixed(2)}</h3>
+          </div>
+          <button onClick={goToPlaceOrder} className="place-order">
             Go To Place Order
           </button>
         </div>
