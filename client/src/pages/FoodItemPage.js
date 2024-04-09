@@ -151,19 +151,18 @@ const FoodItemPage = () => {
   };
 
   const goToPlaceOrder = () => {
-    fetch(`/place_order/${davidAndEmilysPatisserie.name}`)
+    //not working
+    fetch(`/place_order/Chownow`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to place order");
         }
-        return response.json();
+        return response.text();
       })
-      .then((data) => {
-        // If the request is successful, redirect the user to the food platform
-        window.location.href = data.redirectUrl; // Assuming the backend returns the redirect URL
+      .then((redirectUrl) => {
+        window.location.href = redirectUrl;
       })
       .catch((error) => {
-        // Handle any errors, such as if the restaurant is not found
         console.error("Error placing order:", error);
       });
   };
