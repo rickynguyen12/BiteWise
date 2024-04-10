@@ -27,4 +27,11 @@ const register = async (req, res) => {
 
 };
 
+const homepage = async (req, res) => {
+  res.status(200).json({
+    message:"Successful!"
+  })
+};
+
 export {register};
+export {homepage};
