@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
 import { TextField, Button } from "@mui/material";
 
 const FoodItemPage = () => {
+  const location = useLocation();
+  console.log("Location state:", location.state);
+  const { restaurantInfo } = location.state || {};
+
+  console.log("Restaurant info:", restaurantInfo);
+
   const davidAndEmilysPatisserie = {
-    name: "David and Emily's Patisserie",
-    photo: "/rectangle-26@2x.png",
-    type: "french patisserie",
-    rating: 4.2,
-    deliveryTime: "15 mins",
-    cost: "$$",
     menu: [
       {
         name: "Pastries",
@@ -174,26 +175,26 @@ const FoodItemPage = () => {
         <div className="restaurant-info">
           <img
             className="restaurant-photo"
-            src={davidAndEmilysPatisserie.photo}
-            alt={davidAndEmilysPatisserie.name}
+            src={restaurantInfo.rectangle26}
+            alt={restaurantInfo.davidAndEmilysPatisserie}
           />
           <div className="restaurant-details">
             <div className="restaurant-name">
-              <h2>{davidAndEmilysPatisserie.name}</h2>
+              <h2>{restaurantInfo.davidAndEmilysPatisserie}</h2>
             </div>
             <div className="french-patisserie">
-              <p>{davidAndEmilysPatisserie.type}</p>
+              <p>{restaurantInfo.frenchPatisserie}</p>
             </div>
             <div className="info-container">
               <div className="rating">
                 <img alt="" src="/vector-2.svg" />
-                <p>{davidAndEmilysPatisserie.rating}</p>
+                <p>{restaurantInfo.prop}</p>
               </div>
               <div className="delivery-time">
-                <p>{davidAndEmilysPatisserie.deliveryTime} Delivery Time</p>
+                <p>{restaurantInfo.mins} Delivery Time</p>
               </div>
               <div className="cost">
-                <p>{davidAndEmilysPatisserie.cost}</p>
+                <p>{restaurantInfo.prop1}</p>
               </div>
             </div>
             <div className="frame-wrapper">
@@ -273,7 +274,9 @@ const FoodItemPage = () => {
           <h2>Cart</h2>
           <p>
             from{" "}
-            <div className="cart-name">{davidAndEmilysPatisserie.name}</div>
+            <div className="cart-name">
+              {restaurantInfo.davidAndEmilysPatisserie}
+            </div>
           </p>
           <div className="cart-items">
             {selectedItems.map((item, index) => (

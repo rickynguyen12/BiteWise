@@ -68,7 +68,7 @@ function App() {
         path="/register-as-store-owner"
         element={<RegisterAsStoreOwner />}
       />
-      <Route path="/david-and-emilys" element={<FoodItemPage />} />
+      <Route path="/food-item-page" element={<FoodItemPage />} />
     </Routes>
   );
 }
