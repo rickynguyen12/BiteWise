@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
+import FoodItemPage2 from "./pages/FoodItemPage2";
 
 function App() {
   const action = useNavigationType();
@@ -69,6 +70,7 @@ function App() {
         element={<RegisterAsStoreOwner />}
       />
       <Route path="/food-item-page" element={<FoodItemPage />} />
+      <Route path="/food-item-page2" element={<FoodItemPage2 />} />
     </Routes>
   );
 }

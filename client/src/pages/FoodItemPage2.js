@@ -5,216 +5,133 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
 import { TextField, Button } from "@mui/material";
 
-const FoodItemPage = () => {
+const FoodItemPage2 = () => {
   const location = useLocation();
   const { restaurantName, restaurantInfo } = location.state || {};
 
   const menuData = useMemo(() => {
     return {
-      "David and Emily’s Patisserie": [
+      "Not your mother’s falafel": [
         {
-          name: "Pastries",
+          name: "Wraps",
           items: [
             {
               id: 1,
-              name: "Plain Croissant",
+              name: "Classic Falafel Wrap",
               description:
-                "Freshly baked croissant made from flaky layers of buttery dough",
-              category: "Pastries",
+                "Classic falafel wrapped in a soft pita bread with fresh vegetables and tahini sauce.",
+              category: "Wraps",
             },
             {
               id: 2,
-              name: "Pain au Chocolat",
-              description: "Buttery pastry with chocolate filling",
-              category: "Pastries",
+              name: "Spicy Falafel Wrap",
+              description:
+                "Spicy falafel wrapped in a soft pita bread with lettuce, tomatoes, and spicy sauce.",
+              category: "Wraps",
+            },
+          ],
+        },
+        {
+          name: "Rolls",
+          items: [
+            {
+              id: 1,
+              name: "Falafel Roll",
+              description:
+                "Crispy falafel wrapped in a thin flatbread with hummus and pickled vegetables.",
+              category: "Rolls",
             },
             {
+              id: 2,
+              name: "Paneer Tikka Roll",
+              description:
+                "Paneer tikka wrapped in a soft flatbread with mint chutney and onions.",
+              category: "Rolls",
+            },
+          ],
+        },
+      ],
+      "Veggie Delite Loaded Burrito": [
+        {
+          name: "Burritos",
+          items: [
+            {
+              id: 1,
+              name: "Classic Veggie Burrito",
+              description:
+                "A classic combination of fresh veggies wrapped in a warm tortilla.",
+              category: "Burritos",
+            },
+            {
+              id: 2,
+              name: "Spicy Black Bean Burrito",
+              description:
+                "Black beans with a kick of spice, wrapped in a flour tortilla.",
+              category: "Burritos",
+            },
+          ],
+        },
+        {
+          name: "Bowls",
+          items: [
+            {
               id: 3,
-              name: "Ham & Cheese Pastry",
-              description: "Flaky pastry filled with ham and cheese.",
-              category: "Pastries",
+              name: "Veggie Delite Bowl",
+              description:
+                "A bowl filled with a variety of fresh vegetables and grains.",
+              category: "Bowls",
             },
             {
               id: 4,
-              name: "Cream Cheese Pastry",
-              description:
-                "Pastry filled with cream cheese and topped with sliced almonds.",
-              category: "Pastries",
-            },
-          ],
-        },
-        {
-          name: "Cookies",
-          items: [
-            {
-              id: 1,
-              name: "Chocolate Chip Cookie",
-              description: "The classic, loaded with chocolate chips.",
-              category: "Cookies",
-            },
-            {
-              id: 2,
-              name: "Double Chocolate Cookie",
-              description: "Chocolate cookie with chocolate chips.",
-              category: "Cookies",
-            },
-            {
-              id: 3,
-              name: "Oatmeal Raisin Cookie",
-              description:
-                "Traditional flavors of cinnamon, oatmeal and sweet raisins.",
-              category: "Cookies",
-            },
-          ],
-        },
-        {
-          name: "Cake",
-          items: [
-            {
-              id: 1,
-              name: "Mixed Berry Cake",
-              description:
-                "Layers of vanilla cake, with cream, strawberries, blueberries, and raspberries.",
-              price: "$34.00",
-              category: "Cake",
-            },
-            {
-              id: 2,
-              name: "Chocolate Cake",
-              description:
-                "3 Layer Chocolate Cake, Chocolate Buttercream Filling.",
-              price: "$30.00",
-              category: "Cake",
-            },
-            {
-              id: 3,
-              name: "Chocolate Strawberry Cake",
-              description:
-                "3 Layer Chocolate Cake, Whipped Cream Filling with Strawberry.",
-              price: "$32.00",
-              category: "Cake",
+              name: "Southwest Quinoa Bowl",
+              description: "Quinoa mixed with black beans, corn, and salsa.",
+              category: "Bowls",
             },
           ],
         },
       ],
-      "Dilac Vegan Vietnamese Cuisine": [
+      "Thai Tea - Boba Bulb": [
         {
-          name: "Pho",
+          name: "Milk Tea",
           items: [
             {
               id: 1,
-              name: "Vegan Pho",
+              name: "Classic Milk Tea",
               description:
-                "Traditional Vietnamese noodle soup with vegan broth and vegetables.",
-              category: "Pho",
+                "Black tea mixed with creamy milk and sweetened with tapioca pearls.",
+              category: "Milk Tea",
             },
             {
               id: 2,
-              name: "Tofu Pho",
-              description: "Pho with tofu slices and fresh herbs.",
-              category: "Pho",
-            },
-          ],
-        },
-        {
-          name: "Spring Rolls",
-          items: [
-            {
-              id: 1,
-              name: "Vegan Spring Rolls",
+              name: "Taro Boba",
               description:
-                "Rice paper rolls filled with fresh vegetables and tofu, served with dipping sauce.",
-              category: "Spring Rolls",
-            },
-            {
-              id: 2,
-              name: "Avocado Summer Rolls",
-              description:
-                "Summer rolls filled with avocado, cucumber, and other fresh vegetables.",
-              category: "Spring Rolls",
-            },
-          ],
-        },
-        {
-          name: "Noodle Bowls",
-          items: [
-            {
-              id: 1,
-              name: "Vegan Bun Cha",
-              description:
-                "Rice vermicelli noodle bowl with vegan protein and herbs.",
-              category: "Noodle Bowls",
-            },
-            {
-              id: 2,
-              name: "Tofu Banh Mi Bowl",
-              description:
-                "Banh mi sandwich deconstructed into a bowl with tofu, pickled vegetables, and herbs.",
-              category: "Noodle Bowls",
-            },
-          ],
-        },
-      ],
-      "The Good Bowl - Traditional Bowls": [
-        {
-          name: "Curries",
-          items: [
-            {
-              id: 1,
-              name: "Paneer Tikka Masala",
-              description:
-                "Paneer cooked in a rich tomato-based gravy with spices.",
-              category: "Curries",
-            },
-            {
-              id: 2,
-              name: "Butter Chicken",
-              description:
-                "Tender chicken cooked in a creamy tomato-based sauce with butter and spices.",
-              category: "Curries",
+                "Taro-flavored milk tea with tapioca pearls for a delightful texture.",
+              category: "Milk Tea",
             },
             {
               id: 3,
-              name: "Chana Masala",
+              name: "Thai Tea",
               description:
-                "Chickpeas cooked with onions, tomatoes, and spices.",
-              category: "Curries",
+                "A traditional Thai tea made with black tea and sweetened condensed milk.",
+              category: "Milk Tea",
             },
           ],
         },
         {
-          name: "Biryani",
+          name: "Tea",
           items: [
             {
-              id: 1,
-              name: "Vegetable Biryani",
+              id: 4,
+              name: "Green Tea",
+              description: "A classic green tea with subtle floral notes.",
+              category: "Tea",
+            },
+            {
+              id: 5,
+              name: "Earl Grey",
               description:
-                "Fragrant basmati rice cooked with mixed vegetables and aromatic spices.",
-              category: "Biryani",
-            },
-            {
-              id: 2,
-              name: "Chicken Biryani",
-              description:
-                "Fragrant basmati rice cooked with tender chicken pieces and aromatic spices.",
-              category: "Biryani",
-            },
-          ],
-        },
-        {
-          name: "Breads",
-          items: [
-            {
-              id: 1,
-              name: "Naan",
-              description: "Traditional Indian flatbread baked in a tandoor.",
-              category: "Breads",
-            },
-            {
-              id: 2,
-              name: "Garlic Naan",
-              description: "Naan bread topped with minced garlic and cilantro.",
-              category: "Breads",
+                "A bold and aromatic black tea with bergamot flavor.",
+              category: "Tea",
             },
           ],
         },
@@ -271,25 +188,24 @@ const FoodItemPage = () => {
           <img
             className="restaurant-photo"
             src={restaurantInfo.rectangle26}
-            alt={restaurantInfo.davidAndEmilysPatisserie}
+            alt={restaurantInfo.notYourMothersFalafel}
           />
           <div className="restaurant-details">
             <div className="restaurant-name">
-              <h2>{restaurantInfo.davidAndEmilysPatisserie}</h2>
+              <h2>{restaurantInfo.notYourMothersFalafel}</h2>
             </div>
             <div className="french-patisserie">
-              <p>{restaurantInfo.frenchPatisserie}</p>
+              <p>{restaurantInfo.faasosWrapsRolls}</p>
             </div>
             <div className="info-container">
               <div className="rating">
                 <img alt="" src="/vector-2.svg" />
-                <p>{restaurantInfo.prop}</p>
               </div>
               <div className="delivery-time">
                 <p>{restaurantInfo.mins} Delivery Time</p>
               </div>
               <div className="cost">
-                <p>{restaurantInfo.prop1}</p>
+                <p>{restaurantInfo.propAlignSelf}</p>
               </div>
             </div>
             <div className="frame-wrapper">
@@ -369,7 +285,7 @@ const FoodItemPage = () => {
           <p>
             from{" "}
             <div className="cart-name">
-              {restaurantInfo.davidAndEmilysPatisserie}
+              {restaurantInfo.notYourMothersFalafel}
             </div>
           </p>
           <div className="cart-items">
@@ -406,4 +322,4 @@ const FoodItemPage = () => {
   );
 };
 
-export default FoodItemPage;
+export default FoodItemPage2;

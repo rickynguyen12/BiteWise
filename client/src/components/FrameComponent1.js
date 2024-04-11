@@ -74,8 +74,7 @@ const FrameComponent1 = () => {
               />
               <FrameComponent3
                 rectangle26="/rectangle-26-2@2x.png"
-                davidAndEmilysPatisserie="The Good Bowl
-- Traditional Bowls"
+                davidAndEmilysPatisserie="The Good Bowl - Traditional Bowls"
                 frenchPatisserie="North Indian, Punjabi"
                 prop="4.8"
                 mins="25 Mins"

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import "./FrameComponent2.css";
 
 const FrameComponent2 = ({
@@ -43,29 +44,51 @@ const FrameComponent2 = ({
   }, [propMinWidth1]);
 
   return (
-    <div className="rectangle-container" style={frameDivStyle}>
-      <img className="frame-child1" alt="" src={rectangle26} />
-      <div className="not-your-mothers" style={notYourMothersStyle}>
-        {notYourMothersFalafel}
-      </div>
-      <div className="faasos-wraps-rolls-wrapper">
-        <div className="faasos-wraps" style={faasosWrapsStyle}>
-          {faasosWrapsRolls}
+    <Link
+      to={"/food-item-page2"}
+      state={{
+        restaurantName: notYourMothersFalafel,
+        restaurantInfo: {
+          rectangle26,
+          notYourMothersFalafel,
+          faasosWrapsRolls,
+          prop,
+          mins,
+          propAlignSelf,
+          propWidth,
+          propPadding,
+          propAlignSelf1,
+          propHeight,
+          propMinWidth,
+          propMinWidth1,
+        },
+      }}
+      className="link"
+    >
+      <div className="rectangle-container" style={frameDivStyle}>
+        <img className="frame-child1" alt="" src={rectangle26} />
+        <div className="not-your-mothers" style={notYourMothersStyle}>
+          {notYourMothersFalafel}
         </div>
-      </div>
-      <div className="antdesignstarfilled-parent">
-        <div className="antdesignstarfilled">
-          <img className="data-aggregator-icon" alt="" src="/vector-10.svg" />
-          <div className="div2" style={div2Style}>
-            {prop}
+        <div className="faasos-wraps-rolls-wrapper">
+          <div className="faasos-wraps" style={faasosWrapsStyle}>
+            {faasosWrapsRolls}
           </div>
         </div>
-        <div className="group-group">
-          <img className="group-icon1" alt="" src="/group.svg" />
-          <div className="mins1">{mins}</div>
+        <div className="antdesignstarfilled-parent">
+          <div className="antdesignstarfilled">
+            <img className="data-aggregator-icon" alt="" src="/vector-10.svg" />
+            <div className="div2" style={div2Style}>
+              {prop}
+            </div>
+          </div>
+          <div className="group-group">
+            <img className="group-icon1" alt="" src="/group.svg" />
+            <div className="mins1">{mins}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

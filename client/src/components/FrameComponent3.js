@@ -42,6 +42,7 @@ const FrameComponent3 = ({
     <Link
       to={"/food-item-page"}
       state={{
+        restaurantName: davidAndEmilysPatisserie,
         restaurantInfo: {
           rectangle26,
           davidAndEmilysPatisserie,

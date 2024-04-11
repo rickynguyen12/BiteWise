@@ -246,6 +246,7 @@
 .cart-item-quantity {
   display: flex;
   align-items: center;
+  margin-top: 10px;
   justify-content: flex-end;
 }
 
@@ -255,7 +256,7 @@
   font-weight: 600;
 }
 
-.place-order {
+.compare-prices {
   background-color: #3b9566;
   color: #fff;
   border: none;
@@ -263,6 +264,7 @@
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .quantity-button {
