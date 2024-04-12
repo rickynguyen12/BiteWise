@@ -84,6 +84,9 @@
   color: var(--color-gray-200);
   font-family: var(--font-poppins);
 }
+.input-processor {
+  margin-left: auto;
+}
 
 @media screen and (max-width: 450px) {
   .not-your-mothers {

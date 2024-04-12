@@ -13,6 +13,7 @@ const FrameComponent3 = ({
   propMinWidth,
   propTextTransform,
   propMinWidth1,
+  offer,
 }) => {
   const rectangleIconStyle = useMemo(() => {
     return {
@@ -54,6 +55,7 @@ const FrameComponent3 = ({
           propMinWidth,
           propTextTransform,
           propMinWidth1,
+          offer,
         },
       }}
       className="link"

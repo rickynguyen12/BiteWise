@@ -52,37 +52,40 @@ const FrameComponent = () => {
               rectangle26="/rectangle-26-7@2x.png"
               notYourMothersFalafel="Baked Pizza Wrap - Vegetarian"
               faasosWrapsRolls={`Faasos - Wraps & Rolls`}
-              prop="$9"
+              prop="10% off"
               mins="20 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="var(--padding-6xl) var(--padding-5xl)"
               propAlignSelf1="stretch"
               propHeight="unset"
               propMinWidth="unset"
               propMinWidth1="21px"
+              rating="4.1"
+              cost="$"
             />
             <FrameComponent2
               rectangle26="/rectangle-26-8@2x.png"
               notYourMothersFalafel="Butter Chicken Pizza - 8 serve"
               faasosWrapsRolls="Suren Pastries
 "
-              prop="$15"
+              prop="$10 off"
               mins="30 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="var(--padding-6xl) var(--padding-5xl)"
               propAlignSelf1="stretch"
               propHeight="unset"
               propMinWidth="119px"
               propMinWidth1="27px"
+              rating="3.4"
+              cost="$$"
             />
             <FrameComponent2
               rectangle26="/rectangle-26-9@2x.png"
-              notYourMothersFalafel="Mexican Signature Wraps
-"
+              notYourMothersFalafel="Mexican Signature Wraps"
               faasosWrapsRolls="Subway"
-              prop="$10"
+              prop="No Deals"
               mins="32 Mins"
               propAlignSelf="unset"
               propWidth="307px"
@@ -91,21 +94,24 @@ const FrameComponent = () => {
               propHeight="unset"
               propMinWidth="64px"
               propMinWidth1="27px"
+              rating="4.3"
+              cost="$"
             />
             <FrameComponent2
               rectangle26="/rectangle-26-10@2x.png"
-              notYourMothersFalafel="Southwest Chicken Salad
-"
+              notYourMothersFalafel="Southwest Chicken Salad"
               faasosWrapsRolls="Burgerito"
-              prop="$17"
+              prop="20% off"
               mins="41 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="var(--padding-6xl) var(--padding-5xl)"
               propAlignSelf1="stretch"
-              propHeight="60px"
+              propHeight="unset"
               propMinWidth="75px"
               propMinWidth1="25px"
+              rating="4.5"
+              cost="$$"
             />
           </div>
         </div>

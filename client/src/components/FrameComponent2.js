@@ -8,6 +8,8 @@ const FrameComponent2 = ({
   faasosWrapsRolls,
   prop,
   mins,
+  rating,
+  cost,
   propAlignSelf,
   propWidth,
   propPadding,
@@ -54,6 +56,8 @@ const FrameComponent2 = ({
           faasosWrapsRolls,
           prop,
           mins,
+          rating,
+          cost,
           propAlignSelf,
           propWidth,
           propPadding,
@@ -73,6 +77,10 @@ const FrameComponent2 = ({
         <div className="faasos-wraps-rolls-wrapper">
           <div className="faasos-wraps" style={faasosWrapsStyle}>
             {faasosWrapsRolls}
+          </div>
+          <div className="input-processor">
+            <img className="output-handler-icon" alt="" src="/vector-2.svg" />
+            <div className="div">{rating}</div>
           </div>
         </div>
         <div className="antdesignstarfilled-parent">

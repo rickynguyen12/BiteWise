@@ -219,6 +219,86 @@ const FoodItemPage = () => {
           ],
         },
       ],
+      "Swap - Diet Meal Box": [
+        {
+          name: "Fruit Superfood Bowl",
+          items: [
+            {
+              id: 1,
+              name: "Acai Bowl",
+              description:
+                "Acai berries blended with banana and topped with granola, fruits, and honey.",
+              category: "Fruit Superfood Bowl",
+            },
+            {
+              id: 2,
+              name: "Mixed Berry Smoothie Bowl",
+              description:
+                "Mixed berries blended with yogurt and topped with assorted fruits and nuts.",
+              category: "Fruit Superfood Bowl",
+            },
+            {
+              id: 3,
+              name: "Dragon Fruit Bowl",
+              description:
+                "Dragon fruit blended with coconut milk and topped with kiwi, mango, and chia seeds.",
+              category: "Fruit Superfood Bowl",
+            },
+          ],
+        },
+        {
+          name: "Protein Bowl",
+          items: [
+            {
+              id: 1,
+              name: "Quinoa and Black Bean Bowl",
+              description:
+                "Protein-packed quinoa and black beans mixed with avocado and salsa.",
+              category: "Protein Bowl",
+            },
+            {
+              id: 2,
+              name: "Salmon and Brown Rice Bowl",
+              description:
+                "Grilled salmon served over brown rice with mixed greens and sesame dressing.",
+              category: "Protein Bowl",
+            },
+            {
+              id: 3,
+              name: "Tofu and Veggie Stir-Fry",
+              description:
+                "Sautéed tofu and mixed vegetables tossed in a savory sauce.",
+              category: "Protein Bowl",
+            },
+          ],
+        },
+        {
+          name: "Salad",
+          items: [
+            {
+              id: 1,
+              name: "Greek Salad",
+              description:
+                "Classic Greek salad with tomatoes, cucumbers, olives, and feta cheese.",
+              category: "Salad",
+            },
+            {
+              id: 2,
+              name: "Caesar Salad",
+              description:
+                "Fresh romaine lettuce tossed with Caesar dressing, croutons, and Parmesan cheese.",
+              category: "Salad",
+            },
+            {
+              id: 3,
+              name: "Spinach and Strawberry Salad",
+              description:
+                "Baby spinach topped with sliced strawberries, almonds, and balsamic vinaigrette.",
+              category: "Salad",
+            },
+          ],
+        },
+      ],
     };
   }, []);
 
@@ -324,9 +404,33 @@ const FoodItemPage = () => {
                     height: 49,
                   }}
                 >
+                  <img
+                    alt=""
+                    src="/star_fav.png"
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                      marginRight: "8px",
+                    }}
+                  />
                   Favorite
                 </Button>
               </div>
+            </div>
+          </div>
+          <div className="offer">
+            <h3>Offers</h3>
+            <div className="offer-details">
+              <img
+                alt=""
+                src="/offer.png"
+                style={{
+                  width: "15px",
+                  height: "15px",
+                  marginRight: "8px",
+                }}
+              />
+              <p>{restaurantInfo.offer}</p>
             </div>
           </div>
         </div>
