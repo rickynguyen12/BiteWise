@@ -56,7 +56,7 @@ const FrameComponent = () => {
               mins="20 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="36px 27px 25px"
               propAlignSelf1="stretch"
               propHeight="unset"
               propMinWidth="unset"
@@ -71,7 +71,7 @@ const FrameComponent = () => {
               mins="30 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="36px 27px 25px"
               propAlignSelf1="stretch"
               propHeight="unset"
               propMinWidth="119px"
@@ -86,10 +86,10 @@ const FrameComponent = () => {
               mins="32 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="var(--padding-6xl) var(--padding-5xl)"
+              propPadding="36px 27px 25px"
               propAlignSelf1="stretch"
               propHeight="unset"
-              propMinWidth="64px"
+              propMinWidth="119px"
               propMinWidth1="27px"
             />
             <FrameComponent2
@@ -101,11 +101,11 @@ const FrameComponent = () => {
               mins="41 Mins"
               propAlignSelf="unset"
               propWidth="307px"
-              propPadding="36px 62px 25px"
+              propPadding="36px 27px 25px"
               propAlignSelf1="stretch"
-              propHeight="60px"
-              propMinWidth="75px"
-              propMinWidth1="25px"
+              propHeight="unset"
+              propMinWidth="119px"
+              propMinWidth1="27px"
             />
           </div>
         </div>

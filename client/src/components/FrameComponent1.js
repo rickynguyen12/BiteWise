@@ -134,13 +134,6 @@ const FrameComponent1 = () => {
                 faasosWrapsRolls="Lunch Box"
                 prop="$14"
                 mins="25 Mins"
-                propAlignSelf="stretch"
-                propWidth="unset"
-                propPadding="36px 62px 25px"
-                propAlignSelf1="stretch"
-                propHeight="unset"
-                propMinWidth="79px"
-                propMinWidth1="27px"
               />
               <FrameComponent2
                 rectangle26="/rectangle-26-6@2x.png"
@@ -148,13 +141,6 @@ const FrameComponent1 = () => {
                 faasosWrapsRolls="boba bar"
                 prop="$6"
                 mins="15 Mins"
-                propAlignSelf="stretch"
-                propWidth="unset"
-                propPadding="36px 62px 25px"
-                propAlignSelf1="stretch"
-                propHeight="unset"
-                propMinWidth="75px"
-                propMinWidth1="21px"
               />
             </div>
           </div>
