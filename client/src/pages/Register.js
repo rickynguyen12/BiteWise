@@ -26,7 +26,7 @@ const Register = () => {
         <div className="frame-parent">
           <div className="frame-group">
             <div className="logo-wrapper">
-              <div className="logo" onClick={onLogoContainerClick}>
+              <div className="logo">
                 <h2 className="bitewise">BiteWise</h2>
                 <img
                   className="subtract-icon"
@@ -85,7 +85,12 @@ const Register = () => {
                 Sign In
               </Button>
             </div>
-            <img className="image-1-icon" alt="" src="/image-1@2x.png" />
+            <img 
+            className="image-1-icon" 
+            alt="" 
+            src="/image-1@2x.png" 
+            onClick={onLogoContainerClick}
+            />
           </div>
           <div className="first-parent">
             <header className="register-wrapper">

@@ -110,6 +110,7 @@
   left: -25px;
   object-fit: cover;
   z-index: 1;
+  pointer-events: auto;
 }
 .frame-group {
   align-self: stretch;
