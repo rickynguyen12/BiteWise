@@ -81,7 +81,7 @@ const logout = async (req, res) => {
   // clear the cookie
   res.clearCookie('jwt');
 
-  return res.json({
+  return res.status(200).json({
     message: "Logout Successfull",
   });
 };
