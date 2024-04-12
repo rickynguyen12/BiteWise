@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import "./Footer.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Footer = ({ propHeight, propHeight1 }) => {
+
   const frameDiv1Style = useMemo(() => {
     return {
       height: propHeight,
@@ -13,6 +16,12 @@ const Footer = ({ propHeight, propHeight1 }) => {
       height: propHeight1,
     };
   }, [propHeight1]);
+  
+  const navigate = useNavigate();
+
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
 
   return (
     <footer className="footer">
@@ -55,7 +64,12 @@ const Footer = ({ propHeight, propHeight1 }) => {
         <div className="delivery">Delivery</div>
         <div className="about-us">{`Help & Support`}</div>
         <div className="blog">{`T&C`}</div>
-        <img className="image-2-icon" alt="" src="/image-2@2x.png" />
+        <img 
+            className="image-1-icon" 
+            alt="" 
+            src="/image-2@2x.png" 
+            onClick={onLogoContainerClick}
+        />
       </div>
     </footer>
   );

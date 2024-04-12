@@ -4,7 +4,6 @@
   position: relative;
   border-radius: var(--br-lg);
   flex-shrink: 0;
-  debug_commit: f6aba90;
 }
 .search-bar {
   height: 26.8px;
@@ -24,7 +23,6 @@
   display: inline-block;
   min-width: 126px;
   flex-shrink: 0;
-  debug_commit: f6aba90;
 }
 .bite-wise-label {
   display: flex;
