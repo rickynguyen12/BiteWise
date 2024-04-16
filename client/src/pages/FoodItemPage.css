@@ -276,15 +276,15 @@
 }
 
 .offer {
-  color: #46bc7e;
+  color: #2f7c31;
   margin-top: auto;
-  border: 2px dashed #46bc7e; /* Dotted line border */
-  width: 400px; /* Adjust the width as needed */
+  border: 2px dashed #2f7c31;
+  width: 400px;
   height: 100px;
   margin-bottom: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
+  justify-content: center;
   text-align: left;
   padding: 30px;
   border-radius: 15px;

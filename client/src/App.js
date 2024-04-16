@@ -11,6 +11,9 @@ import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
 import FoodItemPage2 from "./pages/FoodItemPage2";
+import OwnerDashboard from "./pages/OwnerDashboard";
+import OwnerEditProfile from "./pages/OwnerEditProfile";
+import OwnerEditMenu from "./pages/OwnerEditMenu";
 
 function App() {
   const action = useNavigationType();
@@ -71,6 +74,9 @@ function App() {
       />
       <Route path="/food-item-page" element={<FoodItemPage />} />
       <Route path="/food-item-page2" element={<FoodItemPage2 />} />
+      <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+      <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
+      <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
     </Routes>
   );
 }
