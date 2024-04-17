@@ -27,6 +27,10 @@ body {
   --font-size-29xl: 48px;
   --font-size-9xl: 28px;
   --font-size-3xl: 22px;
+  --font-size-base: 16px;
+  --font-size-13xl: 32px;
+  --font-size-7xl: 26px;
+  --font-size-xs: 12px;
 
   /* Colors */
   --color-white: #fff;
@@ -43,6 +47,11 @@ body {
   --color-limegreen-200: rgba(26, 200, 75, 0.3);
   --color-darkslategray: #404040;
   --color-dimgray: #616161;
+  --neutral-white: #fff;
+  --color-gray-400: #8a8a8a;
+  --color-gray-500: rgba(138, 138, 138, 0.5);
+  --color-gainsboro-100: #d9d9d9;
+/*  --neutral-white: #737373; */
 
   /* Gaps */
   --gap-101xl: 120px;
@@ -67,14 +76,27 @@ body {
   --gap-14xl: 33px;
   --gap-base: 16px;
   --gap-smi: 13px;
+  --gap-45xl-6: 64.6px;
+  --gap-13xl: 32px;
+  --gap-xs: 12px;
+  --gap-7xl: 26px;
+  --gap-sm: 14px;
+  --gap-9xs: 4px;
+  --gap-26xl: 45px;
+  --gap-46xl-1: 65.1px;
+  --gap-11xs: 2px;
+  --gap-mini-3: 14.3px;
+  --gap-8xl: 27px;
+  --gap-mid: 17px;
+  --gap-lg: 18px;
+  --gap-7xs: 6px;
+  --gap-3xs-9: 9.9px;
 
   /* Paddings */
   --padding-41xl: 60px;
   --padding-94xl: 113px;
   --padding-xl: 20px;
   --padding-xs: 12px;
-  --padding-6xl: 25px;
-  --padding-5xl: 24px;
   --padding-56xl-8: 75.8px;
   --padding-56xl-2: 75.2px;
   --padding-3xs: 10px;
@@ -102,6 +124,27 @@ body {
   --padding-8xl: 27px;
   --padding-105xl: 124px;
   --padding-9xs: 4px;
+  --padding-32xl: 51px;
+  --padding-25xl: 44px;
+  --padding-12xl: 31px;
+  --padding-33xl: 52px;
+  --padding-28xl: 47px;
+  --padding-6xl: 25px;
+  --padding-6xs: 7px;
+  --padding-11xs: 2px;
+  --padding-smi: 13px;
+  --padding-8xs: 5px;
+  --padding-4xs-5: 8.5px;
+  --padding-34xl: 53px;
+  --padding-4xl: 23px;
+  --padding-7xs-5: 5.5px;
+  --padding-10xs: 3px;
+  --padding-17xl: 36px;
+  --padding-10xl: 29px;
+  --padding-21xl: 40px;
+  --padding-14xl: 33px;
+  --padding-16xl: 35px;
+  --padding-4xs: 9px;
 
   /* Border radiuses */
   --br-lg: 18px;
@@ -110,4 +153,7 @@ body {
   --br-4011xl: 4030px;
   --br-8xs-6: 4.6px;
   --br-xl: 20px;
+  --br-12xl: 31px;
+  --br-7xs: 6px;
+  --br-26xl: 45px;
 }

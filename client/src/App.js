@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
 import FoodItemPage2 from "./pages/FoodItemPage2";
+import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
 
 function App() {
   const action = useNavigationType();
@@ -44,6 +45,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/redirect-page-to-food-delivery-app":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -71,6 +76,10 @@ function App() {
       />
       <Route path="/food-item-page" element={<FoodItemPage />} />
       <Route path="/food-item-page2" element={<FoodItemPage2 />} />
+      <Route
+        path="/compare-prices"
+        element={<RedirectPageToFoodDelivery />}
+      />
     </Routes>
   );
 }
