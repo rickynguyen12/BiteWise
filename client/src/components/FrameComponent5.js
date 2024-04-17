@@ -18,6 +18,9 @@ const FrameComponent5 = () => {
   const onNewToBiteWiseClick = () => {
     navigate("/register");
   };
+  const onNewToBiteWiseClickB = () => {
+    navigate("/register-as-store-owner");
+  };
 
   return (
     <div className="logo-area-parent">
@@ -130,6 +133,13 @@ const FrameComponent5 = () => {
                   onClick={onNewToBiteWiseClick}
                 >
                   {`New to BiteWise? `}
+                  <span className="sign-up-here">Sign Up Here</span>
+                </div>
+                <div
+                  className="new-to-bitewise-container"
+                  onClick={onNewToBiteWiseClickB}
+                >
+                  {`Have a Business? `}
                   <span className="sign-up-here">Sign Up Here</span>
                 </div>
                 <div className="sign-in-frame">
