@@ -15,6 +15,7 @@ import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";
+import IACustomerCheckout from "./pages/IACustomerCheckout";
 
 function App() {
   const action = useNavigationType();
@@ -82,6 +83,7 @@ function App() {
       <Route path="/owner-dashboard" element={<OwnerDashboard />} />
       <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
       <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
+      <Route path="/in-app-checkout" element={<IACustomerCheckout />} />
     </Routes>
   );
 }
