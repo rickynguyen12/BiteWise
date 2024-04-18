@@ -22,7 +22,7 @@ const RedirectPageToFoodDelivery = () => {
                   <img
                     className="tree-structure-icons"
                     alt=""
-                    src="/rectangle-26@2x.png"
+                    src="/david-circle.png"
                   />
                 </div>
                 <div className="toggle-switchs">
@@ -34,12 +34,12 @@ const RedirectPageToFoodDelivery = () => {
                       <img
                         className="stepper-circle-childs"
                         alt=""
-                        src="/group-98.svg"
+                        src="/group-98.png"
                       />
                       <img
                         className="stepper-circle-items"
                         alt=""
-                        src="/group-95.svg"
+                        src="/group-95.png"
                       />
                     </div>
                     <div className="mis">2.04 mi</div>
@@ -55,7 +55,9 @@ const RedirectPageToFoodDelivery = () => {
                     <div className="bakerys">Bakery</div>
                   </div>
                   <div className="image-manipulation2s">
-                    <div className="good-for-breakfasts">Good for Breakfast</div>
+                    <div className="good-for-breakfasts">
+                      Good for Breakfast
+                    </div>
                   </div>
                   <div className="image-manipulation3s">
                     <div className="local-eatss">Local Eats</div>
@@ -71,7 +73,7 @@ const RedirectPageToFoodDelivery = () => {
             <div className="frame-wrappers">
               <div className="frame-divs">
                 <div className="group-parents">
-                  <img className="group-icons" alt="" src="/group1.svg" />
+                  <img className="group-icons" alt="" src="/pickup-black.png" />
                   <div className="uber-eats-parents">
                     <h1 className="uber-eatss">Uber Eats</h1>
                     <div className="best-deal-wrappers">
@@ -105,6 +107,7 @@ const RedirectPageToFoodDelivery = () => {
                     fontSize: "16",
                     background: "#3b9566",
                     borderRadius: "10px",
+                    width: "200px",
                     "&:hover": { background: "#3b9566" },
                     height: 43,
                   }}
@@ -124,6 +127,6 @@ const RedirectPageToFoodDelivery = () => {
       </div>
     </div>
   );
-}
+};
 
 export default RedirectPageToFoodDelivery;

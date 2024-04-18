@@ -32,11 +32,7 @@ const RegisterAsStoreOwner = () => {
                 variant="outlined"
                 InputProps={{
                   endAdornment: (
-                    <img
-                      width="19px"
-                      height="19px"
-                      src="/street-address-field.svg"
-                    />
+                    <img width="19px" height="19px" src="/vector.svg" />
                   ),
                 }}
                 sx={{

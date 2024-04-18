@@ -52,6 +52,7 @@
   height: 49px;
   width: 96px;
   cursor: pointer;
+  margin-right: 10px;
 }
 .frame-parent2 {
   width: 626px;
@@ -91,4 +92,5 @@
   padding: 0px var(--padding-xl) var(--padding-5xl);
   box-sizing: border-box;
   max-width: 100%;
+  margin-left: 20px;
 }

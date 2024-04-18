@@ -11,9 +11,9 @@ const FrameComponent6 = () => {
         <div className="frame-wrapper8s">
           <div className="frame-parent6s">
             <div className="frame-parent7s">
-              <img className="frame-child4s" alt="" src="/group-95.svg" />
+              <img className="frame-child4s" alt="" src="/group-95.png" />
               <div className="frame-parent8s">
-                <img className="frame-child5s" alt="" src="/group-98-1.svg" />
+                <img className="frame-child5s" alt="" src="/group-98-1.png" />
                 <h3 className="dilac-vegan-vietnameses">
                   Dilac Vegan Vietnamese Cuisine
                 </h3>
@@ -22,7 +22,7 @@ const FrameComponent6 = () => {
                     className="image-5-icons"
                     loading="lazy"
                     alt=""
-                    src="/image-51@2x.png"
+                    src="/dilac-circle.png"
                   />
                 </div>
                 <div className="mi2s">3.28 mi</div>
@@ -52,7 +52,11 @@ const FrameComponent6 = () => {
         <div className="split-containers">
           <div className="tool-tips">
             <div className="modal-windows">
-              <img className="group-icon2s" alt="" src="/group-1.svg" />
+              <img
+                className="group-icon2s"
+                alt=""
+                src="/delivery-and-pickup.png"
+              />
               <div className="calendar-views">
                 <h1 className="doordashes">DoorDash</h1>
                 <div className="rating-components">
@@ -86,6 +90,7 @@ const FrameComponent6 = () => {
                 fontSize: "16",
                 background: "#3b9566",
                 borderRadius: "10px",
+                width: "200px",
                 "&:hover": { background: "#3b9566" },
                 height: 43,
               }}
@@ -106,7 +111,7 @@ const FrameComponent6 = () => {
         propPadding3="0px 0px var(--padding-34xl)"
       />
     </div>
-    );
-}
+  );
+};
 
 export default FrameComponent6;
