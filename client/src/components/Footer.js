@@ -37,7 +37,7 @@ const Footer = ({ propHeight, propHeight1 }) => {
           </div>
           <div className="contact-parent">
             <div className="contact">Contact:</div>
-            <b className="b">+91 1234567899</b>
+            <b className="b">+1 408-378-3829</b>
           </div>
         </div>
         <div className="data-aggregator1" style={dataAggregatorStyle}>
