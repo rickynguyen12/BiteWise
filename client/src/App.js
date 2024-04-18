@@ -11,13 +11,10 @@ import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
 import FoodItemPage2 from "./pages/FoodItemPage2";
-<<<<<<< HEAD
-import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
-=======
 import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";
->>>>>>> 887bbc7fe78c57659b5f92727667a619ea65b0ca
+import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
 
 function App() {
   const action = useNavigationType();
@@ -85,6 +82,7 @@ function App() {
       <Route path="/owner-dashboard" element={<OwnerDashboard />} />
       <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
       <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
+      <Route path="/compare-prices" element={<RedirectPageToFoodDelivery />} />
     </Routes>
   );
 }

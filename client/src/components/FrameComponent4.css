@@ -7,7 +7,7 @@
 .frame-inner {
   border: none;
   background-color: transparent;
-  height: 49px;
+  height: 60px;
   flex: 1;
   font-family: var(--font-inter);
   font-weight: 500;
