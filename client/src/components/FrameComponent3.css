@@ -112,6 +112,10 @@
   font-family: var(--font-poppins);
 }
 
+.link {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 825px) {
   .frame-wrapper3 {
     padding-top: var(--padding-xl);

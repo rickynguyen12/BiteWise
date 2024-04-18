@@ -9,6 +9,13 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
+import FoodItemPage from "./pages/FoodItemPage";
+import FoodItemPage2 from "./pages/FoodItemPage2";
+import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
+import OwnerDashboard from "./pages/OwnerDashboard";
+import OwnerEditProfile from "./pages/OwnerEditProfile";
+import OwnerEditMenu from "./pages/OwnerEditMenu";
+import IACustomerCheckout from "./pages/IACustomerCheckout";
 
 function App() {
   const action = useNavigationType();
@@ -42,6 +49,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/redirect-page-to-food-delivery-app":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -67,6 +78,12 @@ function App() {
         path="/register-as-store-owner"
         element={<RegisterAsStoreOwner />}
       />
+      <Route path="/food-item-page" element={<FoodItemPage />} />
+      <Route path="/food-item-page2" element={<FoodItemPage2 />} />
+      <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+      <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
+      <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
+      <Route path="/in-app-checkout" element={<IACustomerCheckout />} />
     </Routes>
   );
 }

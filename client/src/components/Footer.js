@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import "./Footer.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Footer = ({ propHeight, propHeight1 }) => {
+
   const frameDiv1Style = useMemo(() => {
     return {
       height: propHeight,
@@ -13,6 +16,12 @@ const Footer = ({ propHeight, propHeight1 }) => {
       height: propHeight1,
     };
   }, [propHeight1]);
+  
+  const navigate = useNavigate();
+
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
 
   return (
     <footer className="footer">
@@ -28,7 +37,7 @@ const Footer = ({ propHeight, propHeight1 }) => {
           </div>
           <div className="contact-parent">
             <div className="contact">Contact:</div>
-            <b className="b">+91 1234567899</b>
+            <b className="b">+1 408-378-3829</b>
           </div>
         </div>
         <div className="data-aggregator1" style={dataAggregatorStyle}>
@@ -55,7 +64,12 @@ const Footer = ({ propHeight, propHeight1 }) => {
         <div className="delivery">Delivery</div>
         <div className="about-us">{`Help & Support`}</div>
         <div className="blog">{`T&C`}</div>
-        <img className="image-2-icon" alt="" src="/image-2@2x.png" />
+        <img 
+            className="image-1-icon" 
+            alt="" 
+            src="/image-2@2x.png" 
+            onClick={onLogoContainerClick}
+        />
       </div>
     </footer>
   );

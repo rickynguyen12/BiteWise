@@ -14,7 +14,11 @@ const FrameComponent4 = () => {
   const onSignInClick = () => {
     navigate("/login");
   };
-
+  
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
+  
   return (
     <header className="condition-branch-wrapper">
       <div className="condition-branch">
@@ -63,7 +67,12 @@ const FrameComponent4 = () => {
             Sign In
           </Button>
         </div>
-        <img className="image-1-icon2" alt="" src="/image-1@2x.png" />
+        <img 
+            className="image-1-icon" 
+            alt="" 
+            src="/image-1@2x.png" 
+            onClick={onLogoContainerClick}
+        />
       </div>
     </header>
   );
