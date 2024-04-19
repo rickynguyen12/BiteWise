@@ -378,7 +378,7 @@
   justify-content: flex-start;
   padding: 0px var(--padding-12xl) var(--padding-12xs);
   gap: var(--gap-11xs);
-  max-width: 100%;
+  width: 1120px;
 }
 .sequence-controllers {
   flex: 1;
@@ -387,12 +387,13 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--gap-26xl);
-  min-width: 794px;
+  min-width: 894px;
   max-width: 100%;
   text-align: left;
   font-size: var(--font-size-5xl);
   color: var(--color-gray-200);
   font-family: var(--font-poppins);
+  padding: 0px 68px 0px;
 }
 .rectangle-parents {
   padding: 0;

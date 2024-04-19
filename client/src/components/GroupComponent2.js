@@ -185,7 +185,7 @@ const GroupComponent2 = () => {
                 />
               )}
             >
-              <MenuItem>Select a cart size</MenuItem>
+              <MenuItem>Default cart size</MenuItem>
             </Select>
             <FormHelperText />
           </FormControl>

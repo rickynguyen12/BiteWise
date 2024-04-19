@@ -1,10 +1,10 @@
 .frame-groups {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0;
+  justify-content: flex-start; */
+  gap: 116px;
   max-width: 100%;
 }
 .frame-childs {
@@ -379,8 +379,8 @@
 .view-all-dealss {
   font-size: 20px;
 }
-.view-all-deals-5-wrappers {
-}
+/* .view-all-deals-5-wrappers {
+} */
 .data-comparer-parents {
   align-self: stretch;
   display: flex;
@@ -454,7 +454,7 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 0px 0px 0px 400px;
+  padding: 0px 350px 0px 400px;
 }
 .redirect-page-to-food-deliverys {
   width: 100%;
