@@ -1,4 +1,3 @@
-
 import express from 'express';
 // import bodyParser from 'body-parser';
 import {dirname} from 'path';
@@ -9,6 +8,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { body, validationResult } from 'express-validator';
 import {json, urlencoded} from 'express';
+
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -41,6 +41,8 @@ mongoose.connect(process.env.MONGO_URI, {
 import userRoutes from './routes/user.js';
 app.use("/", userRoutes);
 
+import menuRoutes from './routes/menu.js';
+app.use("/menu", menuRoutes);
 
 
 //-------------------LISTENER-------------------//
