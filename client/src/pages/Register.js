@@ -1,16 +1,75 @@
 import {
   TextField,
-  InputAdornment,
-  Icon,
-  IconButton,
   Button,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
-import "./Register.css";
+import React, { useState } from "react";
+import axios from "axios"; // Import Axios
+import Footer from '../components/Footer';
+import GoogleSignIn from '../pages/googleSignIn';
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
   const navigate = useNavigate();
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleSignInSuccess = (response) => {
+    console.log("Google Sign-in Response:", response);
+    // Send the response to the server
+    axios.post("http://localhost:8080/googleSuccessfullSignIn", response)
+      .then((response) => {
+        console.log("Google Sign-in Successful:", response);
+        setOpenSnackbar(true); // Open Snackbar on successful Google sign-in
+        setTimeout(() => {
+          navigate("/"); // Redirect to home page after a delay
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Google Sign-in Failed:", error);
+        if (error.response) {
+          console.error("Response Data:", error.response.data);
+        }
+      });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/register", formData);
+      console.log("Signup Successful:", response.data);
+      setOpenSnackbar(true); // Open Snackbar on successful registration
+      setTimeout(() => {
+        navigate("/login"); // Redirect to login page after a delay
+      }, 2000);
+    } catch (error) {
+      console.error("Signup Failed:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+      }
+    }
+  };
 
   const onLogoContainerClick = () => {
     navigate("/");
@@ -85,11 +144,11 @@ const Register = () => {
                 Sign In
               </Button>
             </div>
-            <img 
-            className="image-1-icon" 
-            alt="" 
-            src="/image-1@2x.png" 
-            onClick={onLogoContainerClick}
+            <img
+              className="image-1-icon"
+              alt=""
+              src="/image-1@2x.png"
+              onClick={onLogoContainerClick}
             />
           </div>
           <div className="first-parent">
@@ -97,7 +156,7 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label">
+              <form className="email-label" onSubmit={handleSubmit}>
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
@@ -107,7 +166,11 @@ const Register = () => {
                     <div className="first-name-parent">
                       <TextField
                         className="first-name"
+                        name="firstname"
+                        value={formData.firstname}
                         placeholder="First Name"
+                        required
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -121,7 +184,11 @@ const Register = () => {
                       />
                       <TextField
                         className="last-name"
+                        name="lastname"
+                        value={formData.lastname}
+                        required
                         placeholder="Last Name"
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -137,6 +204,9 @@ const Register = () => {
                     <TextField
                       className="phone-number"
                       placeholder="Phone Number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -152,6 +222,10 @@ const Register = () => {
                       <TextField
                         className="phone-number1"
                         placeholder="Email"
+                        name="email"
+                        value={formData.email}
+                        required
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -167,7 +241,10 @@ const Register = () => {
                     <div className="phone-number-container">
                       <TextField
                         className="phone-number2"
+                        name="username"
+                        value={formData.username}
                         placeholder="Username"
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -182,7 +259,10 @@ const Register = () => {
                     </div>
                     <TextField
                       className="phone-number3"
+                      name="password"
+                      value={formData.password}
                       placeholder="Password"
+                      onChange={handleChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -205,6 +285,7 @@ const Register = () => {
                 </div>
                 <div className="sign-in-parent">
                   <Button
+                    type="submit"
                     className="sign-in1"
                     disableElevation={true}
                     variant="contained"
@@ -224,10 +305,24 @@ const Register = () => {
                 </div>
               </form>
             </div>
+            <div>
+              <GoogleSignIn handleSignInSuccess={handleSignInSuccess} />
+            </div>
           </div>
         </div>
       </section>
       <Footer propHeight="20.9px" propHeight1="24px" />
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message="Registration successful. Redirecting to login..."
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+            X
+          </IconButton>
+        }
+      />
     </div>
   );
 };

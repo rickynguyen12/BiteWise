@@ -12,6 +12,7 @@ import {json, urlencoded} from 'express';
 import session from "express-session";
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
+import cors from 'cors';
 
 
 
@@ -23,6 +24,9 @@ dotenv.config();
 
 //----------------------APP----------------------//
 const app = express();
+
+// Enable CORS for all origins
+app.use(cors());
 
 //--------------------MIDDLEWARE-------------------//
 // handle URL parameter
