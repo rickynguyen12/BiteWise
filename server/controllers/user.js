@@ -23,7 +23,8 @@ const register = async (req, res) => {
   const user = new User(req.body);
   await user.save();
   res.status(201).json({
-    message: "Signup Successfull, Please Login to continue."
+    message: "Signup Successfull, Please Login to continue.",
+    redirect: "/login"
   });
 
 };
