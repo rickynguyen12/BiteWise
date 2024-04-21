@@ -11,6 +11,7 @@
   box-sizing: border-box;
   gap: 20px;
   letter-spacing: normal;
+  min-height: 100vh;
 }
 .edit-menu2 {
   align-self: stretch;
@@ -132,4 +133,8 @@
 }
 .item-details {
   flex-grow: 1;
+}
+.dashboard-footer {
+  margin-top: auto;
+  width: 100%;
 }
