@@ -39,11 +39,25 @@ router.delete('/remove/:restaurantId/:id', async (req, res) => {
     }
   });
   
+  // Update a menu item
+router.put('/update/:restaurantId/:id', async (req, res) => {
+  const { restaurantId, id } = req.params;
+  const updates = req.body;
+
+  try {
+    const updatedItem = await Menu.findOneAndUpdate({ restaurantId, id }, updates, { new: true });
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Menu item not found' });
+    }
+
+    res.json({ message: 'Menu item updated successfully', updatedItem });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
   
   
-
- 
-
 export default router;
 
 
