@@ -5,7 +5,7 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./FrameComponent4.css";
 
 const FrameComponent4 = () => {
@@ -14,11 +14,11 @@ const FrameComponent4 = () => {
   const onSignInClick = () => {
     navigate("/login");
   };
-  
+
   const onLogoContainerClick = () => {
     navigate("/");
   };
-  
+
   return (
     <header className="condition-branch-wrapper">
       <div className="condition-branch">
@@ -45,33 +45,36 @@ const FrameComponent4 = () => {
             }}
           />
           <div className="bag2">
-            <img className="vector-icon1" alt="" src="/vector-1.svg" />
-            <div className="bag-item" />
+            <Link to="/cart">
+              <img className="vector-icon1" alt="" src="/bag.png" />
+            </Link>
           </div>
-          <Button
-            className="sign-in4"
-            disableElevation={true}
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              color: "#fdfbfa",
-              fontSize: "14",
-              background: "#202020",
-              borderRadius: "10px",
-              "&:hover": { background: "#202020" },
-              width: 96,
-              height: 49,
-            }}
-            onClick={onSignInClick}
-          >
-            Sign In
-          </Button>
+          <div className="sign-in4-container">
+            <Button
+              className="sign-in4"
+              disableElevation={true}
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                color: "#fdfbfa",
+                fontSize: "14",
+                background: "#202020",
+                borderRadius: "10px",
+                "&:hover": { background: "#202020" },
+                width: 96,
+                height: 49,
+              }}
+              onClick={onSignInClick}
+            >
+              Sign In
+            </Button>
+          </div>
         </div>
-        <img 
-            className="image-1-icon" 
-            alt="" 
-            src="/image-1@2x.png" 
-            onClick={onLogoContainerClick}
+        <img
+          className="image-1-icon"
+          alt=""
+          src="/image-1@2x.png"
+          onClick={onLogoContainerClick}
         />
       </div>
     </header>

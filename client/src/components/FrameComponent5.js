@@ -81,7 +81,12 @@ const FrameComponent5 = () => {
             Sign In
           </Button>
         </div>
-        <img className="image-1-icon3" alt="" src="/image-1@2x.png" onClick={onLogoContainerClick}/>
+        <img
+          className="image-1-icon3"
+          alt=""
+          src="/image-1@2x.png"
+          onClick={onLogoContainerClick}
+        />
       </div>
       <div className="frame-wrapper5">
         <header className="sign-in-container">

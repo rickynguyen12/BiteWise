@@ -477,25 +477,6 @@ export const menuData = {
   ],
   "Baked Pizza Wrap - Vegetarian": [
     {
-      name: "Wraps",
-      items: [
-        {
-          id: 1,
-          name: "Classic Baked Pizza Wrap",
-          description:
-            "Vegetarian baked pizza wrapped in a soft tortilla with cheese, tomato sauce, and assorted vegetables.",
-          category: "Wraps",
-        },
-        {
-          id: 2,
-          name: "Spicy Baked Pizza Wrap",
-          description:
-            "Spicy vegetarian baked pizza wrapped in a soft tortilla with jalapenos, cheese, tomato sauce, and assorted vegetables.",
-          category: "Wraps",
-        },
-      ],
-    },
-    {
       name: "Rolls",
       items: [
         {

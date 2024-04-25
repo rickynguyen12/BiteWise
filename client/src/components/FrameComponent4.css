@@ -17,13 +17,8 @@
   max-width: 100%;
 }
 .vector-icon1 {
-  position: absolute;
-  height: 39.33%;
-  width: 32%;
-  top: 7%;
-  right: 36%;
-  bottom: 53.67%;
-  left: 32%;
+  height: 60px;
+  width: 60px;
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
@@ -42,17 +37,22 @@
   z-index: 1;
 }
 .bag2 {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
+  display: flex;
+  top: -5px;
 }
 .sign-in4 {
   height: 49px;
   width: 96px;
   cursor: pointer;
   margin-right: 10px;
+}
+.sign-in4-container {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
 }
 .frame-parent2 {
   width: 626px;

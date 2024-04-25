@@ -20,6 +20,7 @@ import RedirectPageToFoodDelivery2 from "./pages/RedirectPageToFoodDelivery2";
 import OwnerEditMenuItem from "./pages/OwnerEditMenuItem";
 import OwnerAddToMenu from "./pages/OwnerAddToMenu";
 import OwnerOrders from "./pages/OwnerOrders";
+import CustomerCart from "./pages/CustomerCart";
 
 function App() {
   const action = useNavigationType();
@@ -99,6 +100,7 @@ function App() {
       <Route path="/owner-edit-item" element={<OwnerEditMenuItem />} />
       <Route path="/owner-add-to-menu" element={<OwnerAddToMenu />} />
       <Route path="/owner-orders" element={<OwnerOrders />} />
+      <Route path="/cart" element={<CustomerCart />} />
     </Routes>
   );
 }
