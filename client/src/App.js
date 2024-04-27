@@ -21,6 +21,7 @@ import OwnerEditMenuItem from "./pages/OwnerEditMenuItem";
 import OwnerAddToMenu from "./pages/OwnerAddToMenu";
 import OwnerOrders from "./pages/OwnerOrders";
 import CustomerCart from "./pages/CustomerCart";
+import ViewAllDeals from "./pages/ViewAllDeals";
 
 function App() {
   const action = useNavigationType();
@@ -55,6 +56,10 @@ function App() {
         metaDescription = "";
         break;
       case "/redirect-page-to-food-delivery-app":
+        title = "";
+        metaDescription = "";
+        break;
+      case "view-all-deals":
         title = "";
         metaDescription = "";
         break;
@@ -101,6 +106,7 @@ function App() {
       <Route path="/owner-add-to-menu" element={<OwnerAddToMenu />} />
       <Route path="/owner-orders" element={<OwnerOrders />} />
       <Route path="/cart" element={<CustomerCart />} />
+      <Route path="/view-all-deals" element={<ViewAllDeals />} />
     </Routes>
   );
 }
