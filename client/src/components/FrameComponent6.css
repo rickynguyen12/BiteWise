@@ -1,4 +1,4 @@
-.frame-child3s {
+.frame-childs {
   align-self: stretch;
   width: 100px;
   position: relative;
@@ -8,6 +8,9 @@
   box-sizing: border-box;
   display: none;
   max-width: 100%;
+}
+.progress-circles {
+  padding: 10px 10px 0 30px;
 }
 .frame-child4s {
   position: absolute;
@@ -158,6 +161,16 @@
   justify-content: flex-start;
   gap: var(--gap-mini-3);
   max-width: 100%;
+}
+.frame-wrapperss {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  right: 10px;
+  position: relative;
+  top: -30px;
 }
 .frame-wrapper9s {
   width: 424px;
@@ -397,12 +410,15 @@
 }
 .rectangle-parents {
   padding: 0;
-  width: 100px;
+  max-width: 970px !important;
+}
+.spinners {
+  margin-left: 0;
 }
 .frame-containers {
-  margin-left: -50px;
+  margin-left: -70px;
   flex-direction: column;
-  margin-top: -10px;
+  margin-right: 20px;
 }
 .weather-displays {
   margin-top: 10px;
@@ -412,6 +428,25 @@
   padding: 5px;
   margin-bottom: 5px;
   border-radius: var(--br-7xs);
+}
+.view-all-deals-link {
+  text-decoration: none;
+}
+
+.view-all-deals-button2 {
+  cursor: pointer;
+}
+
+.view-all-dealss {
+  margin: 0;
+  font-size: 20px;
+  color: #808080;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.view-all-deals-link:hover .view-all-deals-button {
+  text-decoration: underline;
 }
 @media screen and (max-width: 1325px) {
   .group-divs {

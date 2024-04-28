@@ -6,9 +6,23 @@ import {
   Button,
 } from "@mui/material";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 import "./RegisterAsStoreOwner.css";
 
 const RegisterAsStoreOwner = () => {
+  const navigate = useNavigate();
+  const onSignInClick = () => {
+    navigate("/login");
+  };
+
+  const onCartClick = () => {
+    navigate("/cart");
+  };
+
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -48,7 +62,12 @@ const RegisterAsStoreOwner = () => {
               />
               <div className="category-field">
                 <div className="bag1">
-                  <img className="vector-icon" alt="" src="/vector-1.svg" />
+                  <img
+                    className="vector-icon"
+                    alt=""
+                    src="/vector-1.svg"
+                    onClick={onCartClick}
+                  />
                   <div className="bag-child" />
                 </div>
               </div>
@@ -66,11 +85,17 @@ const RegisterAsStoreOwner = () => {
                   width: 96,
                   height: 49,
                 }}
+                onClick={onSignInClick}
               >
                 Sign In
               </Button>
             </div>
-            <img className="image-1-icon1" alt="" src="/image-1@2x.png" />
+            <img
+              className="image-1-icon1"
+              alt=""
+              src="/image-1@2x.png"
+              onClick={onLogoContainerClick}
+            />
           </div>
           <div className="business-registration-parent">
             <header className="business-registration">
@@ -88,7 +113,7 @@ const RegisterAsStoreOwner = () => {
                     </div>
                     <div className="frame-container">
                       <TextField
-                        className="frame-child"
+                        className="frame-child-name"
                         placeholder="Business Name"
                         variant="outlined"
                         sx={{
@@ -201,8 +226,8 @@ const RegisterAsStoreOwner = () => {
                     />
                   </div>
                 </div>
-                <div className="frame-div">
-                  <div className="frame-parent1">
+                <div className="frame-divv">
+                  <div className="frame-parent12">
                     <div className="owner-details-wrapper">
                       <h2 className="owner-details">Owner Details</h2>
                     </div>

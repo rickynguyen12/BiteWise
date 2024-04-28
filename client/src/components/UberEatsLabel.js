@@ -16,7 +16,7 @@ const UberEatsLabel = () => {
                     className="deliverycom-label-child"
                     loading="lazy"
                     alt=""
-                    src="/ellipse-11@2x.png"
+                    src="/david-circle.png"
                   />
                 </div>
                 <div className="david-and-emilys-patisserie-parent">
@@ -29,13 +29,13 @@ const UberEatsLabel = () => {
                         className="third-child-container-child"
                         loading="lazy"
                         alt=""
-                        src="/group-98.svg"
+                        src="/group-98.png"
                       />
                       <img
                         className="third-child-container-item"
                         loading="lazy"
                         alt=""
-                        src="/group-95.svg"
+                        src="/group-95.png"
                       />
                     </div>
                     <div className="mi">2.04 mi</div>
@@ -47,11 +47,17 @@ const UberEatsLabel = () => {
               className="switch-to-pickup-label-child"
               loading="lazy"
               alt=""
-              src="/group-124.svg"
+              src="/group-124.png"
             />
           </div>
         </div>
         <div className="eighth-child-container">
+          <img
+            className="delivery-service-line"
+            loading="lazy"
+            alt=""
+            src="/line-7.png"
+          />
           <div className="ninth-child-container">
             <div className="tenth-child-container">
               <div className="eleventh-child-container">
@@ -61,7 +67,7 @@ const UberEatsLabel = () => {
                       className="group-icon2"
                       loading="lazy"
                       alt=""
-                      src="/group.svg"
+                      src="/pickup-black.png"
                     />
                     <div className="nineteenth-child-container">
                       <h1 className="uber-eats">Uber Eats</h1>
@@ -91,44 +97,65 @@ const UberEatsLabel = () => {
                 <div className="pickup-option-btn">
                   <div className="switch-to-pickup">Switch to Pickup</div>
                 </div>
+                <img
+                  className="delivery-service-line"
+                  loading="lazy"
+                  alt=""
+                  src="/line-7.png"
+                />
               </div>
             </div>
           </div>
           <PostmatesLogo
             postmates="Postmates"
-            group="/group-1.svg"
-            sVG="/svg.svg"
+            group="/pickup-black.png"
+            sVG="/pickup2.png"
             prop="$2.00"
             min="35 min"
           />
+          <img
+            className="delivery-service-line"
+            loading="lazy"
+            alt=""
+            src="/line-7.png"
+          />
           <FrameComponent9
             grubHub="GrubHub"
-            group="/group-2.svg"
+            group="/pickup-black.png"
             prop="$2.07"
             min="40 min"
           />
           <img
-            className="eighth-child-container-child"
+            className="delivery-service-line"
+            loading="lazy"
             alt=""
-            src="/group-125.svg"
+            src="/line-7.png"
+          />
+          <FrameComponent9
+            grubHub="ChowNow"
+            group="/pickup-black.png"
+            prop="$5.00"
+            min="60 min"
+            propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
+          />
+          <img
+            className="delivery-service-line"
+            loading="lazy"
+            alt=""
+            src="/line-7.png"
+          />
+          <PostmatesLogo
+            postmates="delivery.com"
+            group="/pickup-black.png"
+            sVG="/pickup2.png"
+            prop="$5.95"
+            min="50 min"
+            propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
           />
         </div>
-        <div className="third-party-services-parent">
+        {/* <div className="third-party-services-parent">
           <div className="third-party-services">
-            <div className="third-party-services-inner">
-              <FrameComponent9
-                grubHub="ChowNow"
-                group="/group-3.svg"
-                prop="$5.00"
-                min="60 min"
-                propAlignSelf="unset"
-                propFlex="1"
-                propDebugCommit="unset"
-                propWidth="unset"
-                propGap="6px"
-                propFlex1="unset"
-              />
-            </div>
+            <div className="third-party-services-inner"></div>
             <img
               className="third-party-services-child"
               loading="lazy"
@@ -136,15 +163,7 @@ const UberEatsLabel = () => {
               src="/line-10.svg"
             />
           </div>
-          <PostmatesLogo
-            postmates="delivery.com"
-            group="/group-4.svg"
-            sVG="/svg-1.svg"
-            prop="$5.95"
-            min="50 min"
-            propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
-          />
-        </div>
+        </div> */}
       </div>
     </div>
   );

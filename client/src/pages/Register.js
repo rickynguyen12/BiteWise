@@ -23,7 +23,7 @@ const Register = () => {
   return (
     <div className="register">
       <section className="register-inner">
-        <div className="frame-parent">
+        <div className="frame-parent-register">
           <div className="frame-group">
             <div className="logo-wrapper">
               <div className="logo">
@@ -85,11 +85,11 @@ const Register = () => {
                 Sign In
               </Button>
             </div>
-            <img 
-            className="image-1-icon" 
-            alt="" 
-            src="/image-1@2x.png" 
-            onClick={onLogoContainerClick}
+            <img
+              className="image-1-icon"
+              alt=""
+              src="/image-1@2x.png"
+              onClick={onLogoContainerClick}
             />
           </div>
           <div className="first-parent">
@@ -97,11 +97,13 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label">
+              <form className="email-label2">
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
-                    <h3 className="create-your-account">Create Your Account</h3>
+                    <h3 className="create-your-account2">
+                      Create Your Account
+                    </h3>
                   </div>
                   <div className="register-button">
                     <div className="first-name-parent">

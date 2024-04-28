@@ -11,12 +11,11 @@ import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
 import FoodItemPage2 from "./pages/FoodItemPage2";
-import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";
 import IACustomerCheckout from "./pages/IACustomerCheckout";
-import RedirectPageToFoodDelivery2 from "./pages/RedirectPageToFoodDelivery2";
+import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery2";
 import OwnerEditMenuItem from "./pages/OwnerEditMenuItem";
 import OwnerAddToMenu from "./pages/OwnerAddToMenu";
 import OwnerOrders from "./pages/OwnerOrders";
@@ -97,10 +96,6 @@ function App() {
       <Route
         path="/redirect-page-to-food-delivery-app"
         element={<RedirectPageToFoodDelivery />}
-      />
-      <Route
-        path="/redirect-page-to-food-delivery-app2"
-        element={<RedirectPageToFoodDelivery2 />}
       />
       <Route path="/owner-edit-item" element={<OwnerEditMenuItem />} />
       <Route path="/owner-add-to-menu" element={<OwnerAddToMenu />} />

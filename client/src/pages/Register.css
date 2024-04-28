@@ -156,7 +156,7 @@
   display: none;
   max-width: 100%;
 }
-.create-your-account {
+.create-your-account2 {
   margin: 0;
   position: relative;
   font-size: var(--font-size-5xl);
@@ -318,7 +318,7 @@
   box-sizing: border-box;
   max-width: 100%;
 }
-.email-label {
+.email-label2 {
   margin: 0;
   width: 1142px;
   border-radius: var(--br-xl);
@@ -352,7 +352,7 @@
   gap: 47px;
   max-width: 100%;
 }
-.frame-parent {
+.frame-parent-register {
   width: 1520px;
   display: flex;
   flex-direction: column;
@@ -405,7 +405,7 @@
     flex-wrap: wrap;
   }
 
-  .email-label {
+  .email-label2 {
     padding-top: var(--padding-20xl);
     padding-bottom: var(--padding-xl);
     box-sizing: border-box;

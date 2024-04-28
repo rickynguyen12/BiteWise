@@ -71,7 +71,7 @@ const OwnerAddToMenu = () => {
                     />
                   </div>
                 </div>
-                <div className="frame-div">
+                <div className="frame-divv">
                   <div className="sign-in-wrapper">
                     <Button
                       className="sign-in3"

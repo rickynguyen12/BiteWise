@@ -51,7 +51,7 @@
 .est-fee {
   align-self: stretch;
   font-size: var(--font-size-base);
-  color: var(--color-gray-200);
+  color: #808080;
   z-index: 2;
 }
 .order-button {
@@ -75,7 +75,7 @@
 .est-time {
   align-self: stretch;
   font-size: var(--font-size-base);
-  color: var(--color-gray-200);
+  color: #808080;
   z-index: 2;
 }
 .order-button1 {
@@ -116,7 +116,7 @@
 .place-order-wrapper {
   cursor: pointer;
   border: 1.5px solid var(--color-seagreen);
-  padding: var(--padding-6xs) var(--padding-xl);
+  padding: 10px var(--padding-xl);
   background-color: var(--color-seagreen);
   align-self: stretch;
   border-radius: var(--br-3xs);

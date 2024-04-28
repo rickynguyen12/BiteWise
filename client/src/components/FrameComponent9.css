@@ -1,9 +1,9 @@
 .group-icon1,
-.grubhub {
+.grubhub-name {
   position: relative;
   z-index: 1;
 }
-.grubhub {
+.grubhub-name {
   margin: 0;
   flex: 1;
   font-size: inherit;
@@ -15,38 +15,39 @@
   width: 29px;
   height: 27px;
 }
-.alternative-methods,
-.grubhub-parent {
+.alternative-methods {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-}
-.alternative-methods {
-  flex-direction: column;
   padding: var(--padding-11xs) 0 0;
 }
-.grubhub-parent {
-  width: 150px;
+.grubhub-parent2 {
+  display: flex;
   flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xs);
 }
 .div1,
 .est-fee1 {
   position: relative;
   font-weight: 500;
-  z-index: 1;
 }
 .div1 {
   width: 68px;
   text-transform: capitalize;
   display: inline-block;
   white-space: nowrap;
+  z-index: 1;
 }
 .est-fee1 {
   align-self: stretch;
   font-size: var(--font-size-base);
-  color: var(--color-gray-200);
+  color: #808080;
+  z-index: 2;
 }
-.parent {
+.parent-fee {
   width: 75px;
   display: flex;
   flex-direction: column;
@@ -57,17 +58,18 @@
 .min1 {
   position: relative;
   font-weight: 500;
-  z-index: 1;
 }
 .min1 {
   width: 80px;
   text-transform: capitalize;
   display: inline-block;
+  z-index: 1;
 }
 .est-time1 {
   align-self: stretch;
   font-size: var(--font-size-base);
-  color: var(--color-gray-200);
+  color: #808080;
+  z-index: 2;
 }
 .min-parent {
   width: 91px;
@@ -107,7 +109,7 @@
 .place-order-container {
   cursor: pointer;
   border: 1.5px solid var(--color-seagreen);
-  padding: var(--padding-6xs) var(--padding-xl);
+  padding: 10px var(--padding-xl);
   background-color: var(--color-seagreen);
   align-self: stretch;
   border-radius: var(--br-3xs);
@@ -146,8 +148,32 @@
   color: var(--color-gray-300);
   font-family: var(--font-poppins);
 }
+.frame-parentz1,
+.frame-outside {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.frame-outside {
+  align-self: stretch;
+  justify-content: flex-end;
+  padding: 0 var(--padding-11xs) 0 var(--padding-9xs);
+  box-sizing: border-box;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-gray-300);
+  font-family: var(--font-poppins);
+}
+.frame-parentz1 {
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--gap-6xs);
+}
+
 @media screen and (max-width: 450px) {
-  .grubhub {
+  .grubhub-name {
     font-size: var(--font-size-lgi);
   }
   .div1,
