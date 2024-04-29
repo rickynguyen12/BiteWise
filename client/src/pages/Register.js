@@ -10,6 +10,8 @@ import axios from "axios"; // Import Axios
 import Footer from '../components/Footer';
 import GoogleSignIn from '../pages/googleSignIn';
 import "./Register.css";
+import isSignedInToken from "../components/isSignedInToken";
+import isSignedInLocal from "../components/isSignedInLocal";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +24,7 @@ const Register = () => {
   });
 
   const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
-  const [hideSignInButton, setHideSignInButton] = useState(false); // State to hide sign-in button
+  // const [hideSignInButton, setHideSignInButton] = useState(false); // State to hide sign-in button
   const navigate = useNavigate();
 
   const handleCloseSnackbar = () => {
@@ -39,7 +41,7 @@ const Register = () => {
         setTimeout(() => {
           navigate("/"); // Redirect to home page after a delay
         }, 2000);
-        setHideSignInButton(true); // Hide sign-in button after successful sign-in
+        // setHideSignInButton(true); // Hide sign-in button after successful sign-in
       })
       .catch((error) => {
         console.error("Google Sign-in Failed:", error);
@@ -66,7 +68,7 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login"); // Redirect to login page after a delay
       }, 2000);
-      setHideSignInButton(true); // Hide sign-in button after successful sign-up
+      // setHideSignInButton(true); // Hide sign-in button after successful sign-up
     } catch (error) {
       console.error("Signup Failed:", error);
       if (error.response) {
@@ -99,42 +101,43 @@ const Register = () => {
                 />
               </div>
             </div>
-            {!hideSignInButton && ( // Render sign-in button if not hidden
-              <div className="first-name-field">
-                <TextField
-                  className="last-name-field"
-                  placeholder="Enter item or restaurant you are looking for"
-                  variant="outlined"
-                  InputProps={{
-                    endAdornment: (
-                      <img width="19px" height="19px" src="/vector.svg" />
-                    ),
-                  }}
-                  sx={{
-                    "& fieldset": { borderColor: "#808080" },
-                    "& .MuiInputBase-root": {
-                      height: "49px",
-                      backgroundColor: "#fff",
-                      paddingRight: "25px",
-                      borderRadius: "10px",
-                    },
-                    "& .MuiInputBase-input": { color: "#808080" },
-                  }}
-                />
-                <div className="sign-in-instance">
-                  <div className="bag">
-                    <img
-                      className="calorie-info-icon"
-                      alt=""
-                      src="/vector-1.svg"
-                    />
-                    <div className="delivery-info" />
-                  </div>
+            <div className="first-name-field">
+              <TextField
+                className="last-name-field"
+                placeholder="Enter item or restaurant you are looking for"
+                variant="outlined"
+                InputProps={{
+                  endAdornment: (
+                    <img width="19px" height="19px" src="/vector.svg" />
+                  ),
+                }}
+                sx={{
+                  "& fieldset": { borderColor: "#808080" },
+                  "& .MuiInputBase-root": {
+                    height: "49px",
+                    backgroundColor: "#fff",
+                    paddingRight: "25px",
+                    borderRadius: "10px",
+                  },
+                  "& .MuiInputBase-input": { color: "#808080" },
+                }}
+              />
+              <div className="sign-in-instance">
+                <div className="bag">
+                  <img
+                    className="calorie-info-icon"
+                    alt=""
+                    src="/vector-1.svg"
+                  />
+                  <div className="delivery-info" />
                 </div>
+              </div>
+              <div className="sign-in-button">
                 <Button
                   className="sign-in"
                   disableElevation={true}
                   variant="contained"
+
                   sx={{
                     textTransform: "none",
                     color: "#fdfbfa",
@@ -149,7 +152,7 @@ const Register = () => {
                   Sign In
                 </Button>
               </div>
-            )}
+            </div>
             <img
               className="image-1-icon"
               alt=""
@@ -292,24 +295,27 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="sign-in-parent">
-                  <Button
-                    type="submit"
-                    className="sign-in1"
-                    disableElevation={true}
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                      color: "#fff",
-                      fontSize: "14",
-                      background: "#307651",
-                      borderRadius: "10px",
-                      "&:hover": { background: "#307651" },
-                      width: 103,
-                      height: 49,
-                    }}
-                  >
-                    Sign Up
-                  </Button>
+                  <div /*onClick = {onLogoContainerClick}*/>
+                    <Button
+                      type="submit"
+                      className="sign-in1"
+                      disableElevation={true}
+                      variant="contained"
+
+                      sx={{
+                        textTransform: "none",
+                        color: "#fff",
+                        fontSize: "14",
+                        background: "#307651",
+                        borderRadius: "10px",
+                        "&:hover": { background: "#307651" },
+                        width: 103,
+                        height: 49,
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </div>
                 </div>
                 <div className="google-sign-in">
                   <GoogleSignIn onSignInSuccess={handleSignInSuccess} />
