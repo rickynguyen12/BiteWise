@@ -165,7 +165,7 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label2">
+              <form className="email-label" onSubmit={handleSubmit}>
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
