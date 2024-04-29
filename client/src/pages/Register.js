@@ -88,7 +88,7 @@ const Register = () => {
   return (
     <div className="register">
       <section className="register-inner">
-        <div className="frame-parent-register">
+        <div className="frame-parent">
           <div className="frame-group">
             <div className="logo-wrapper">
               <div className="logo">
@@ -169,9 +169,7 @@ const Register = () => {
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
-                    <h3 className="create-your-account2">
-                      Create Your Account
-                    </h3>
+                    <h3 className="create-your-account">Create Your Account</h3>
                   </div>
                   <div className="register-button">
                     <div className="first-name-parent">
