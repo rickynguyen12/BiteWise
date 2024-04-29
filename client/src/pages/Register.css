@@ -390,6 +390,18 @@
   letter-spacing: normal;
 }
 
+.google-sign-in {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px var(--padding-3xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
 @media screen and (max-width: 975px) {
   .register {
     gap: 144px 289px;
@@ -451,6 +463,7 @@
     color: #777; /* Adjust the color as needed */
     font-weight: bold; /* Adjust the font weight as needed */
   }
+  
   
 
 }
