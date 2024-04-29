@@ -1,16 +1,81 @@
 import {
   TextField,
-  InputAdornment,
-  Icon,
-  IconButton,
   Button,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
+import React, { useState } from "react";
+import axios from "axios"; // Import Axios
+import Footer from '../components/Footer';
+import GoogleSignIn from '../pages/googleSignIn';
 import "./Register.css";
+import isSignedInToken from "../components/isSignedInToken";
+import isSignedInLocal from "../components/isSignedInLocal";
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
+  // const [hideSignInButton, setHideSignInButton] = useState(false); // State to hide sign-in button
   const navigate = useNavigate();
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleSignInSuccess = (response) => {
+    console.log("Google Sign-in Response:", response);
+    // Send the response to the server
+    axios.post("http://localhost:8080/googleSuccessfullSignIn", response)
+      .then((response) => {
+        console.log("Google Sign-in Successful:", response);
+        setOpenSnackbar(true); // Open Snackbar on successful Google sign-in
+        setTimeout(() => {
+          navigate("/"); // Redirect to home page after a delay
+        }, 2000);
+        // setHideSignInButton(true); // Hide sign-in button after successful sign-in
+      })
+      .catch((error) => {
+        console.error("Google Sign-in Failed:", error);
+        if (error.response) {
+          console.error("Response Data:", error.response.data);
+        }
+      });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/register", formData);
+      console.log("Signup Successful:", response.data);
+      setOpenSnackbar(true); // Open Snackbar on successful registration
+      setTimeout(() => {
+        navigate("/login"); // Redirect to login page after a delay
+      }, 2000);
+      // setHideSignInButton(true); // Hide sign-in button after successful sign-up
+    } catch (error) {
+      console.error("Signup Failed:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+      }
+    }
+  };
 
   const onLogoContainerClick = () => {
     navigate("/");
@@ -23,7 +88,7 @@ const Register = () => {
   return (
     <div className="register">
       <section className="register-inner">
-        <div className="frame-parent-register">
+        <div className="frame-parent">
           <div className="frame-group">
             <div className="logo-wrapper">
               <div className="logo">
@@ -67,23 +132,26 @@ const Register = () => {
                   <div className="delivery-info" />
                 </div>
               </div>
-              <Button
-                className="sign-in"
-                disableElevation={true}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  color: "#fdfbfa",
-                  fontSize: "14",
-                  background: "#202020",
-                  borderRadius: "10px",
-                  "&:hover": { background: "#202020" },
-                  width: 96,
-                  height: 49,
-                }}
-              >
-                Sign In
-              </Button>
+              <div className="sign-in-button">
+                <Button
+                  className="sign-in"
+                  disableElevation={true}
+                  variant="contained"
+
+                  sx={{
+                    textTransform: "none",
+                    color: "#fdfbfa",
+                    fontSize: "14",
+                    background: "#202020",
+                    borderRadius: "10px",
+                    "&:hover": { background: "#202020" },
+                    width: 96,
+                    height: 49,
+                  }}
+                >
+                  Sign In
+                </Button>
+              </div>
             </div>
             <img
               className="image-1-icon"
@@ -97,19 +165,21 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label2">
+              <form className="email-label" onSubmit={handleSubmit}>
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
-                    <h3 className="create-your-account2">
-                      Create Your Account
-                    </h3>
+                    <h3 className="create-your-account">Create Your Account</h3>
                   </div>
                   <div className="register-button">
                     <div className="first-name-parent">
                       <TextField
                         className="first-name"
+                        name="firstname"
+                        value={formData.firstname}
                         placeholder="First Name"
+                        required
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -123,7 +193,11 @@ const Register = () => {
                       />
                       <TextField
                         className="last-name"
+                        name="lastname"
+                        value={formData.lastname}
+                        required
                         placeholder="Last Name"
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -139,6 +213,9 @@ const Register = () => {
                     <TextField
                       className="phone-number"
                       placeholder="Phone Number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -154,6 +231,10 @@ const Register = () => {
                       <TextField
                         className="phone-number1"
                         placeholder="Email"
+                        name="email"
+                        value={formData.email}
+                        required
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -169,7 +250,10 @@ const Register = () => {
                     <div className="phone-number-container">
                       <TextField
                         className="phone-number2"
+                        name="username"
+                        value={formData.username}
                         placeholder="Username"
+                        onChange={handleChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -184,7 +268,10 @@ const Register = () => {
                     </div>
                     <TextField
                       className="phone-number3"
+                      name="password"
+                      value={formData.password}
                       placeholder="Password"
+                      onChange={handleChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -206,23 +293,30 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="sign-in-parent">
-                  <Button
-                    className="sign-in1"
-                    disableElevation={true}
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                      color: "#fff",
-                      fontSize: "14",
-                      background: "#307651",
-                      borderRadius: "10px",
-                      "&:hover": { background: "#307651" },
-                      width: 103,
-                      height: 49,
-                    }}
-                  >
-                    Sign Up
-                  </Button>
+                  <div /*onClick = {onLogoContainerClick}*/>
+                    <Button
+                      type="submit"
+                      className="sign-in1"
+                      disableElevation={true}
+                      variant="contained"
+
+                      sx={{
+                        textTransform: "none",
+                        color: "#fff",
+                        fontSize: "14",
+                        background: "#307651",
+                        borderRadius: "10px",
+                        "&:hover": { background: "#307651" },
+                        width: 103,
+                        height: 49,
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </div>
+                </div>
+                <div className="google-sign-in">
+                  <GoogleSignIn onSignInSuccess={handleSignInSuccess} />
                 </div>
               </form>
             </div>
@@ -230,6 +324,17 @@ const Register = () => {
         </div>
       </section>
       <Footer propHeight="20.9px" propHeight1="24px" />
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message="Registration successful. Redirecting to login..."
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+            X
+          </IconButton>
+        }
+      />
     </div>
   );
 };
