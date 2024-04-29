@@ -139,7 +139,6 @@
   font-weight: 500;
   font-family: inherit;
   flex-shrink: 0;
-  debug_commit: 1de1738;
 }
 .uber-eats {
   align-self: stretch;
@@ -190,7 +189,6 @@
   display: inline-block;
   min-width: 68px;
   flex-shrink: 0;
-  debug_commit: 1de1738;
   white-space: nowrap;
   z-index: 3;
 }
@@ -211,7 +209,6 @@
   display: inline-block;
   min-width: 75px;
   flex-shrink: 0;
-  debug_commit: 1de1738;
   z-index: 4;
 }
 .thirteenth-child-container {
@@ -231,7 +228,6 @@
   display: inline-block;
   min-width: 80px;
   flex-shrink: 0;
-  debug_commit: 1de1738;
   z-index: 1;
 }
 .min-wrapper {
@@ -251,7 +247,6 @@
   display: inline-block;
   min-width: 91px;
   flex-shrink: 0;
-  debug_commit: 1de1738;
   z-index: 2;
 }
 .thirteenth-child-container1 {
