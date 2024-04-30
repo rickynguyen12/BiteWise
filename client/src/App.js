@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
-import FoodItemPage2 from "./pages/FoodItemPage2";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";
@@ -21,6 +20,7 @@ import OwnerAddToMenu from "./pages/OwnerAddToMenu";
 import OwnerOrders from "./pages/OwnerOrders";
 import CustomerCart from "./pages/CustomerCart";
 import ViewAllDeals from "./pages/ViewAllDeals";
+import SearchedResults from "./pages/SearchedResults";
 
 function App() {
   const action = useNavigationType();
@@ -88,7 +88,6 @@ function App() {
         element={<RegisterAsStoreOwner />}
       />
       <Route path="/food-item-page" element={<FoodItemPage />} />
-      <Route path="/food-item-page2" element={<FoodItemPage2 />} />
       <Route path="/owner-dashboard" element={<OwnerDashboard />} />
       <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
       <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
@@ -102,6 +101,7 @@ function App() {
       <Route path="/owner-orders" element={<OwnerOrders />} />
       <Route path="/cart" element={<CustomerCart />} />
       <Route path="/view-all-deals" element={<ViewAllDeals />} />
+      <Route path="/searched-results" element={<SearchedResults />} />
     </Routes>
   );
 }

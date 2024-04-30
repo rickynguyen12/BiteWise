@@ -43,12 +43,17 @@ const UberEatsLabel = () => {
                 </div>
               </div>
             </div>
-            <img
-              className="switch-to-pickup-label-child"
-              loading="lazy"
-              alt=""
-              src="/group-124.png"
-            />
+            <a
+              href="/redirect-page-to-food-delivery-app"
+              className="pickup-page-link"
+            >
+              <img
+                className="switch-to-pickup-label-child"
+                loading="lazy"
+                alt=""
+                src="/group-124.png"
+              />
+            </a>
           </div>
         </div>
         <div className="eighth-child-container">
