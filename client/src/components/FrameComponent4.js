@@ -7,10 +7,21 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import "./FrameComponent4.css";
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import IsLoggedInLogic from './isLoggedIn';
 
 const FrameComponent4 = () => {
   const navigate = useNavigate();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get('jwt'));
+
+  useEffect(() => {
+    const jwt = Cookies.get('jwt'); // Retrieve jwt cookie
+    setIsLoggedIn(!!jwt); // Update isLoggedIn state based on jwt cookie
+  }, []); // Empty dependency array to run only once on component mount
+
+  
   const onSignInClick = () => {
     navigate("/login");
   };
