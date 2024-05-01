@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { menuData } from "./MenuData";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
@@ -53,7 +54,10 @@ const FoodItemPage = () => {
     setSelectedItems(updated);
   };
 
-  const goToComparePrices = () => {};
+  const navigate = useNavigate();
+  const goToComparePrices = () => {
+    navigate("/redirect-page-to-food-delivery-app");
+  };
 
   return (
     <div className="food-item">

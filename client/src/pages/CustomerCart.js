@@ -49,7 +49,7 @@ const CustomerCart = () => {
   const navigate = useNavigate();
 
   const handleComparePrices = () => {
-    navigate(`/redirect-page-to-food-delivery-app2`);
+    navigate(`/redirect-page-to-food-delivery-app`);
   };
 
   return (

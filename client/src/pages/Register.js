@@ -132,7 +132,7 @@ const Register = () => {
                   <div className="delivery-info" />
                 </div>
               </div>
-              <div className="sign-in-button">
+              <div className="sign-in-button" onClick={onAlreadyHaveAnClick}>
                 <Button
                   className="sign-in"
                   disableElevation={true}
@@ -165,7 +165,7 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label" onSubmit={handleSubmit}>
+              <form className="email-label2" onSubmit={handleSubmit}>
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
