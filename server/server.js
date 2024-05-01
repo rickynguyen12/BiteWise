@@ -13,6 +13,7 @@ import session from "express-session";
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
 import cors from 'cors';
+import { fetchAndExtractText } from './homepageRest.js';
 
 
 
@@ -53,6 +54,23 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log("DB connected"))
 .catch(err => console.log(err))
+
+//-------------------LOCATION-------------------//
+const router = express.Router();
+
+router.post('/api/locations', async (req, res) => {
+  // Extract latitude and longitude directly from req.body
+  const { latitude, longitude } = req.body;
+
+  // Log the received location data
+  console.log('Received location data:', { latitude, longitude });
+
+  // Now you can use latitude and longitude as needed
+  // For example, you can pass them to your fetchAndExtractText function
+  await fetchAndExtractText({ latitude, longitude });
+
+  res.send("Location data received successfully");
+});
 
 //-------------------ROUTES-------------------//
 import userRoutes from './routes/user.js';
