@@ -71,7 +71,7 @@ router.post('/api/locations', async (req, res) => {
 
   res.send("Location data received successfully");
 });
-
+app.use('/', router);
 //-------------------ROUTES-------------------//
 import userRoutes from './routes/user.js';
 app.use("/", userRoutes);
