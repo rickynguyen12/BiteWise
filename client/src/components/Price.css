@@ -1,0 +1,12 @@
+.priceContainer {
+    display: flex;
+  }
+  
+  .price {
+    cursor: pointer;
+    transition: all 0.1s linear;
+  }
+  
+  .price:hover {
+    transform: scale(1.1);
+  }

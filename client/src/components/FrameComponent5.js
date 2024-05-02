@@ -1,14 +1,18 @@
 import {
   TextField,
-  InputAdornment,
-  Icon,
-  IconButton,
   Button,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./FrameComponent5.css";
+import React, { useState } from "react";
+import axios from "axios"; // Import Axios
+import IsLoggedInLogic from "./isLoggedIn";
 
 const FrameComponent5 = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const onLogoContainerClick = () => {
@@ -20,6 +24,63 @@ const FrameComponent5 = () => {
   };
   const onNewToBiteWiseClickB = () => {
     navigate("/register-as-store-owner");
+  };
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/login", formData);
+      console.log("Login Successful:", response.data);
+      setOpenSnackbar(true);
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Login Failed:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+      }
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/logout");
+      console.log("Login Successful:", response.data);
+      setOpenSnackbar(true);
+      setIsLoggedIn(false);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Logout Failed:", error);
+    }
+  };
+
+  // const onLogoContainerClick = () => {
+  //   navigate("/");
+  // };
+
+  const onAlreadyHaveAnClick = () => {
+    navigate("/login");
   };
 
   return (
@@ -63,23 +124,7 @@ const FrameComponent5 = () => {
               <div className="bag-inner" />
             </div>
           </div>
-          <Button
-            className="sign-in7"
-            disableElevation={true}
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              color: "#fdfbfa",
-              fontSize: "14",
-              background: "#202020",
-              borderRadius: "10px",
-              "&:hover": { background: "#202020" },
-              width: 96,
-              height: 49,
-            }}
-          >
-            Sign In
-          </Button>
+          <IsLoggedInLogic IsLoggedIn={isLoggedIn} />
         </div>
         <img
           className="image-1-icon3"
@@ -103,7 +148,11 @@ const FrameComponent5 = () => {
             <div className="inputs-wrapper">
               <TextField
                 className="inputs"
-                placeholder="Username"
+                placeholder="Email"
+                name = "email"
+                value={formData.email}
+                onChange={handleChange}
+                required
                 variant="outlined"
                 sx={{
                   "& fieldset": { borderColor: "#1ac84b" },
@@ -118,6 +167,10 @@ const FrameComponent5 = () => {
             </div>
             <TextField
               className="frame-child10"
+              name = "password"
+              value={formData.password}
+              onChange={handleChange}
+              required
               placeholder="Password"
               variant="outlined"
               sx={{
@@ -151,6 +204,7 @@ const FrameComponent5 = () => {
                   <Button
                     className="sign-in9"
                     disableElevation={true}
+                    onClick={handleLogin}
                     variant="contained"
                     sx={{
                       textTransform: "none",
@@ -170,6 +224,17 @@ const FrameComponent5 = () => {
           </form>
         </div>
       </div>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message={isLoggedIn ? "Login Succesfull. Redirecting to Homepage..." : "Logout Successful. Redirecting to Login"}
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+            X
+          </IconButton>
+        }
+      />
     </div>
   );
 };
