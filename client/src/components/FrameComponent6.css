@@ -1,13 +1,15 @@
-.frame-childs {
+.frame-childs-redirect {
   align-self: stretch;
   width: 100px;
   position: relative;
-  border-radius: var(--br-12xl);
+  /* border-radius: var(--br-12xl);
   background-color: var(--neutral-white);
-  border: 2px solid var(--color-gray-400);
+  border: 2px solid var(--color-gray-400); */
   box-sizing: border-box;
-  display: none;
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
+  padding-left: 0;
 }
 .progress-circles {
   padding: 10px 10px 0 30px;
@@ -162,6 +164,13 @@
   gap: var(--gap-mini-3);
   max-width: 100%;
 }
+.frame-divs-redirect {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  padding-left: 0px;
+}
 .frame-wrapperss {
   display: flex;
   flex-direction: column;
@@ -228,6 +237,28 @@
   width: 82px;
   height: 36px;
   z-index: 2;
+}
+.uber-eats-parents2 {
+  position: absolute;
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+}
+.group-parents-uber {
+  align-self: stretch;
+  height: 76px;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-icons-redirect {
+  max-height: 30px;
+  width: auto;
+  margin-left: 170px;
 }
 .doordashes {
   margin: 0;
@@ -413,12 +444,12 @@
   max-width: 970px !important;
 }
 .spinners {
-  margin-left: 0;
+  margin-left: -70px;
 }
 .frame-containers {
-  margin-left: -70px;
+  margin-left: -80px;
   flex-direction: column;
-  margin-right: 20px;
+  margin-right: var(--padding-xl);
 }
 .weather-displays {
   margin-top: 10px;
@@ -452,10 +483,16 @@
   .group-divs {
     flex-wrap: wrap;
   }
+  .frame-containers {
+    margin-left: 100px;
+  }
 }
 @media screen and (max-width: 1125px) {
   .sequence-controllers {
     min-width: 100%;
+  }
+  .frame-containers {
+    margin-left: 100px;
   }
 }
 @media screen and (max-width: 800px) {
@@ -466,12 +503,17 @@
   .sequence-controllers {
     gap: var(--gap-3xl);
   }
+  .frame-containers {
+    margin-left: 100px;
+  }
 }
 @media screen and (max-width: 450px) {
   .dilac-vegan-vietnameses {
     font-size: var(--font-size-lgi);
   }
-
+  .frame-containers {
+    margin-left: 100px;
+  }
   .good-for-dinner-wrappers {
     flex: 1;
   }
