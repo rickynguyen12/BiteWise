@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 
-const GoogleSignIn = ({ handleSignInSuccess }) => {
+const GoogleSignIn = ({ onGoogleSignInSuccess }) => {
   useEffect(() => {
     const handleCredentialResponse = (response) => {
       // handle response here
       if (response.credential) {
-        handleSignInSuccess(response);
+        console.log("Credential Response:", response);
+        onGoogleSignInSuccess(response);
       } else {
         console.error("Error occurred while signing in with Google");
       }
@@ -27,7 +28,7 @@ const GoogleSignIn = ({ handleSignInSuccess }) => {
     return () => {
       document.body.removeChild(googleScript);
     };
-  }, [handleSignInSuccess]);
+  }, [onGoogleSignInSuccess]);
 
   return (
     <div className="google-signup">

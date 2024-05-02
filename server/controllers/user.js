@@ -20,11 +20,12 @@ const register = async (req, res) => {
   });
 
   // create new user if username and email are unique
+  console.log(req.body);
   const user = new User(req.body);
   await user.save();
   res.status(201).json({
     message: "Signup Successfull, Please Login to continue.",
-    redirect: "/login"
+    redirect: "/"
   });
 
 };

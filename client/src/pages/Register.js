@@ -10,8 +10,6 @@ import axios from "axios"; // Import Axios
 import Footer from '../components/Footer';
 import GoogleSignIn from '../pages/googleSignIn';
 import "./Register.css";
-import isSignedInToken from "../components/isSignedInToken";
-import isSignedInLocal from "../components/isSignedInLocal";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -23,32 +21,28 @@ const Register = () => {
     password: "",
   });
 
-  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
-  // const [hideSignInButton, setHideSignInButton] = useState(false); // State to hide sign-in button
+  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbars
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
 
-  const handleSignInSuccess = (response) => {
-    console.log("Google Sign-in Response:", response);
-    // Send the response to the server
-    axios.post("http://localhost:8080/googleSuccessfullSignIn", response)
-      .then((response) => {
-        console.log("Google Sign-in Successful:", response);
-        setOpenSnackbar(true); // Open Snackbar on successful Google sign-in
-        setTimeout(() => {
-          navigate("/"); // Redirect to home page after a delay
-        }, 2000);
-        // setHideSignInButton(true); // Hide sign-in button after successful sign-in
-      })
-      .catch((error) => {
-        console.error("Google Sign-in Failed:", error);
-        if (error.response) {
-          console.error("Response Data:", error.response.data);
-        }
-      });
+  const handleSignInSuccess =  (response) => {
+    try {
+      axios.post("http://localhost:8080/googleSuccessfullSignIn", response);
+      setOpenSnackbar(true); // Open Snackbar on successful registration
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Signup Failed:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -68,7 +62,6 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login"); // Redirect to login page after a delay
       }, 2000);
-      // setHideSignInButton(true); // Hide sign-in button after successful sign-up
     } catch (error) {
       console.error("Signup Failed:", error);
       if (error.response) {
@@ -316,7 +309,7 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="google-sign-in">
-                  <GoogleSignIn onSignInSuccess={handleSignInSuccess} />
+                  <GoogleSignIn onGoogleSignInSuccess={handleSignInSuccess} />
                 </div>
               </form>
             </div>
