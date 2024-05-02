@@ -8,7 +8,10 @@ import {
   InputAdornment,
 } from "@mui/material";
 import "./GroupComponent2.css";
+import Stars from "./Stars";
+import Price from "./Price";
 import React, { useState } from "react";
+import Checkboxes from "./Checkboxes";
 
 const GroupComponent2 = () => {
   const [deliverySelected, setDeliverySelected] = useState(false);
@@ -40,6 +43,7 @@ const GroupComponent2 = () => {
   const handleNoneClick = () => {
     setNoneSelected(!noneSelected);
   };
+  const defaultRating = localStorage.getItem("starRating");
 
   return (
     <div className="rectangle-groups">
@@ -195,24 +199,14 @@ const GroupComponent2 = () => {
         <div className="ratings-parent">
           <div className="ratings">Rating</div>
           <div className="frame-wrapper5s">
-            <img
-              className="frame-child1s"
-              loading="lazy"
-              alt=""
-              src="/rating.png"
-            />
+            <Stars defaultRating={defaultRating} />
           </div>
         </div>
       </div>
       <div className="data-aggregators">
         <div className="logic-gates">
           <div className="prices">Price</div>
-          <img
-            className="logic-gate-childs"
-            loading="lazy"
-            alt=""
-            src="/price.png"
-          />
+          <Price defaultRating={defaultRating} />
         </div>
       </div>
       <div className="output-containers">
@@ -329,7 +323,8 @@ const GroupComponent2 = () => {
       </div>
       <div className="condition-checkers">
         <div className="data-splitters">
-          <div className="checkboxs" />
+          {/* <div className="checkboxs" /> */}
+          <Checkboxes />
           <div className="error-handlers">
             <div className="available-nows">Available Now</div>
           </div>
