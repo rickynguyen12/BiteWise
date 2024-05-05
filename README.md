@@ -1,7 +1,3 @@
-Sure, here's a sample GitHub README file for your MERN stack project:
-
----
-
 # BiteWise
 
 BiteWise is a web application designed to help users find the best deals on their favorite meals from various food delivery services like DoorDash and Uber Eats. With BiteWise, users can discover tasty deals in their area, compare rates, and save money while enjoying delicious food.
