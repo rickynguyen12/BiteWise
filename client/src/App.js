@@ -21,6 +21,7 @@ import OwnerOrders from "./pages/OwnerOrders";
 import CustomerCart from "./pages/CustomerCart";
 import ViewAllDeals from "./pages/ViewAllDeals";
 import SearchedResults from "./pages/SearchedResults";
+import IAOrderConfirmation from "./components/IAOrderConfirmation";
 
 function App() {
   const action = useNavigationType();
@@ -102,6 +103,7 @@ function App() {
       <Route path="/cart" element={<CustomerCart />} />
       <Route path="/view-all-deals" element={<ViewAllDeals />} />
       <Route path="/searched-results" element={<SearchedResults />} />
+      <Route path="/in-app-order-confirm" element={<IAOrderConfirmation />} />
     </Routes>
   );
 }

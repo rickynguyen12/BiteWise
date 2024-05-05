@@ -8,73 +8,94 @@ import {
     Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./IACustomerCheckout.css";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 
 const IACustomerCheckout = () => {
+    const taxRate = 0.0875;
+    const deliveryFee = 5.50;
 
-    // delivery address
-    const [address1, setAddress1] = useState("");
-    const [address2, setAddress2] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [zipCode, setZipCode] = useState("");
+    const [cartData, setCartData] = useState({
+        restaurantName: "David and Emily’s Patisserie",
+        cartItems: [
+            { id: 1, itemName: "Pain au Chocolat", quantity: 2, price: 4.99},
+            { id: 2, itemName: "Plain Croissant", quantity: 1 , price: 6.99},
+            { id: 3, itemName: "Chocolate Cake", quantity: 1 , price: 13.99},
+        ],
+    });
 
-    // payment information
-    const [fname, setFName] = useState("");
-    const [lname, setLName] = useState("");
-    const [ccNum, setCCNum] = useState("");
-    const [expMonth, setExpMonth] = useState("");
-    const [expDate, setExpDate] = useState("");
-    const [cvvNum, setCVVNum] = useState("");
+    const[itemTotal, setItemTotal] = useState(0);
+    const[taxPrice, setTaxPrice] = useState(0);
+    const[subtotal, setSubtotal] = useState(0);
+    
+    useEffect(() => {
+        let totalPrice = 0.00;
+        cartData.cartItems.forEach((item) => {
+            totalPrice += item.quantity * item.price;
+        });
 
-    // change handler functions
-    const handleAddress1Change = (event) => {
-        setAddress1(event.target.value);
+        let taxes = totalPrice * taxRate;
+        let subtotal = totalPrice + taxes + deliveryFee;
+
+        setItemTotal(totalPrice.toFixed(2));
+        setTaxPrice((taxes).toFixed(2));
+        setSubtotal((subtotal).toFixed(2));
+    }, [cartData.cartItems]);
+
+    const handleSubmit = (form) => {
+        // fill out route for backend
+    }
+
+    const handleQuantityChange = (itemId, newQuantity, type) => {
+        
+        const updatedCartItems = cartData.cartItems
+            .map((item) => {
+                if (item.id === itemId) {
+                    const quantity = Math.max(0, newQuantity);
+                    if (quantity === 0) {
+                        return null;
+                    }
+                    return {
+                        ...item,
+                        quantity,
+                    };
+                }
+                return item;
+            })
+            .filter(Boolean);
+
+        setCartData((prevData) => ({
+            ...prevData,
+            cartItems: updatedCartItems,
+        }));
     };
 
-    const handleAddress2Change = (event) => {
-        setAddress2(event.target.value);
-    };
+    const[formData, setFormData] = useState({
+        address1: "",
+        address2: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        fname: "",
+        lname: "",
+        ccNum: "",
+        expMonth: "",
+        expDate: "",
+        cvvNum: ""
+    });
 
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
-    };
-
-    const handleStateChange = (event) => {
-        setState(event.target.value);
-    };
-
-    const handleZipCodeChange = (event) => {
-        setZipCode(event.target.value);
-    };
-
-    const handleFNameChange = (event) => {
-        setFName(event.target.value);
-    };
-
-    const handleLNameChange = (event) => {
-        setLName(event.target.value);
-    };
-
-    const handleCCNumChange = (event) => {
-        setCCNum(event.target.value);
-    };
-
-    const handleExpMonthChange = (event) => {
-        setExpMonth(event.target.value);
-    };
-
-    const handleExpDateChange = (event) => {
-        setExpDate(event.target.value);
-    };
-
-    const handleCVVNumChange = (event) => {
-        setCVVNum(event.target.value);
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]:value,
+        }));
     };
 
 
@@ -153,11 +174,11 @@ const IACustomerCheckout = () => {
                     </div>
                     <div className="first-parent">
                         <header className="register-wrapper">
-                            <h3 className="register1">Secure Checkout</h3>
+                            <h3 className="register1">In App Checkout</h3>
                         </header>
                         <div className="first-body">
                             <div className="checkout-form-wrapper">
-                                <form className="checkout-form">
+                                <form className="checkout-form" onSubmit={handleSubmit(this)}>
                                     <div className="delivery-payment-sections">
                                         <div className="delivery-payment-header">
                                             <img className="loc-icon" alt="" src="/location.svg" />
@@ -168,7 +189,8 @@ const IACustomerCheckout = () => {
                                                 className="street-address"
                                                 placeholder="Address Line 1"
                                                 variant="outlined"
-                                                onChange={handleAddress1Change}
+                                                name='address1'
+                                                onChange={handleChange}
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -183,8 +205,9 @@ const IACustomerCheckout = () => {
                                             <TextField
                                                 className="street-address"
                                                 placeholder="Address Line 2"
+                                                name='address2'
                                                 variant="outlined"
-                                                onChange={handleAddress2Change}
+                                                onChange={handleChange}
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
                                                     "& .MuiInputBase-root": {
@@ -200,7 +223,8 @@ const IACustomerCheckout = () => {
                                                     className="city-field"
                                                     placeholder="City"
                                                     variant="outlined"
-                                                    onChange={handleCityChange}
+                                                    name='city'
+                                                    onChange={handleChange}
                                                     required
                                                     sx={{
                                                         "& fieldset": { borderColor: "#1ac84b" },
@@ -216,7 +240,8 @@ const IACustomerCheckout = () => {
                                                     className="city-field"
                                                     placeholder="State"
                                                     variant="outlined"
-                                                    onChange={handleStateChange}
+                                                    name='state'
+                                                    onChange={handleChange}
                                                     required
                                                     sx={{
                                                         "& fieldset": { borderColor: "#1ac84b" },
@@ -233,7 +258,8 @@ const IACustomerCheckout = () => {
                                                     className="street-address"
                                                     placeholder="Zip Code"
                                                     variant="outlined"
-                                                    onChange={handleZipCodeChange}
+                                                    name='zipcode'
+                                                    onChange={handleChange}
                                                     required
                                                     sx={{
                                                         "& fieldset": { borderColor: "#1ac84b" },
@@ -260,7 +286,8 @@ const IACustomerCheckout = () => {
                                                 className="name-field"
                                                 placeholder="First Name"
                                                 variant="outlined"
-                                                onChange={handleFNameChange}
+                                                name='firstName'
+                                                onChange={handleChange}
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -277,7 +304,8 @@ const IACustomerCheckout = () => {
                                                 className="name-field"
                                                 placeholder="Last Name"
                                                 variant="outlined"
-                                                onChange={handleLNameChange}
+                                                name='lastName'
+                                                onChange={handleChange}
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -295,7 +323,8 @@ const IACustomerCheckout = () => {
                                             className="street-address"
                                             placeholder="Credit Card Number (xxxx xxxx xxxx xxxx)"
                                             variant="outlined"
-                                            onChange={handleCCNumChange}
+                                            name='ccnum'
+                                            onChange={handleChange}
                                             required
                                             sx={{
                                                 "& fieldset": { borderColor: "#1ac84b" },
@@ -310,9 +339,10 @@ const IACustomerCheckout = () => {
                                         <div className="city-state-info">
                                             <TextField
                                                 className="city-field"
-                                                placeholder="Month"
+                                                placeholder="Month (i.e. September)"
                                                 variant="outlined"
-                                                onChange={handleExpMonthChange}
+                                                onChange={handleChange}
+                                                name='expmonth'
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -326,9 +356,10 @@ const IACustomerCheckout = () => {
                                             />
                                             <TextField
                                                 className="city-field"
-                                                placeholder="Day"
+                                                placeholder="Year (i.e. 2024)"
                                                 variant="outlined"
-                                                onChange={handleExpDateChange}
+                                                onChange={handleChange}
+                                                name='expyear'
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -345,7 +376,8 @@ const IACustomerCheckout = () => {
                                                 className="street-address"
                                                 placeholder="CVV"
                                                 variant="outlined"
-                                                onChange={handleCVVNumChange}
+                                                name='cvvnum'
+                                                onChange={handleChange}
                                                 required
                                                 sx={{
                                                     "& fieldset": { borderColor: "#1ac84b" },
@@ -363,6 +395,7 @@ const IACustomerCheckout = () => {
                                     <div className="sign-in-parent">
                                         <Button
                                             className="sign-in1"
+                                            type='submit'
                                             disableElevation={true}
                                             variant="contained"
                                             sx={{
@@ -383,6 +416,43 @@ const IACustomerCheckout = () => {
                             </div>
                             <div className="cart-wrapper">
                                 <h3 className="cart-header">Cart</h3>
+                                {cartData.cartItems.map((item) => (
+                                    <div className='cart-item'>
+                                        <div className='order-info'>
+                                            <p className="item-name">{item.itemName}</p>
+                                            <p className="cart-item-price">${item.price*item.quantity}</p>
+                                        </div>
+                                        <div className='quantity-btns'>
+                                            <IconButton onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
+                                                <RemoveIcon className='sub-btn' />
+                                            </IconButton>
+                                            <span className="item-quantity">
+                                                {item.quantity}</span>
+                                            <IconButton onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
+                                                <AddIcon className='add-btn' />
+                                            </IconButton>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className='subtotal-div'>
+                                    <div className='item-total-div'>
+                                        <p className='label'>Item Total </p>
+                                        <p className='value'> ${itemTotal}</p>
+                                    </div>
+                                    <div className='item-total-div'>
+                                        <p className='label'>Taxes </p>
+                                        <p className='taxprice-val'> ${taxPrice}</p>
+                                    </div>
+                                    <div className='item-total-div'>
+                                        <p className='delivery-label'>Delivery Fee </p>
+                                        <p className='delivery-val'> ${deliveryFee.toFixed(2)}</p>
+                                    </div>
+                                    <div className='total-price-div'>
+                                        <h4 className='total-label'>Total </h4>
+                                        <h4 className='total-value'> ${subtotal}</h4>
+                                    </div>
+                                   
+                                </div>
                             </div>
                         </div>
                     </div>
