@@ -35,7 +35,10 @@ BiteWise is a web application designed to help users find the best deals on thei
 2. Install dependencies:
 
    ```
-   cd bitewise
+   cd GROUP7_BITEWISE/client
+   npm install
+
+   cd GROUP7_BITEWISE/server
    npm install
    ```
 
