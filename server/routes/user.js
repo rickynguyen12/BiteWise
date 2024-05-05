@@ -11,6 +11,7 @@
     import {homepage} from '../controllers/user.js';
     import {login} from '../controllers/user.js';
     import {logout} from '../controllers/user.js';
+    import {validate} from '../controllers/user.js';
 
     // import middlewares
     import {userRegisterValidator} from '../middlewares/user.js';
@@ -49,18 +50,19 @@
     }
 
         if(user){
-
             // generate a token with user id and jwt secret
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
             // persist the token as 'jwt' in cookie with an expiry date
             res.cookie('jwt', token, { expire: new Date() + 9999, httpOnly: true });
-
+        
+            console.log("User saved successfully: ", token);
             // return the response with user
             const { username } = user;
             return res.json({
             message: "Login Successfull",
             username,
+            jwt: token
             });
         }
         else {
@@ -72,5 +74,6 @@
     router.post('/register', userRegisterValidator, register);
     router.post('/login', login);
     router.get('/logout', logout);
+    router.post('/validate', validate);
 
     export default router;

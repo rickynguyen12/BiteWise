@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 const GoogleSignIn = ({ onGoogleSignInSuccess }) => {
   useEffect(() => {
     const handleCredentialResponse = (response) => {
-      // handle response here
       if (response.credential) {
         console.log("Credential Response:", response);
         onGoogleSignInSuccess(response);
       } else {
         console.error("Error occurred while signing in with Google");
+        // Implement retry logic here
+        setTimeout(() => {
+          window.location.reload(); // Reload the page to retry sign-in
+        }, 5000); // Retry after 5 seconds
       }
     };
 
