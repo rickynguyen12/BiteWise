@@ -9,6 +9,7 @@ import "./FrameComponent5.css";
 import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import IsLoggedInLogic from "./isLoggedIn";
+import Cookies from 'js-cookie'; // Import the 'js-cookie' package
 
 const FrameComponent5 = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -48,6 +49,8 @@ const FrameComponent5 = () => {
     try {
       const response = await axios.post("http://localhost:8080/login", formData);
       console.log("Login Successful:", response.data);
+      // Set the JWT token in the browser's cookies
+      document.cookie = Cookies.set('jwt', response.data.jwt);
       setOpenSnackbar(true);
       setIsLoggedIn(true);
       setTimeout(() => {
@@ -228,7 +231,7 @@ const FrameComponent5 = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message={isLoggedIn ? "Login Succesfull. Redirecting to Homepage..." : "Logout Successful. Redirecting to Login"}
+        message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
         action={
           <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
             X
