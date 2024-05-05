@@ -10,6 +10,7 @@ import axios from "axios"; // Import Axios
 import Footer from '../components/Footer';
 import GoogleSignIn from '../pages/googleSignIn';
 import "./Register.css";
+import Cookies from 'js-cookie';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Register = () => {
   });
 
   const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbars
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get('jwt'));
   const navigate = useNavigate();
 
   const handleCloseSnackbar = () => {
@@ -30,19 +31,21 @@ const Register = () => {
   };
 
   const handleSignInSuccess =  (response) => {
-    try {
-      axios.post("http://localhost:8080/googleSuccessfullSignIn", response);
+    axios.post("http://localhost:8080/googleSuccessfullSignIn", response).then(responseFromBackend => {
+      console.log("Login Successful:", responseFromBackend);
+      // Set the JWT token in the browser's cookies
+      document.cookie = Cookies.set('jwt', responseFromBackend.data.jwt);
       setOpenSnackbar(true); // Open Snackbar on successful registration
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/");
       }, 2000);
-    } catch (error) {
+    }).catch(error => {
       console.error("Signup Failed:", error);
       if (error.response) {
         console.error("Response Data:", error.response.data);
       }
-    }
+    })
   };
 
   const handleChange = (e) => {
@@ -321,7 +324,7 @@ const Register = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message="Registration successful. Redirecting to login..."
+        message="Registration successful! Please log in to continue"
         action={
           <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
             X
