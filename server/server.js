@@ -8,6 +8,12 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { body, validationResult } from 'express-validator';
 import {json, urlencoded} from 'express';
+import session from "express-session";
+import passport from 'passport';
+import GoogleStrategy from 'passport-google-oauth20';
+import cors from 'cors';
+
+
 
 
 // get the directory name
@@ -19,6 +25,9 @@ dotenv.config();
 //----------------------APP----------------------//
 const app = express();
 
+// Enable CORS for all origins
+app.use(cors());
+
 //--------------------MIDDLEWARE-------------------//
 // handle URL parameter
 app.use(urlencoded({extended: true}));
@@ -27,7 +36,15 @@ app.use(morgan('dev'));
 app.use(json());
 app.use(cookieParser());
 app.use(body());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose.connect(process.env.MONGO_URI, {
@@ -41,9 +58,32 @@ mongoose.connect(process.env.MONGO_URI, {
 import userRoutes from './routes/user.js';
 app.use("/", userRoutes);
 
+import merchantRoutes from './routes/merchant.js';
+app.use('/merchant', merchantRoutes);
+
 import menuRoutes from './routes/menu.js';
 app.use("/menu", menuRoutes);
 
+
+passport.use("google", new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:8080/auth/google/callback",
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+}, async (accessToken, refreshToken, profile, cb) => {
+  console.log("accessToken", accessToken);
+  console.log("refreshToken", refreshToken);
+  console.log("profile", profile);
+  return cb(null, profile);
+}));
+
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+});
 
 //-------------------LISTENER-------------------//
 app.listen(process.env.PORT || 8080, function() {

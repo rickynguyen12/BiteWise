@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
             maxlength: 10,
-            required: true,
+            required: false,
             unique: true,
             sparse: true
         },
@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema(
         username: {
             type: String,
             trim: true,
-            required: true,
+            required: false,
             maxlength: 32,
             unique: true,
             lowercase: true
