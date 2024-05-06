@@ -13,7 +13,7 @@ import session from "express-session";
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
 import cors from 'cors';
-import { fetchAndExtractText } from './homepageRest.js';
+import { searchMerchants } from './searchFoods.js';
 
 
 
@@ -38,7 +38,7 @@ app.use(json());
 app.use(cookieParser());
 app.use(body());
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: "IAMBATMAN",
   resave: false,
   saveUninitialized: true
 }))
@@ -48,28 +48,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //--------------------DB----------------------//
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect("mongodb+srv://jasontobin:3-Zvdwki2hMA!m7@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log("DB connected"))
 .catch(err => console.log(err))
 
-//-------------------LOCATION-------------------//
+//-------------------Searching-------------------//
 const router = express.Router();
+router.get('/search-query', async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
 
-router.post('/api/locations', async (req, res) => {
-  // Extract latitude and longitude directly from req.body
-  const { latitude, longitude } = req.body;
+    // Log the input received in the request body
+    console.log('Received search query:', query);
+    const returnMerchants = await searchMerchants(query)
+    // Optionally, you can send a response back to the client
+    res.status(200).send(returnMerchants);
 
-  // Log the received location data
-  console.log('Received location data:', { latitude, longitude });
-
-  // Now you can use latitude and longitude as needed
-  // For example, you can pass them to your fetchAndExtractText function
-  await fetchAndExtractText({ latitude, longitude });
-
-  res.send("Location data received successfully");
+    // Perform any additional processing or handle the search query here
+  } catch (error) {
+    console.error('Error handling search query:', error);
+    res.status(500).send('Internal server error');
+  }
 });
 app.use('/', router);
 //-------------------ROUTES-------------------//
@@ -77,8 +79,8 @@ import userRoutes from './routes/user.js';
 app.use("/", userRoutes);
 
 passport.use("google", new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  clientID: "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
+  clientSecret: "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",
   callbackURL: "http://localhost:8080/auth/google/callback",
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 }, async (accessToken, refreshToken, profile, cb) => {
@@ -97,6 +99,6 @@ passport.deserializeUser((user, cb) => {
 });
 
 //-------------------LISTENER-------------------//
-app.listen(process.env.PORT || 8080, function() {
+app.listen(8080 || 8080, function() {
   console.log("Server is running on port 8080")
 });

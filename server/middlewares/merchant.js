@@ -3,7 +3,7 @@ import { body, validationResult } from 'express-validator';
 const merchantRegisterValidator = [
      // Validate merchantName
      body('merchantname').notEmpty().withMessage('Company Name is required')
-                     .isLength({ min: 3, max: 10 }).withMessage('Company Name must exist'),
+                     .isLength({ min: 3, max: 50 }).withMessage('Company Name must exist'),
 
      // Validate email
      body('email').notEmpty().withMessage('Email is required')

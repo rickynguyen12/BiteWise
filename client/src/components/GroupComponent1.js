@@ -44,7 +44,7 @@ const GroupComponent1 = ({
                 className="distribution-dome-icons"
                 loading="lazy"
                 alt=""
-                src="/ellipse-11@2x.png"
+                src="/david-circle.png"
               />
             </div>
             <div className="data-receivers">
@@ -57,13 +57,13 @@ const GroupComponent1 = ({
                     className="tree-pruner-childs"
                     loading="lazy"
                     alt=""
-                    src="/group-98.svg"
+                    src="/group-98.png"
                   />
                   <img
                     className="tree-pruner-items"
                     loading="lazy"
                     alt=""
-                    src="/group-95.svg"
+                    src="/group-95.png"
                   />
                 </div>
                 <div className="mi1s">2.04 mi</div>
@@ -104,7 +104,7 @@ const GroupComponent1 = ({
                 className="group-icon1s"
                 loading="lazy"
                 alt=""
-                src="/group1.svg"
+                src="/pickup-black.png"
               />
               <div className="value-transformer-networks">
                 <h1 className="uber-eats1s">Uber Eats</h1>
@@ -139,6 +139,7 @@ const GroupComponent1 = ({
                 fontSize: "16",
                 background: "#3b9566",
                 borderRadius: "10px",
+                width: "200px",
                 "&:hover": { background: "#3b9566" },
                 height: 43,
               }}
@@ -152,7 +153,7 @@ const GroupComponent1 = ({
         </div>
       </div>
     </div>
-    );
-}
+  );
+};
 
 export default GroupComponent1;

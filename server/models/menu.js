@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const menuItemSchema = new mongoose.Schema({
-  restaurantId: {
+  restaurant_id: {
     type: Number,
     required: true
   },

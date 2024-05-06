@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./FrameComponent6.css";
 
 const FrameComponent6a = ({
@@ -16,7 +17,7 @@ const FrameComponent6a = ({
 }) => {
   return (
     <div className="rectangle-parents">
-      <div className="frame-childs" />
+      <div className="frame-childs-redirect" />
       <div className="spinners">
         <div className="progress-circles">
           <div className="weather-displays">
@@ -46,19 +47,19 @@ const FrameComponent6a = ({
         </div>
       </div>
       <div className="frame-containers">
-        <div className="vector-wrappers">
-          <img className="frame-items" alt="" src="/line-5.svg" />
-        </div>
-        <div className="frame-wrappers">
-          <div className="frame-divs">
-            <div className="group-parents">
-              <img className="group-icons" alt="" src={icon} />
-              <div className="uber-eats-parents">
+        {/* <div className="vector-wrappers">
+          <img className="frame-items" alt="" src="/line-5.png" />
+        </div> */}
+        <div className="frame-wrapperss">
+          <div className="frame-divs-redirect">
+            <div className="group-parents-uber">
+              <div className="uber-eats-parents2">
                 <h1 className="uber-eatss">{deliveryService}</h1>
                 <div className="best-deal-wrappers">
                   <h3 className="best-deals">Best Deal</h3>
                 </div>
               </div>
+              <img className="group-icons-redirect" alt="" src={icon} />
             </div>
             <div className="frame-wrapper1s">
               <div className="frame-parent1s">
@@ -93,11 +94,13 @@ const FrameComponent6a = ({
             >
               Place Order
             </Button>
-            <div className="view-all-deals-5-wrappers">
-              <div className="view-all-dealss">
-                View All Deals ({numOfDeals})
+            <Link to="/view-all-deals" className="view-all-deals-link">
+              <div className="view-all-deals-button2">
+                <h2 className="view-all-dealss">
+                  View All Deals ({numOfDeals})
+                </h2>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

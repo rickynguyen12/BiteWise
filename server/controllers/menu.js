@@ -2,9 +2,9 @@ import Menu from '../models/menu.js'
 
 // Function to add a new menu item
 const addMenuItem = async (req, res) => {
-    const { restaurantId } = req.params; 
+    const { restaurant_id } = req.params; 
     const menuItem = new Menu({
-      restaurantId: restaurantId, 
+      restaurant_id: restaurant_id, 
       id: req.body.id,
       name: req.body.name,
       description: req.body.description,
@@ -23,11 +23,11 @@ const addMenuItem = async (req, res) => {
   
   // remove an item based on restaurant id
   const removeMenuItem = async (req, res) => {
-    const { restaurantId, id } = req.params;
+    const { restaurant_id, id } = req.params;
   
     try {
       //find item based on id and restaurantId
-      const deletedItem = await Menu.findOneAndDelete({ restaurantId, id });
+      const deletedItem = await Menu.findOneAndDelete({ restaurant_id, id });
       if (!deletedItem) {
         return res.status(404).json({ message: 'Menu item not found' });
       }
@@ -39,11 +39,11 @@ const addMenuItem = async (req, res) => {
   
   // update menu item
   const updateMenuItem = async (req, res) => {
-    const { restaurantId, id } = req.params;
+    const { restaurant_id, id } = req.params;
     const updates = req.body;
   
     try {
-      const updatedItem = await Menu.findOneAndUpdate({ restaurantId, id }, updates, { new: true });
+      const updatedItem = await Menu.findOneAndUpdate({ restaurant_id, id }, updates, { new: true });
   
       if (!updatedItem) {
         return res.status(404).json({ message: 'Menu item not found' });

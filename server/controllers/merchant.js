@@ -1,33 +1,40 @@
-import {Merchant} from '../models/merchant.js';
+import Merchant from '../models/merchant.js'
 import jwt from 'jsonwebtoken';
 
 const register = async (req, res) => {
+  try {
+    // Check if username already exists
+    const userNameExists = await Merchant.findOne({
+      username: req.body.username
+    });
+    if (userNameExists) {
+      return res.status(403).json({
+        error: "Username already exists"
+      });
+    }
 
-  // Business Name, Adress could be duplicates
-  // Email, and business phone number must be individual
+    // Check if email already exists
+    const emailExists = await Merchant.findOne({
+      email: req.body.email
+    });
+    if (emailExists) {
+      return res.status(403).json({
+        error: "Email already exists"
+      });
+    }
 
-  // check if email already exists
-  const emailExists = await Merchant.findOne({
-    email: req.body.email
-  });
-  if (emailExists) return res.status(403).json({
-    error: "Email already exists"
-  });
-
-  const businessPhoneExists = await Merchant.findOne({
-    phone: req.body.businessPhone
-  })
-  if(businessPhoneExists) return res.status(403).json({
-    error: "Business Phone Number Already Exists"
-  })
-
-  // create new user if username and email are unique
-  const merchant = new Merchant(req.body);
-  await merchant.save();
-  res.status(201).json({
-    message: "Signup Successfull, Please Login to continue.",
-    redirect: "/login"
-  });
+    // Create new merchant
+    const merchant = new Merchant(req.body);
+    await merchant.save();
+    res.status(201).json({
+      message: "Signup Successful, Please Login to continue."
+    });
+  } catch (error) {
+    console.error("Error occurred during merchant registration:", error);
+    res.status(500).json({
+      error: "An unexpected error occurred during registration"
+    });
+  }
 };
 
 const homepage = async (req, res) => {
@@ -64,10 +71,10 @@ const login = async (req, res) => {
     res.cookie('jwt', token, { expire: new Date() + 9999, httpOnly: true });
 
     // return the response with user
-    const { email } = merchant;
+    const { username } = merchant;
     return res.json({
       message: "Login Successfull",
-      email,
+      username,
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -78,13 +85,29 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  // clear the cookie
   res.clearCookie('jwt');
-  res.json({
-    message: "Logout Successfull"
+
+  return res.status(200).json({
+    message: "Logout Successfull",
   });
 };
 
-export {register};
-export {homepage};
-export {login};
-export {logout};
+
+const updateMerchant = async (req, res) => {
+  const { restaurant_id } = req.params;
+  const updates = req.body;
+
+  try {
+    const updatedMerchant = await Merchant.findOneAndUpdate({ restaurant_id }, updates, { new: true });
+    if (!updatedMerchant) {
+      return res.status(404).json({ message: 'Merchant not found' });
+    }
+    res.json({ message: 'Merchant updated successfully', updatedMerchant });
+  } catch (error) {
+    res.status(500).json({ message: 'Could not update merchant information' });
+  }
+};
+
+
+export {register,login,homepage,logout,updateMerchant};
