@@ -109,8 +109,8 @@ const IACustomerCheckout = () => {
         <div className="register">
             <section className="register-inner">
                 <div className="frame-parent">
-                    <div className="frame-group">
-                        <div className="logo-wrapper">
+                    <div className="frame-group" >
+                        <div className="logo-wrapper" onClick={onLogoContainerClick}>
                             <div className="logo" onClick={onLogoContainerClick}>
                                 <h2 className="bitewise">BiteWise</h2>
                                 <img
@@ -118,6 +118,7 @@ const IACustomerCheckout = () => {
                                     loading="lazy"
                                     alt=""
                                     src="/subtract1.svg"
+                                    onClick={onLogoContainerClick}
                                 />
                             </div>
                         </div>

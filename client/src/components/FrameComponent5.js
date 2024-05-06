@@ -78,14 +78,6 @@ const FrameComponent5 = () => {
     }
   };
 
-  // const onLogoContainerClick = () => {
-  //   navigate("/");
-  // };
-
-  const onAlreadyHaveAnClick = () => {
-    navigate("/login");
-  };
-
   return (
     <div className="logo-area-parent">
       <div className="logo-area">

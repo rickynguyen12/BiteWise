@@ -1,7 +1,6 @@
 import FrameComponent5 from "../components/FrameComponent5";
 import Footer from "../components/Footer";
 import "./Login.css";
-import "./Login.css";
 
 
 const Login = () => {
