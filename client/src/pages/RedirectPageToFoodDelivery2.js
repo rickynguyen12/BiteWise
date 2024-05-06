@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import FrameComponent7 from "../components/FrameComponent7";
+import FrameComponent4 from "../components/FrameComponent4";
 import GroupComponent2 from "../components/GroupComponent2";
 import FrameComponent6 from "../components/FrameComponent6";
 import FrameComponent6a from "../components/FrameComponent6a";
@@ -50,7 +50,12 @@ const RedirectPageToFoodDelivery2 = () => {
 
   return (
     <div className="redirect-page-to-food-deliverys">
-      <FrameComponent7 />
+      <FrameComponent4 />
+      <div className="redirect-header-frame">
+        <header className="redirect-header">
+          <h3 className="view1">Compare Prices</h3>
+        </header>
+      </div>
       <section className="frame-parents">
         <div className="frame-groups">
           <GroupComponent2 />

@@ -1,8 +1,15 @@
 import PostmatesLogo from "./PostmatesLogo";
 import FrameComponent9 from "./FrameComponent9";
 import "./UberEatsLabel.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const UberEatsLabel = () => {
+  const navigate = useNavigate();
+
+  const navigateCheckout = () => {
+    navigate("/in-app-checkout");
+  };
   return (
     <div className="uber-eats-label">
       <div className="rectangle-parentz">
@@ -96,7 +103,7 @@ const UberEatsLabel = () => {
                 </div>
               </div>
               <div className="place-order-btn-parent">
-                <button className="place-order-btn">
+                <button className="place-order-btn" onClick={navigateCheckout}>
                   <div className="place-order2">Place Order</div>
                 </button>
                 <div className="pickup-option-btn">
