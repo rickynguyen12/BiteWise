@@ -3,8 +3,17 @@ import FrameComponent7 from "../components/FrameComponent7";
 import GroupComponent2 from "../components/GroupComponent2";
 import FrameComponent6 from "../components/FrameComponent6";
 import "./RedirectPageToFoodDelivery.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const RedirectPageToFoodDelivery = () => {
+
+  const navigate = useNavigate();
+
+  const navigateCheckout = () => {
+    navigate('/in-app-checkout');
+  };
+
   return (
     <div className="redirect-page-to-food-deliverys">
       <FrameComponent7 />
@@ -111,6 +120,7 @@ const RedirectPageToFoodDelivery = () => {
                     "&:hover": { background: "#3b9566" },
                     height: 43,
                   }}
+                  onClick={navigateCheckout}
                 >
                   Place Order
                 </Button>
