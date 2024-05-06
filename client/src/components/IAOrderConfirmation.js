@@ -10,45 +10,42 @@ import {
 import Footer from "../components/Footer";
 import "../pages/IACustomerCheckout.css";
 import { useNavigate } from "react-router-dom";
-import { LottiePlayer } from "@lottiefiles/lottie-player";
+import * as LottiePlayer from "@lottiefiles/lottie-player";
+import FrameComponent4 from "./FrameComponent4";
+import "./IAOrderConfirmation.css";
 
 
 
 const IAOrderConfirmation = () => {
     const navigate = useNavigate();
+
     const onLogoContainerClick = () => {
         navigate("/");
     };
+
     return (
-        <div className="register">
-            <section className="register-inner">
-                <div className="frame-parent">
-                    <div className="frame-group">
-                        <div className="logo-wrapper">
-                            <div className="logo" onClick={onLogoContainerClick}>
-                                <h2 className="bitewise">BiteWise</h2>
-                                <img
-                                    className="subtract-icon"
-                                    loading="lazy"
-                                    alt=""
-                                    src="/subtract1.svg"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="ia-container">
+            <FrameComponent4 />
+            <header className="register-wrapper">
+                <h3 className="register1">Order Confirmation</h3>
+            </header>
+            <section className='body-section'>
                 <div className="lottie-container">
-                    <LottiePlayer
+                    <lottie-player
                         autoplay
-                        loop
-                        controls
                         mode="normal"
-                        src="https://assets3.lottiefiles.com/packages/lf20_0bzW8w.json"
-                        style={{ width: "320px" }}
-                    />
+                        src="https://lottie.host/9343e1a5-dc9a-4a08-95c3-3021b639208c/NET26ye8QF.json"
+                        style={{ width: "250px" }}
+                    ></lottie-player>
+                </div>
+                <div className='order-confirmation-text'>
+                    <p className='thank-you-msg'>Thank you for ordering with BiteWise!</p>
+                    <p className='delivery-msg'>Delivery instructions will be messaged to you shortly.</p>
                 </div>
             </section>
-            <Footer propHeight="20.9px" propHeight1="24px" />
+            <div>
+                <Footer propHeight="20.9px" propHeight1="24px" />
+            </div>
         </div>
     );
 }
