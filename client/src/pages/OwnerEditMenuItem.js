@@ -22,7 +22,7 @@ const OwnerEditMenuItem = () => {
                     </div>
                     <div className="frame-container">
                       <TextField
-                        className="frame-child"
+                        className="frame-item"
                         placeholder="Item Name"
                         variant="outlined"
                         sx={{
