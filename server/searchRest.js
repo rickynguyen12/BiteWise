@@ -1,11 +1,12 @@
+import { response } from 'express';
 import puppeteer from 'puppeteer';
 
 const url = "https://www.doordash.com/";
 const location = "1201 Parkmoor Ave, San Jose, CA 95126";
 const puppeteerOptions = {
-    headless: false,
+    headless: true,
     args: [
-      '--disable-gpu',
+      '--enable-gpu',
       '--disable-dev-shm-usage',
       '--disable-setuid-sandbox',
       '--no-first-run',
@@ -23,7 +24,7 @@ async function getPDF(url, page) {
   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36');
 
   // Set a larger viewport size to capture the entire page
-  await page.setViewport({ width: 1366, height: 3000 });
+  await page.setViewport({ width: 1000, height: 3000 });
 
   // Navigate to the website
   await page.goto(url);
@@ -40,15 +41,16 @@ async function getPDF(url, page) {
 
   // Generate a PDF of the entire webpage
   await page.pdf({ path: 'rest.pdf', format: 'A4', printBackground: false });
-
-  // Close the browser
-  await browser.close();
 }
 
 async function search(url, location, query) {
     const browser = await puppeteer.launch(puppeteerOptions)
     try{
         const page = await browser.newPage();
+        await page.setUserAgent(
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
+          'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
+        );
         await page.goto(url);
         console.log('Current URL:', page.url());
 
@@ -58,11 +60,8 @@ async function search(url, location, query) {
         // Click the "Find Restaurants" button
         await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
         await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
-        // Click the "Find Restaurants" button with a shorter timeout for redundancy
+        // redundancy
         await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
-        // await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
-        // await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
-        // await page.click('button[aria-label="Find Restaurants"]', { timeout: 1000 });
 
         // Wait for navigation to complete
         await page.waitForNavigation();
@@ -72,38 +71,43 @@ async function search(url, location, query) {
         console.log('Current URL:', page.url());
         await page.type('input[aria-owns="search-dropdown-results"]', query,  { timeout: 3000 });
 
-        // await page.keyboard.press('ArrowDown',  { timeout: 1000 });
-        // await page.keyboard.press('Enter',  { timeout: 1000 });
-
-        //https://www.doordash.com/graphql/autocompleteFacetFeed?operation=autocompleteFacetFeed
-        //After finished typing, payload contains url somewhere
-
         // Intercept network requests
         await page.setRequestInterception(true);
 
         // Listen for the network request you want to intercept
+        var responseGot = false;
         page.on('request', async (interceptedRequest) => {
-          if (interceptedRequest.url().includes('autocompleteFacetFeed')) {
-              const response = await interceptedRequest.response();
+          if (interceptedRequest.url().includes('autocompleteFacetFeed') && !responseGot) {
+              console.log(interceptedRequest.url());
+              responseGot = true;
+              // Get the response payload
+              const response = await page.waitForResponse(interceptedRequest.url());
                if(response) {
                 const payload = await response.text();
-                console.log('Payload:', payload);
+                const payloadJSON = JSON.parse(payload);
+                const bodyArray = JSON.parse(payloadJSON.data.autocompleteFacetFeed.body[0].body[0].events.click.data);
+                const goToURL = bodyArray.domain + bodyArray.uri; // RAHHHHHHHHHHH
+                console.log(goToURL)
+                await getPDF(goToURL, page)
+                browser.close()
               }
-              // Process the payload as needed (extract URL, etc.)
           }
-          interceptedRequest.continue();
+          else {
+            if(!response) {
+              interceptedRequest.continue();
+            }
+            else {
+              await page.setRequestInterception(false);
+            }
+          }
         });
 
         //getPDF("https://www.doordash.com/store/mcdonald's-san-jose-654311/?event_type=autocomplete&pickup=false", page)
     }
     catch(error) {
         console.log(error)
-        browser.close()
+        page.close()
     }
 }
 
-search(url, location, "McDonalds");
-
-// test pdf gathering
-const testURL = "https://www.doordash.com/store/mcdonald's-san-jose-654311/?event_type=autocomplete&pickup=false"
-//getPDF(testURL);
+search(url, location, "The Giving Pies");
