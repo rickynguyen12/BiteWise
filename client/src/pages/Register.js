@@ -324,7 +324,7 @@ const Register = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message="Registration successful! Please log in to continue"
+        message="Registration successful!"
         action={
           <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
             X

@@ -63,6 +63,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/in-app-checkout":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
