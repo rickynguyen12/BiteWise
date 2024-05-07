@@ -23,8 +23,33 @@ const Register = () => {
   });
 
   const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbars
+  const [errorMessage, setErrorMessage] = useState(""); // State to store error message
   const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get('jwt'));
+  const [showPassword, setShowPassword] = useState(false);  // State to toggle password visibility
   const navigate = useNavigate();
+
+  // validations
+  // password validation
+  let hasSixChar = formData.password.length >= 6;
+  let hasLowerChar = /(.*[a-z].*)/.test(formData.password);
+  let hasUpperChar = /(.*[A-Z].*)/.test(formData.password);
+  let hasNumber = /(.*[0-9].*)/.test(formData.password);
+  let hasSpecialChar = /[^A-Za-z0-9]/.test(formData.password);
+
+  // email validation
+  let emailValid = formData.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
+  // phone validation
+  let phoneValid = formData.phone.match(/^[0-9]{10}$/);
+  
+  // username validation
+  let usernameValid = formData.username.match(/^[a-zA-Z0-9]+$/);
+
+  // first name validation
+  let firstNameValid = formData.firstname.match(/^[a-zA-Z]+$/);
+
+  // last name validation
+  let lastNameValid = formData.lastname.match(/^[a-zA-Z]+$/);
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
@@ -279,6 +304,11 @@ const Register = () => {
                         "& .MuiInputBase-input": { color: "#808080" },
                       }}
                     />
+                    <div className='ml-1'>
+                      <div>
+                        <small className={hasSixChar ? 'text-success' : 'text-danger'}> at least 6 characters</small>
+                      </div>
+                    </div>
                     <div
                       className="already-have-an-container"
                       onClick={onAlreadyHaveAnClick}
