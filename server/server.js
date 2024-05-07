@@ -39,7 +39,7 @@ app.use(json());
 app.use(cookieParser());
 app.use(body());
 app.use(session({
-  secret: "IAMBATMAN",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //--------------------DB----------------------//
-mongoose.connect("mongodb+srv://jasontobin:3-Zvdwki2hMA!m7@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -103,8 +103,8 @@ import userRoutes from './routes/user.js';
 app.use("/", userRoutes);
 
 passport.use("google", new GoogleStrategy({
-  clientID: "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
-  clientSecret: "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",
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "http://localhost:8080/auth/google/callback",
   userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 }, async (accessToken, refreshToken, profile, cb) => {
@@ -123,6 +123,6 @@ passport.deserializeUser((user, cb) => {
 });
 
 //-------------------LISTENER-------------------//
-app.listen(8080 || 8080, function() {
+app.listen(process.env.PORT || 8080, function() {
   console.log("Server is running on port 8080")
 });
