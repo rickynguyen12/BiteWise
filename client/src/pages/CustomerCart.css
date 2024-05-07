@@ -57,6 +57,7 @@
 }
 .cart-details {
   flex: 1;
+  margin-top: -50px;
   margin-left: var(--padding-41xl);
   margin-right: var(--padding-41xl);
 }
@@ -122,6 +123,7 @@
 }
 .compare-prices-container {
   display: flex;
+  margin-bottom: 20px;
 }
 .restaurant-name2 {
   margin-top: 20px;

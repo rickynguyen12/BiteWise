@@ -56,7 +56,7 @@ const RedirectPageToFoodDelivery2 = () => {
           <h3 className="view1">Compare Prices</h3>
         </header>
       </div>
-      <section className="frame-parents">
+      <section className="frame-parents-compare-prices">
         <div className="frame-groups">
           <GroupComponent2 />
           <div className="frame-list">
@@ -66,9 +66,9 @@ const RedirectPageToFoodDelivery2 = () => {
           </div>
         </div>
       </section>
-      <div className="view-more-button-wrappers">
+      {/* <div className="view-more-button-wrappers">
         <h2 className="view-more-buttons">View More</h2>
-      </div>
+      </div> */}
     </div>
   );
 };

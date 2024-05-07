@@ -55,9 +55,9 @@ const CustomerCart = () => {
   return (
     <div className="my-cart">
       <FrameComponent4 />
-      <div className="cart-parent">
-        <header className="cart2">
-          <h2 className="cart1">My Cart</h2>
+      <div className="redirect-header-frame">
+        <header className="redirect-header">
+          <h3 className="cart1">My Cart</h3>
         </header>
       </div>
       <div className="cart-details">
