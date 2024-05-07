@@ -14,7 +14,8 @@ import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
 import cors from 'cors';
 import { searchMerchants } from './searchFoods.js';
-
+import { searchFoods } from './searchFoods.js';
+import { getMerchantInfo } from './searchFoods.js';
 
 
 // get the directory name
@@ -64,8 +65,14 @@ router.get('/search-query', async (req, res) => {
     // Log the input received in the request body
     console.log('Received search query:', query);
     const returnMerchants = await searchMerchants(query)
-    // Optionally, you can send a response back to the client
-    res.status(200).send(returnMerchants);
+    const {foods, merchantNames} = await searchFoods(query)
+    
+    const combinedData = {
+      merchants: returnMerchants,
+      foods: foods,
+      merchantNames: merchantNames
+    }
+    res.status(200).send(combinedData);
 
     // Perform any additional processing or handle the search query here
   } catch (error) {
@@ -73,6 +80,23 @@ router.get('/search-query', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
+
+router.get('/get-merch-info', async (req, res) => {
+  try {
+    const { query } = req.query;
+    console.log("Looking for rest_id: ", query)
+    const {merchant, menuItems} = await getMerchantInfo(query);
+    const combinedData = {
+      merchant: merchant,
+      menuItems: menuItems
+    }
+    res.status(200).send(combinedData);
+  } catch(error) {
+    console.error('Error handling search query:', error);
+    res.status(500).send('Internal server error');
+  }
+})
+
 app.use('/', router);
 //-------------------ROUTES-------------------//
 import userRoutes from './routes/user.js';

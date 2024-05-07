@@ -3,15 +3,16 @@ import SearchedComponent from "./SearchedComponent";
 import Button from "@mui/material/Button";
 import "./SearchedGroupComponent.css";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const SearchedGroupComponent = ({searchQuery}) => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedButton, setSelectedButton] = useState("Items");
-  // const [queryResults, setQueryResults] = useState([preInitSearchResults]);
+  const [searchResults, setSearchResults] = useState({merchants: [], foods: [], merchantNames: []});
+  const [selectedButton, setSelectedButton] = useState("Restaurants");
   
   const handleButtonClick = (button) => {
     setSelectedButton(button);
   };
+  const navigate = useNavigate();
 
   // Fetch Search results based on searchQuery
   useEffect(() => {
@@ -66,9 +67,9 @@ const SearchedGroupComponent = ({searchQuery}) => {
             </Button>
           </div>
           <div className="searched-group-component">
-            {searchResults.map((result) => (
+            {selectedButton === "Restaurants" && searchResults.merchants && searchResults.merchants.map((result) => (
               <SearchedComponent
-                image="/bowl1.png"
+                image="/bowl1.png" // TODO: change to result.logo_url
                 itemName={result.merchantname}
                 restaurantName={result.category}
                 deal="10% off"
@@ -80,6 +81,24 @@ const SearchedGroupComponent = ({searchQuery}) => {
                 propHeight="unset"
                 propMinWidth="unset"
                 propMinWidth1="21px"
+                onClicked={() => navigate(`/food-item-page?merchant=${result.restaurant_id}`)}
+              />
+            ))}
+            {selectedButton === "Items" && searchResults.foods && searchResults.merchantNames && searchResults.foods.map((result, index) => (
+              <SearchedComponent
+                image="/bowl1.png" // TODO: change to searchResults.merchantNames[index].logo_url
+                itemName={result.name}
+                restaurantName={searchResults.merchantNames[index].merchantname}
+                deal="10% off"
+                mins="20 Mins"
+                propAlignSelf="unset"
+                propWidth="307px"
+                propPadding="36px 27px 25px"
+                propAlignSelf1="stretch"
+                propHeight="unset"
+                propMinWidth="unset"
+                propMinWidth1="21px"
+                onClicked={() => navigate(`/food-item-page?merchant=${searchResults.merchantNames[index].restaurant_id}`)}
               />
             ))}
           </div>
