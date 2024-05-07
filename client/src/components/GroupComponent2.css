@@ -249,6 +249,7 @@
 }
 .rectangle-groups {
   width: 380px;
+  height: 250px;
   border-radius: var(--br-26xls);
   background-color: var(--color-gainsboro-100);
   display: flex;
@@ -264,6 +265,7 @@
   color: var(--color-black);
   font-family: var(--font-poppins);
   border-radius: 20px;
+  margin-top: 50px;
 }
 .form-control-wrapper {
   width: 100%;

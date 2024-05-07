@@ -6,6 +6,7 @@ const FrameComponent3 = ({
   rectangle26,
   davidAndEmilysPatisserie,
   frenchPatisserie,
+  restaurantId,
   prop,
   mins,
   prop1,
@@ -41,13 +42,18 @@ const FrameComponent3 = ({
 
   return (
     <Link
-      to={"/food-item-page"}
+      to={{
+        pathname: "/food-item-page",
+        search: `?merchant=${encodeURIComponent(restaurantId)}`,
+      }}
       state={{
         restaurantName: davidAndEmilysPatisserie,
+        restaurantId: restaurantId,
         restaurantInfo: {
           rectangle26,
           davidAndEmilysPatisserie,
           frenchPatisserie,
+          restaurantId,
           prop,
           mins,
           prop1,
@@ -74,14 +80,14 @@ const FrameComponent3 = ({
             <div className="french-patisserie" style={frenchPatisserieStyle}>
               {frenchPatisserie}
             </div>
-            <div className="input-processor">
+            {/* <div className="input-processor">
               <img className="output-handler-icon" alt="" src="/vector-2.svg" />
               <div className="div" style={divStyle}>
                 {prop}
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="frame-parent6">
+          {/* <div className="frame-parent6">
             <div className="group-parent">
               <img className="group-icon" alt="" src="/group.svg" />
               <div className="mins">{mins}</div>
@@ -92,7 +98,7 @@ const FrameComponent3 = ({
                 {prop1}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>

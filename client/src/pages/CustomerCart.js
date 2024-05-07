@@ -19,10 +19,14 @@ const CustomerCart = () => {
   const location = useLocation();
   console.log("Location state:", location.state);
   const navigate = useNavigate();
-  const cartData = location.state?.cartData || [];
-
+  const [cartData, setCartData] = useState(location.state.selectedItems || []);
+  // const cartData = location?.cartData || {
+  //   restaurantName: "",
+  //   cartItems: [],
+  // };
+  console.log("Cart data:", cartData);
   const handleQuantityChange = (itemId, newQuantity) => {
-    const updatedCartItems = cartData.cartItems
+    const updatedCartItems = cartData
       .map((item) => {
         if (item.id === itemId) {
           const quantity = Math.max(0, newQuantity);
@@ -38,14 +42,13 @@ const CustomerCart = () => {
       })
       .filter(Boolean);
 
-    // setCartData((prevData) => ({
-    //   ...prevData,
-    //   cartItems: updatedCartItems,
-    // }));
+    setCartData(updatedCartItems);
   };
 
   const handleRemoveItem = (itemId) => {
     const updatedCartItems = cartData.filter((item) => item.id !== itemId);
+    setCartData(updatedCartItems);
+
     // setCartData((prevData) => ({
     //   ...prevData,
     //   cartItems: prevData.cartItems.filter((item) => item.id !== itemId),
@@ -65,11 +68,11 @@ const CustomerCart = () => {
         </header>
       </div>
       <div className="cart-details">
-        <div className="restaurant-name2">From {cartData.restaurantId}</div>
+        <div className="restaurant-name2">From {cartData?.restaurantName}</div>
         {console.log("Cart data:", cartData)}
-        {cartData.cartItems.map((item) => (
+        {cartData?.map((item) => (
           <div key={item.id} className="cart-item2">
-            <div className="cart-item-name">{item.itemName}</div>
+            <div className="cart-item-name">{item.name}</div>
             <div className="quantity">
               <Button
                 className="quantity-button2 minus"

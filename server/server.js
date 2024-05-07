@@ -13,7 +13,9 @@ import session from "express-session";
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
 import cors from 'cors';
-
+import { searchMerchants } from './searchFoods.js';
+import { searchFoods } from './searchFoods.js';
+import { getMerchantInfo } from './searchFoods.js';
 
 
 // get the directory name
@@ -60,6 +62,48 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("DB connected"))
 .catch(err => console.log(err))
 
+//-------------------Searching-------------------//
+const router = express.Router();
+router.get('/search-query', async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
+
+    // Log the input received in the request body
+    console.log('Received search query:', query);
+    const returnMerchants = await searchMerchants(query)
+    const {foods, merchantNames} = await searchFoods(query)
+    
+    const combinedData = {
+      merchants: returnMerchants,
+      foods: foods,
+      merchantNames: merchantNames
+    }
+    res.status(200).send(combinedData);
+
+    // Perform any additional processing or handle the search query here
+  } catch (error) {
+    console.error('Error handling search query:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+router.get('/get-merch-info', async (req, res) => {
+  try {
+    const { query } = req.query;
+    console.log("Looking for rest_id: ", query)
+    const {merchant, menuItems} = await getMerchantInfo(query);
+    const combinedData = {
+      merchant: merchant,
+      menuItems: menuItems
+    }
+    res.status(200).send(combinedData);
+  } catch(error) {
+    console.error('Error handling search query:', error);
+    res.status(500).send('Internal server error');
+  }
+})
+
+app.use('/', router);
 //-------------------ROUTES-------------------//
 import userRoutes from './routes/user.js';
 app.use("/", userRoutes);

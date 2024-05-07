@@ -486,6 +486,8 @@
   align-items: flex-start;
   justify-content: center;
   padding: 0px 350px 0px 400px;
+  margin-left: 235px;
+  margin-top: 20px;
 }
 .redirect-page-to-food-deliverys {
   width: 100%;

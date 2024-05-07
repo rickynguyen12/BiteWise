@@ -1,21 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchedComponent from "./SearchedComponent";
 import Button from "@mui/material/Button";
 import "./SearchedGroupComponent.css";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-const SearchedGroupComponent = () => {
-  const [selectedButton, setSelectedButton] = useState("Items");
-
+const SearchedGroupComponent = ({searchQuery}) => {
+  const [searchResults, setSearchResults] = useState({merchants: [], foods: [], merchantNames: []});
+  const [selectedButton, setSelectedButton] = useState("Restaurants");
+  
   const handleButtonClick = (button) => {
     setSelectedButton(button);
   };
+  const navigate = useNavigate();
+
+  // Fetch Search results based on searchQuery
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/search-query', {
+          params: {
+            query: searchQuery}, // Bobs Burgers
+        });
+        setSearchResults(response.data)
+      } catch (error) {
+          console.error('Error sending search request:', error);
+      }
+    };
+
+    if (searchQuery) {
+      fetchData();
+    }
+  }, [searchQuery])
 
   return (
     <section className="homepage-child">
       <div className="frame-parent14">
         <div className="personalized-recommendations-parent">
           <h3 className="personalized-recommendations">
-            Search results for "Rice Bowls"
+            Search results for "{searchQuery}"
           </h3>
           <div className="search-result-buttons">
             <Button
@@ -44,90 +67,40 @@ const SearchedGroupComponent = () => {
             </Button>
           </div>
           <div className="searched-group-component">
-            <SearchedComponent
-              image="/bowl6.png"
-              itemName="Paneer Tikka Rice Bowl"
-              restaurantName={`The Good Bowl`}
-              deal="10% off"
-              mins="20 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
-            <SearchedComponent
-              image="/bowl1.png"
-              itemName="Dal Fry Rice Bowl - Fried With Ghee"
-              restaurantName={`The Good Bowl`}
-              deal="10% off"
-              mins="20 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
-            <SearchedComponent
-              image="/bowl2.png"
-              itemName="Butter Paneer Rice Bowl Large"
-              restaurantName={`The Good Bowl`}
-              deal="$5 off"
-              mins="20 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
-            <SearchedComponent
-              image="/bowl3.png"
-              itemName="Paneer Signature Rice Bowl (Regular)"
-              restaurantName={`Fasso - Wraps & Bowls`}
-              deal="No Deal"
-              mins="15 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
-            <SearchedComponent
-              image="/bowl4.png"
-              itemName="Chicken Signature Rice Bowl"
-              restaurantName={`Fasso - Wraps & Bowls`}
-              deal="No Deal"
-              mins="15 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
-            <SearchedComponent
-              image="/bowl5.png"
-              itemName="Royal Chicken Rice Bowl (Jumbo)"
-              restaurantName={`Fasso - Wraps & Bowls`}
-              deal="5% off"
-              mins="15 Mins"
-              propAlignSelf="unset"
-              propWidth="307px"
-              propPadding="36px 27px 25px"
-              propAlignSelf1="stretch"
-              propHeight="unset"
-              propMinWidth="unset"
-              propMinWidth1="21px"
-            />
+            {selectedButton === "Restaurants" && searchResults.merchants && searchResults.merchants.map((result) => (
+              <SearchedComponent
+                image="/bowl1.png" // TODO: change to result.logo_url
+                itemName={result.merchantname}
+                restaurantName={result.category}
+                deal="10% off"
+                mins="20 Mins"
+                propAlignSelf="unset"
+                propWidth="307px"
+                propPadding="36px 27px 25px"
+                propAlignSelf1="stretch"
+                propHeight="unset"
+                propMinWidth="unset"
+                propMinWidth1="21px"
+                onClicked={() => navigate(`/food-item-page?merchant=${result.restaurant_id}`)}
+              />
+            ))}
+            {selectedButton === "Items" && searchResults.foods && searchResults.merchantNames && searchResults.foods.map((result, index) => (
+              <SearchedComponent
+                image="/bowl1.png" // TODO: change to searchResults.merchantNames[index].logo_url
+                itemName={result.name}
+                restaurantName={searchResults.merchantNames[index].merchantname}
+                deal="10% off"
+                mins="20 Mins"
+                propAlignSelf="unset"
+                propWidth="307px"
+                propPadding="36px 27px 25px"
+                propAlignSelf1="stretch"
+                propHeight="unset"
+                propMinWidth="unset"
+                propMinWidth1="21px"
+                onClicked={() => navigate(`/food-item-page?merchant=${searchResults.merchantNames[index].restaurant_id}`)}
+              />
+            ))}
           </div>
         </div>
       </div>
