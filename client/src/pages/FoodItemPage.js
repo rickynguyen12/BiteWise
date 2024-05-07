@@ -11,10 +11,11 @@ const FoodItemPage = () => {
   const location = useLocation();
 
   const { restaurantName, restaurantInfo } = location.state || {};
+  console.log(restaurantInfo);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   const [menuItems, setMenuItems] = useState([]);
 
@@ -24,39 +25,59 @@ const FoodItemPage = () => {
   }, [restaurantName]);
 
   const addToCart = (item, category) => {
-    const existingItem = selectedItems.findIndex(
-      (selectedItem) =>
-        selectedItem.id === item.id && selectedItem.category === category
+    const existingCartItem = cartItems.find(
+      (cartItem) =>
+        cartItem.item.id === item.id && cartItem.category === category
     );
-    if (existingItem !== -1) {
-      const updated = [...selectedItems];
-      selectedItems[existingItem].quantity += 1;
-      setSelectedItems(updated);
+    //   if (existingItem !== -1) {
+    //     const updated = [...selectedItems];
+    //     selectedItems[existingItem].quantity += 1;
+    //     setSelectedItems(updated);
+    //   } else {
+    //     setSelectedItems([...selectedItems, { ...item, quantity: 1, category }]);
+    //   }
+    // };
+    if (existingCartItem) {
+      const updatedCartItems = cartItems.map((cartItem) =>
+        cartItem === existingCartItem
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem
+      );
+      setCartItems(updatedCartItems);
     } else {
-      setSelectedItems([...selectedItems, { ...item, quantity: 1, category }]);
+      setCartItems([
+        ...cartItems,
+        {
+          restaurantId: restaurantInfo.id,
+          item,
+          itemId: item.id,
+          quantity: 1,
+          category,
+        },
+      ]);
     }
   };
 
   const removeFromCart = (itemId, category) => {
-    const updated = selectedItems
-      .map((item) => {
+    const updatedCartItems = cartItems
+      .map((cartItem) => {
         if (
-          item.id === itemId &&
-          item.category === category &&
-          item.quantity > 0
+          cartItem.item.id === itemId &&
+          cartItem.category === category &&
+          cartItem.quantity > 0
         ) {
-          return { ...item, quantity: item.quantity - 1 };
+          return { ...cartItem, quantity: cartItem.quantity - 1 };
         } else {
-          return item;
+          return cartItem;
         }
       })
-      .filter((item) => item.quantity > 0);
-    setSelectedItems(updated);
+      .filter((cartItem) => cartItem.quantity > 0);
+    setCartItems(updatedCartItems);
   };
 
   const navigate = useNavigate();
-  const goToComparePrices = () => {
-    navigate("/redirect-page-to-food-delivery-app");
+  const goToCart = () => {
+    navigate("/cart", { state: { cartData: cartItems } });
   };
 
   return (
@@ -73,10 +94,10 @@ const FoodItemPage = () => {
             <div className="restaurant-name">
               <h2>{restaurantInfo.davidAndEmilysPatisserie}</h2>
             </div>
-            <div className="french-patisserie">
+            <div className="french-patisserie2">
               <p>{restaurantInfo.frenchPatisserie}</p>
             </div>
-            <div className="info-container">
+            {/* <div className="info-container">
               <div className="rating">
                 <img
                   alt=""
@@ -94,8 +115,8 @@ const FoodItemPage = () => {
               <div className="cost">
                 <p>{restaurantInfo.prop1}</p>
               </div>
-            </div>
-            <div className="frame-wrapper">
+            </div> */}
+            {/* <div className="frame-wrapper">
               <div className="frame-parent5">
                 <TextField
                   className="frame-textfield"
@@ -139,9 +160,9 @@ const FoodItemPage = () => {
                   Favorite
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="offer">
+          {/* <div className="offer">
             <h3>Offers</h3>
             <div className="offer-details">
               <img
@@ -158,7 +179,7 @@ const FoodItemPage = () => {
               />
               <p>{restaurantInfo.offer}</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       <div className="menu">
@@ -195,7 +216,7 @@ const FoodItemPage = () => {
               ))}
         </div>
         <div className="cart">
-          <h2>Cart</h2>
+          <h2>My Bag</h2>
           <p>
             from{" "}
             <div className="cart-name">
@@ -203,22 +224,26 @@ const FoodItemPage = () => {
             </div>
           </p>
           <div className="cart-items">
-            {selectedItems.map((item, index) => (
+            {cartItems.map((cartItem, index) => (
               <div key={index} className="cart-item">
                 <div className="cart-item-info">
-                  <h3>{item.name}</h3>
+                  <h3>{cartItem.item.name}</h3>
                 </div>
                 <div className="cart-item-quantity">
                   <button
                     className="quantity-button"
-                    onClick={() => removeFromCart(item.id, item.category)}
+                    onClick={() =>
+                      removeFromCart(cartItem.item.id, cartItem.item.category)
+                    }
                   >
                     –
                   </button>
-                  <span>{item.quantity}</span>
+                  <span>{cartItem.quantity}</span>
                   <button
                     className="quantity-button"
-                    onClick={() => addToCart(item, item.category)}
+                    onClick={() =>
+                      addToCart(cartItem.item, cartItem.item.category)
+                    }
                   >
                     +
                   </button>
@@ -226,8 +251,8 @@ const FoodItemPage = () => {
               </div>
             ))}
           </div>
-          <button onClick={goToComparePrices} className="compare-prices">
-            Go To Compare Prices
+          <button onClick={goToCart} className="compare-prices">
+            Add to Cart
           </button>
         </div>
       </div>

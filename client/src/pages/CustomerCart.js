@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./CustomerCart.css";
 
 const CustomerCart = () => {
   // Hardcoded data for restaurant name and cart items
-  const [cartData, setCartData] = useState({
-    restaurantName: "David and Emily’s Patisserie",
-    cartItems: [
-      { id: 1, itemName: "Pain au Chocolat", quantity: 2 },
-      { id: 2, itemName: "Plain Croissant", quantity: 1 },
-      { id: 3, itemName: "Chocolate Cake", quantity: 1 },
-    ],
-  });
+  // const [cartData, setCartData] = useState({
+  //   restaurantName: "David and Emily’s Patisserie",
+  //   cartItems: [
+  //     { id: 1, itemName: "Pain au Chocolat", quantity: 2 },
+  //     { id: 2, itemName: "Plain Croissant", quantity: 1 },
+  //     { id: 3, itemName: "Chocolate Cake", quantity: 1 },
+  //   ],
+  // });
+
+  const location = useLocation();
+  console.log("Location state:", location.state);
+  const navigate = useNavigate();
+  const cartData = location.state?.cartData || [];
 
   const handleQuantityChange = (itemId, newQuantity) => {
     const updatedCartItems = cartData.cartItems
@@ -33,23 +38,22 @@ const CustomerCart = () => {
       })
       .filter(Boolean);
 
-    setCartData((prevData) => ({
-      ...prevData,
-      cartItems: updatedCartItems,
-    }));
+    // setCartData((prevData) => ({
+    //   ...prevData,
+    //   cartItems: updatedCartItems,
+    // }));
   };
 
   const handleRemoveItem = (itemId) => {
-    setCartData((prevData) => ({
-      ...prevData,
-      cartItems: prevData.cartItems.filter((item) => item.id !== itemId),
-    }));
+    const updatedCartItems = cartData.filter((item) => item.id !== itemId);
+    // setCartData((prevData) => ({
+    //   ...prevData,
+    //   cartItems: prevData.cartItems.filter((item) => item.id !== itemId),
+    // }));
   };
 
-  const navigate = useNavigate();
-
-  const handleComparePrices = () => {
-    navigate(`/redirect-page-to-food-delivery-app`);
+  const handleCheckout = () => {
+    navigate(`/in-app-checkout`);
   };
 
   return (
@@ -61,7 +65,8 @@ const CustomerCart = () => {
         </header>
       </div>
       <div className="cart-details">
-        <div className="restaurant-name2">From {cartData.restaurantName}</div>
+        <div className="restaurant-name2">From {cartData.restaurantId}</div>
+        {console.log("Cart data:", cartData)}
         {cartData.cartItems.map((item) => (
           <div key={item.id} className="cart-item2">
             <div className="cart-item-name">{item.itemName}</div>
@@ -93,8 +98,8 @@ const CustomerCart = () => {
         ))}
 
         <div className="compare-prices-container">
-          <Button className="compare-prices" onClick={handleComparePrices}>
-            Go to Compare Prices
+          <Button className="compare-prices" onClick={handleCheckout}>
+            Proceed to Checkout
           </Button>
         </div>
       </div>
