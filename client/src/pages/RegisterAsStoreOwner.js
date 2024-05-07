@@ -8,6 +8,7 @@ import {
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import "./RegisterAsStoreOwner.css";
+import FrameComponent4 from "../components/FrameComponent4";
 
 const RegisterAsStoreOwner = () => {
   const navigate = useNavigate();
@@ -27,80 +28,13 @@ const RegisterAsStoreOwner = () => {
     <div className="register-as-store-owner">
       <section className="store-registration">
         <div className="subtract-button-parent">
-          <div className="subtract-button">
-            <div className="bite-wise-label">
-              <div className="search-bar">
-                <img
-                  className="subtract-icon1"
-                  loading="lazy"
-                  alt=""
-                  src="/subtract1.svg"
-                />
-              </div>
-              <h1 className="bitewise1">BiteWise</h1>
-            </div>
-            <div className="image-placeholder">
-              <TextField
-                className="image-placeholder-child"
-                placeholder="Enter item or restaurant you are looking for"
-                variant="outlined"
-                InputProps={{
-                  endAdornment: (
-                    <img width="19px" height="19px" src="/vector.svg" />
-                  ),
-                }}
-                sx={{
-                  "& fieldset": { borderColor: "#808080" },
-                  "& .MuiInputBase-root": {
-                    height: "49px",
-                    backgroundColor: "#fff",
-                    paddingRight: "25px",
-                    borderRadius: "10px",
-                  },
-                  "& .MuiInputBase-input": { color: "#808080" },
-                }}
-              />
-              <div className="category-field">
-                <div className="bag1">
-                  <img
-                    className="vector-icon"
-                    alt=""
-                    src="/vector-1.svg"
-                    onClick={onCartClick}
-                  />
-                  <div className="bag-child" />
-                </div>
-              </div>
-              <Button
-                className="sign-in2"
-                disableElevation={true}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  color: "#fdfbfa",
-                  fontSize: "14",
-                  background: "#202020",
-                  borderRadius: "10px",
-                  "&:hover": { background: "#202020" },
-                  width: 96,
-                  height: 49,
-                }}
-                onClick={onSignInClick}
-              >
-                Sign In
-              </Button>
-            </div>
-            <img
-              className="image-1-icon1"
-              alt=""
-              src="/image-1@2x.png"
-              onClick={onLogoContainerClick}
-            />
+          <FrameComponent4 />
+          <div className="redirect-header-frame">
+            <header className="redirect-header">
+              <h3 className="cart1">Register Business</h3>
+            </header>
           </div>
           <div className="business-registration-parent">
-            <header className="business-registration">
-              <h2 className="register-business">Register Business</h2>
-            </header>
             <div className="phone-number-input">
               <form className="state-zipcode-fields">
                 <div className="state-zipcode-fields-child" />
@@ -212,6 +146,21 @@ const RegisterAsStoreOwner = () => {
                     <TextField
                       className="city-input1"
                       placeholder="Category"
+                      variant="outlined"
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "47px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
+                    <TextField
+                      className="city-input1"
+                      placeholder="Logo Image URL"
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
