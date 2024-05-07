@@ -14,8 +14,6 @@ import GoogleStrategy from 'passport-google-oauth20';
 import cors from 'cors';
 
 
-
-
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -63,6 +61,9 @@ app.use('/merchant', merchantRoutes);
 
 import menuRoutes from './routes/menu.js';
 app.use("/menu", menuRoutes);
+
+import orderRoutes from './routes/order.js';
+app.use('/orders', orderRoutes);
 
 
 passport.use("google", new GoogleStrategy({

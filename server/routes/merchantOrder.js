@@ -1,4 +1,3 @@
-/*
 import { merchant } from '../models/merchant.js';
 
 // Route to get a merchant by restaurant ID
@@ -27,4 +26,3 @@ app.get('/merchants/:restaurantId/active-orders', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-*/
