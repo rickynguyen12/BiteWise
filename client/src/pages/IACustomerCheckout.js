@@ -20,20 +20,21 @@ import RemoveIcon from '@mui/icons-material/Remove';
 const IACustomerCheckout = () => {
     const taxRate = 0.0875;
     const deliveryFee = 5.50;
+    const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034];
 
     const [cartData, setCartData] = useState({
         restaurantName: "David and Emily’s Patisserie",
         cartItems: [
-            { id: 1, itemName: "Pain au Chocolat", quantity: 2, price: 4.99},
-            { id: 2, itemName: "Plain Croissant", quantity: 1 , price: 6.99},
-            { id: 3, itemName: "Chocolate Cake", quantity: 1 , price: 13.99},
+            { id: 1, itemName: "Pain au Chocolat", quantity: 2, price: 4.99 },
+            { id: 2, itemName: "Plain Croissant", quantity: 1, price: 6.99 },
+            { id: 3, itemName: "Chocolate Cake", quantity: 1, price: 13.99 },
         ],
     });
 
-    const[itemTotal, setItemTotal] = useState(0);
-    const[taxPrice, setTaxPrice] = useState(0);
-    const[subtotal, setSubtotal] = useState(0);
-    
+    const [itemTotal, setItemTotal] = useState(0);
+    const [taxPrice, setTaxPrice] = useState(0);
+    const [subtotal, setSubtotal] = useState(0);
+
     useEffect(() => {
         let totalPrice = 0.00;
         cartData.cartItems.forEach((item) => {
@@ -48,12 +49,62 @@ const IACustomerCheckout = () => {
         setSubtotal((subtotal).toFixed(2));
     }, [cartData.cartItems]);
 
-    const handleSubmit = (form) => {
-        // fill out route for backend
+    const handleSubmit = async (e) => {
+
+        /**
+         * {
+            _id: ObjectId,
+            userId: ObjectId, // stored in local storage or cookies
+            restaurantId: ObjectId, // stored in local storage or cookies after displaying
+            items: [String], // add item name for each cart data
+            status: String,  // n/a
+            totalPrice: Number, // totalprice
+            paymentMethod: String, // credit card
+            confirmationNumber: String, // generate random
+            deliveryDetails: Object, // message
+            createdAt: Date, // date
+            }
+
+         */
+        e.preventDefault();
+        console.log(formData);
+        navigate('/in-app-order-confirm');
+    };
+
+    // validation functions
+    const validateFName = (field) => {
+        if (/[^a-zA-Z\s]+/.test(field)) return "First Name can only contain letters (a-z A-Z) only!";
+        else return "";
+    };
+
+    const validateCity = (field) => {
+        if (/[^a-zA-Z\s]+/.test(field)) return "City can only contain letters (a-z A-Z) only!";
+        else return "";
+    };
+
+    const validateState = (field) => {
+        if (/[^a-zA-Z\s]+/.test(field)) return "State can only contain letters (a-z A-Z) only!";
+        else return "";
+    };
+
+    const validateLName = (field) => {
+        if (/[^a-zA-Z\s]+/.test(field)) return "Last Name can only contain letters (a-z A-Z) only!";
+        else return "";
+    };
+
+    const validateAddress = (field) => {
+        if (/[^a-zA-Z0-9\s]+/.test(field)) return "Address can only contain letters (a-z A-Z) or numbers only!";
+        else return "";
+    };
+
+    const validateZipCode = (field) => {
+        if (/[^0-9-\s]+/.test(field)) return "Zip Code can only contain numbers only!";
+        else return "";
     }
 
+
     const handleQuantityChange = (itemId, newQuantity, type) => {
-        
+
         const updatedCartItems = cartData.cartItems
             .map((item) => {
                 if (item.id === itemId) {
@@ -76,7 +127,7 @@ const IACustomerCheckout = () => {
         }));
     };
 
-    const[formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
         address1: "",
         address2: "",
         city: "",
@@ -84,247 +135,84 @@ const IACustomerCheckout = () => {
         zipCode: "",
         fname: "",
         lname: "",
-        ccNum: "",
+        ccnum: "",
         expMonth: "",
-        expDate: "",
+        expYear: "",
         cvvNum: ""
     });
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]:value,
+            [name]: value,
         }));
     };
 
 
     const navigate = useNavigate();
 
-    const onLogoContainerClick = () => {
-        navigate("/");
-    };
-
     return (
-        <div className="register">
-            <section className="register-inner">
-                <div className="frame-parent">
-                    <div className="frame-group" >
-                        <div className="logo-wrapper" onClick={onLogoContainerClick}>
-                            <div className="logo" onClick={onLogoContainerClick}>
-                                <h2 className="bitewise">BiteWise</h2>
-                                <img
-                                    className="subtract-icon"
-                                    loading="lazy"
-                                    alt=""
-                                    src="/subtract1.svg"
-                                    onClick={onLogoContainerClick}
-                                />
-                            </div>
-                        </div>
-                        <div className="first-name-field">
-                            <TextField
-                                className="last-name-field"
-                                placeholder="Enter item or restaurant you are looking for"
-                                variant="outlined"
-                                InputProps={{
-                                    endAdornment: (
-                                        <img width="19px" height="19px" src="/vector.svg" />
-                                    ),
-                                }}
-                                sx={{
-                                    "& fieldset": { borderColor: "#808080" },
-                                    "& .MuiInputBase-root": {
-                                        height: "49px",
-                                        backgroundColor: "#fff",
-                                        paddingRight: "25px",
-                                        borderRadius: "10px",
-                                    },
-                                    "& .MuiInputBase-input": { color: "#808080" },
-                                }}
-                            />
-                            <div className="sign-in-instance">
-                                <div className="bag">
-                                    <img
-                                        className="calorie-info-icon"
-                                        alt=""
-                                        src="/vector-1.svg"
-                                    />
-                                    <div className="delivery-info" />
+        <div className="checkout-container">
+            <FrameComponent4 />
+            <header className="register-wrapper">
+                <h3 className="register1">In App Checkout</h3>
+            </header>
+            <section className='section1'>
+                <div className="first-body">
+                    <div className="checkout-form-wrapper">
+                        <form className="checkout-form" onSubmit={handleSubmit}>
+                            <div className="delivery-payment-sections">
+                                <div className="delivery-payment-header">
+                                    <img className="loc-icon" alt="" src="/location.svg" />
+                                    <h5 className="create-your-account">Delivery Address</h5>
                                 </div>
-                            </div>
-                            <Button
-                                className="sign-in"
-                                disableElevation={true}
-                                variant="contained"
-                                sx={{
-                                    textTransform: "none",
-                                    color: "#fdfbfa",
-                                    fontSize: "14",
-                                    background: "#202020",
-                                    borderRadius: "10px",
-                                    "&:hover": { background: "#202020" },
-                                    width: 96,
-                                    height: 49,
-                                }}
-                            >
-                                Sign In
-                            </Button>
-                        </div>
-                        <img className="image-1-icon" alt="" src="/image-1@2x.png" />
-                    </div>
-                    <div className="first-parent">
-                        <header className="register-wrapper">
-                            <h3 className="register1">In App Checkout</h3>
-                        </header>
-                        <div className="first-body">
-                            <div className="checkout-form-wrapper">
-                                <form className="checkout-form" onSubmit={handleSubmit(this)}>
-                                    <div className="delivery-payment-sections">
-                                        <div className="delivery-payment-header">
-                                            <img className="loc-icon" alt="" src="/location.svg" />
-                                            <h5 className="create-your-account">Delivery Address</h5>
-                                        </div>
-                                        <div className="delivery-sub">
-                                            <TextField
-                                                className="street-address"
-                                                placeholder="Address Line 1"
-                                                variant="outlined"
-                                                name='address1'
-                                                onChange={handleChange}
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                            <TextField
-                                                className="street-address"
-                                                placeholder="Address Line 2"
-                                                name='address2'
-                                                variant="outlined"
-                                                onChange={handleChange}
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                            <div className="city-state-info">
-                                                <TextField
-                                                    className="city-field"
-                                                    placeholder="City"
-                                                    variant="outlined"
-                                                    name='city'
-                                                    onChange={handleChange}
-                                                    required
-                                                    sx={{
-                                                        "& fieldset": { borderColor: "#1ac84b" },
-                                                        "& .MuiInputBase-root": {
-                                                            height: "40px",
-                                                            backgroundColor: "#fff",
-                                                            borderRadius: "10px",
-                                                        },
-                                                        "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                    }}
-                                                />
-                                                <TextField
-                                                    className="city-field"
-                                                    placeholder="State"
-                                                    variant="outlined"
-                                                    name='state'
-                                                    onChange={handleChange}
-                                                    required
-                                                    sx={{
-                                                        "& fieldset": { borderColor: "#1ac84b" },
-                                                        "& .MuiInputBase-root": {
-                                                            height: "40px",
-                                                            backgroundColor: "#fff",
-                                                            borderRadius: "10px",
-                                                        },
-                                                        "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                    }}
-                                                />
-
-                                                <TextField
-                                                    className="street-address"
-                                                    placeholder="Zip Code"
-                                                    variant="outlined"
-                                                    name='zipcode'
-                                                    onChange={handleChange}
-                                                    required
-                                                    sx={{
-                                                        "& fieldset": { borderColor: "#1ac84b" },
-                                                        "& .MuiInputBase-root": {
-                                                            height: "40px",
-                                                            width: "168px",
-                                                            backgroundColor: "#fff",
-                                                            borderRadius: "10px",
-                                                        },
-                                                        "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="delivery-payment-header">
-                                        <img className="loc-icon" alt="" src="/card.svg" />
-                                        <h5 className="create-your-account">Payment Information</h5>
-                                    </div>
-                                    <div className="delivery-sub">
-                                        <img className="payments-img" alt="" src="/payments.svg" />
-                                        <div className="payment-info">
-                                            <TextField
-                                                className="name-field"
-                                                placeholder="First Name"
-                                                variant="outlined"
-                                                name='firstName'
-                                                onChange={handleChange}
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                            <TextField
-                                                className="name-field"
-                                                placeholder="Last Name"
-                                                variant="outlined"
-                                                name='lastName'
-                                                onChange={handleChange}
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                        </div>
+                                <div className="delivery-sub">
+                                    <TextField
+                                        className="street-address"
+                                        placeholder="Address Line 1"
+                                        error={validateAddress(formData.address1)}
+                                        helperText={validateAddress(formData.address1)}
+                                        variant="outlined"
+                                        name='address1'
+                                        onChange={handleChange}
+                                        required
+                                        sx={{
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                height: "40px",
+                                                backgroundColor: "#fff",
+                                                borderRadius: "10px",
+                                            },
+                                            "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                        }}
+                                    />
+                                    <TextField
+                                        className="street-address"
+                                        placeholder="Address Line 2"
+                                        name='address2'
+                                        variant="outlined"
+                                        error={validateAddress(formData.address2)}
+                                        helperText={validateAddress(formData.address2)}
+                                        onChange={handleChange}
+                                        sx={{
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                height: "40px",
+                                                backgroundColor: "#fff",
+                                                borderRadius: "10px",
+                                            },
+                                            "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                        }}
+                                    />
+                                    <div className="city-state-info">
                                         <TextField
-                                            className="street-address"
-                                            placeholder="Credit Card Number (xxxx xxxx xxxx xxxx)"
+                                            className="city-field"
+                                            placeholder="City"
                                             variant="outlined"
-                                            name='ccnum'
+                                            name='city'
+                                            error={validateCity(formData.city)}
+                                            helperText={validateCity(formData.city)}
                                             onChange={handleChange}
                                             required
                                             sx={{
@@ -337,124 +225,256 @@ const IACustomerCheckout = () => {
                                                 "& .MuiInputBase-input": { color: "#808080", height: '10px' },
                                             }}
                                         />
-                                        <div className="city-state-info">
-                                            <TextField
-                                                className="city-field"
-                                                placeholder="Month (i.e. September)"
-                                                variant="outlined"
-                                                onChange={handleChange}
-                                                name='expmonth'
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                            <TextField
-                                                className="city-field"
-                                                placeholder="Year (i.e. 2024)"
-                                                variant="outlined"
-                                                onChange={handleChange}
-                                                name='expyear'
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-
-                                            <TextField
-                                                className="street-address"
-                                                placeholder="CVV"
-                                                variant="outlined"
-                                                name='cvvnum'
-                                                onChange={handleChange}
-                                                required
-                                                sx={{
-                                                    "& fieldset": { borderColor: "#1ac84b" },
-                                                    "& .MuiInputBase-root": {
-                                                        height: "40px",
-                                                        width: "168px",
-                                                        backgroundColor: "#fff",
-                                                        borderRadius: "10px",
-                                                    },
-                                                    "& .MuiInputBase-input": { color: "#808080", height: '10px' },
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="sign-in-parent">
-                                        <Button
-                                            className="sign-in1"
-                                            type='submit'
-                                            disableElevation={true}
-                                            variant="contained"
+                                        <TextField
+                                            className="city-field"
+                                            placeholder="State"
+                                            variant="outlined"
+                                            name='state'
+                                            error={validateState(formData.state)}
+                                            helperText={validateState(formData.state)}
+                                            onChange={handleChange}
+                                            required
                                             sx={{
-                                                textTransform: "none",
-                                                marginTop: "25px",
-                                                color: "#fff",
-                                                fontSize: "14",
-                                                background: "#307651",
-                                                borderRadius: "10px",
-                                                "&:hover": { background: "#307651" },
-                                                height: 49,
+                                                "& fieldset": { borderColor: "#1ac84b" },
+                                                "& .MuiInputBase-root": {
+                                                    height: "40px",
+                                                    backgroundColor: "#fff",
+                                                    borderRadius: "10px",
+                                                },
+                                                "& .MuiInputBase-input": { color: "#808080", height: '10px' },
                                             }}
-                                        >
-                                            Confirm Payment
-                                        </Button>
+                                        />
+
+                                        <TextField
+                                            className="street-address"
+                                            placeholder="Zip Code"
+                                            variant="outlined"
+                                            name='zipCode'
+                                            error={validateZipCode(formData.zipCode)}
+                                            helperText={validateZipCode(formData.zipCode)}
+                                            onChange={handleChange}
+                                            required
+                                            sx={{
+                                                "& fieldset": { borderColor: "#1ac84b" },
+                                                "& .MuiInputBase-root": {
+                                                    height: "40px",
+                                                    width: "168px",
+                                                    backgroundColor: "#fff",
+                                                    borderRadius: "10px",
+                                                },
+                                                "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                            }}
+                                        />
                                     </div>
-                                </form>
-                            </div>
-                            <div className="cart-wrapper">
-                                <h3 className="cart-header">Cart</h3>
-                                {cartData.cartItems.map((item) => (
-                                    <div className='cart-item'>
-                                        <div className='order-info'>
-                                            <p className="item-name">{item.itemName}</p>
-                                            <p className="cart-item-price">${item.price*item.quantity}</p>
-                                        </div>
-                                        <div className='quantity-btns'>
-                                            <IconButton onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
-                                                <RemoveIcon className='sub-btn' />
-                                            </IconButton>
-                                            <span className="item-quantity">
-                                                {item.quantity}</span>
-                                            <IconButton onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
-                                                <AddIcon className='add-btn' />
-                                            </IconButton>
-                                        </div>
-                                    </div>
-                                ))}
-                                <div className='subtotal-div'>
-                                    <div className='item-total-div'>
-                                        <p className='label'>Item Total </p>
-                                        <p className='value'> ${itemTotal}</p>
-                                    </div>
-                                    <div className='item-total-div'>
-                                        <p className='label'>Taxes </p>
-                                        <p className='taxprice-val'> ${taxPrice}</p>
-                                    </div>
-                                    <div className='item-total-div'>
-                                        <p className='delivery-label'>Delivery Fee </p>
-                                        <p className='delivery-val'> ${deliveryFee.toFixed(2)}</p>
-                                    </div>
-                                    <div className='total-price-div'>
-                                        <h4 className='total-label'>Total </h4>
-                                        <h4 className='total-value'> ${subtotal}</h4>
-                                    </div>
-                                   
                                 </div>
                             </div>
+                            <div className="delivery-payment-header">
+                                <img className="loc-icon" alt="" src="/card.svg" />
+                                <h5 className="create-your-account">Payment Information</h5>
+                            </div>
+                            <div className="delivery-sub">
+                                <img className="payments-img" alt="" src="/payments.svg" />
+                                <div className="payment-info">
+                                    <TextField
+                                        className="name-field"
+                                        placeholder="First Name"
+                                        variant="outlined"
+                                        name='fname'
+                                        onChange={handleChange}
+                                        error={validateFName(formData.fname)}
+                                        helperText={validateFName(formData.fname)}
+                                        required
+                                        sx={{
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                height: "40px",
+
+                                                backgroundColor: "#fff",
+                                                borderRadius: "10px",
+                                            },
+                                            "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                        }}
+                                    />
+                                    <TextField
+                                        className="name-field"
+                                        placeholder="Last Name"
+                                        variant="outlined"
+                                        name='lname'
+                                        onChange={handleChange}
+                                        error={validateLName(formData.lname)}
+                                        helperText={validateLName(formData.lname)}
+                                        required
+                                        sx={{
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                height: "40px",
+
+                                                backgroundColor: "#fff",
+                                                borderRadius: "10px",
+                                            },
+                                            "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                        }}
+                                    />
+                                </div>
+                                <TextField
+                                    className="street-address"
+                                    placeholder="Credit Card Number (xxxx xxxx xxxx xxxx)"
+                                    variant="outlined"
+                                    name='ccnum'
+                                    onChange={handleChange}
+                                    required
+                                    sx={{
+                                        "& fieldset": { borderColor: "#1ac84b" },
+                                        "& .MuiInputBase-root": {
+                                            height: "40px",
+                                            backgroundColor: "#fff",
+                                            borderRadius: "10px",
+                                        },
+                                        "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                    }}
+                                />
+                                <div className="city-state-info">
+                                    <Select
+                                        placeholder="Month (i.e. September)"
+                                        className="city-field"
+                                        value={formData.expMonth}
+                                        name='expMonth'
+                                        onChange={handleChange}
+                                        sx={{
+                                            height: "40px",
+                                            borderRadius: "10px",
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                width: "626px",
+                                                backgroundColor: "#fff",
+                                                borderRadius: "20px",
+                                            },
+                                            "& .MuiInputBase-input": {
+                                                color: "#808080",
+                                                height: '10px'
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem value={'January'}>Jan</MenuItem>
+                                        <MenuItem value={'February'}>Feb</MenuItem>
+                                        <MenuItem value={'March'}>Mar</MenuItem>
+                                        <MenuItem value={'April'}>Apr</MenuItem>
+                                        <MenuItem value={'May'}>May</MenuItem>
+                                        <MenuItem value={'June'}>Jun</MenuItem>
+                                        <MenuItem value={'July'}>Jul</MenuItem>
+                                        <MenuItem value={'August'}>Aug</MenuItem>
+                                        <MenuItem value={'September'}>Sep</MenuItem>
+                                        <MenuItem value={'October'}>Oct</MenuItem>
+                                        <MenuItem value={'November'}>Nov</MenuItem>
+                                        <MenuItem value={'December'}>Dec</MenuItem>
+                                    </Select>
+                                    <Select
+                                        placeholder="Month (i.e. September)"
+                                        className="city-field"
+                                        value={formData.expYear}
+                                        name='expYear'
+                                        onChange={handleChange}
+                                        sx={{
+                                            height: "40px",
+                                            borderRadius: "10px",
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                width: "626px",
+                                                backgroundColor: "#fff",
+                                                borderRadius: "20px",
+                                            },
+                                            "& .MuiInputBase-input": {
+                                                color: "#808080",
+                                                height: '10px'
+                                            },
+                                        }}
+                                    >
+                                        {years.map((item, index) => {
+                                            return <MenuItem key={index} value={item}>{item}</MenuItem>
+                                        })}
+                                    </Select>
+                                    <TextField
+                                        className="street-address"
+                                        placeholder="CVV"
+                                        variant="outlined"
+                                        name='cvvNum'
+                                        onChange={handleChange}
+                                        required
+                                        type="password"
+                                        inputProps={{ maxLength: 3 }}
+                                        sx={{
+                                            "& fieldset": { borderColor: "#1ac84b" },
+                                            "& .MuiInputBase-root": {
+                                                height: "40px",
+                                                width: "168px",
+                                                backgroundColor: "#fff",
+                                                borderRadius: "10px",
+                                            },
+                                            "& .MuiInputBase-input": { color: "#808080", height: '10px' },
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="sign-in-parent">
+                                <Button
+                                    className="sign-in1"
+                                    type='submit'
+                                    disableElevation={true}
+                                    variant="contained"
+                                    sx={{
+                                        textTransform: "none",
+                                        marginTop: "25px",
+                                        color: "#fff",
+                                        fontSize: "14",
+                                        background: "#307651",
+                                        borderRadius: "10px",
+                                        "&:hover": { background: "#307651" },
+                                        height: 49,
+                                    }}
+                                >
+                                    Confirm Payment
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="cart-wrapper">
+                        <h3 className="cart-header">Cart</h3>
+                        {cartData.cartItems.map((item) => (
+                            <div className='cart-item'>
+                                <div className='order-info'>
+                                    <p className="item-name">{item.itemName}</p>
+                                    <p className="cart-item-price">${item.price * item.quantity}</p>
+                                </div>
+                                <div className='quantity-btns'>
+                                    <IconButton onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
+                                        <RemoveIcon className='sub-btn' />
+                                    </IconButton>
+                                    <span className="item-quantity">
+                                        {item.quantity}</span>
+                                    <IconButton onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
+                                        <AddIcon className='add-btn' />
+                                    </IconButton>
+                                </div>
+                            </div>
+                        ))}
+                        <div className='subtotal-div'>
+                            <div className='item-total-div'>
+                                <p className='label'>Item Total </p>
+                                <p className='value'> ${itemTotal}</p>
+                            </div>
+                            <div className='item-total-div'>
+                                <p className='label'>Taxes </p>
+                                <p className='taxprice-val'> ${taxPrice}</p>
+                            </div>
+                            <div className='item-total-div'>
+                                <p className='delivery-label'>Delivery Fee </p>
+                                <p className='delivery-val'> ${deliveryFee.toFixed(2)}</p>
+                            </div>
+                            <div className='total-price-div'>
+                                <h4 className='total-label'>Total </h4>
+                                <h4 className='total-value'> ${subtotal}</h4>
+                            </div>
+
                         </div>
                     </div>
                 </div>
