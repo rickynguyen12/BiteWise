@@ -4,13 +4,14 @@ import {
   Icon,
   IconButton,
   Snackbar,
+  Snackbar,
   Button,
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import "./FrameComponent4.css";
-import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const FrameComponent4 = () => {
   const navigate = useNavigate();
@@ -75,6 +76,8 @@ const FrameComponent4 = () => {
           <TextField
             className="frame-inner"
             placeholder="Enter item or restaurant you are looking for"
+            onChange={(e) => setSearchInput(e.target.value)} // Add an onChange handler to update searchInput
+            onKeyUp={handleKeyPress} // Add onKeyPress event handler
             variant="outlined"
             InputProps={{
               endAdornment: (

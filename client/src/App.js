@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAsStoreOwner from "./pages/RegisterAsStoreOwner";
 import FoodItemPage from "./pages/FoodItemPage";
+import FoodItemPage2 from "./pages/FoodItemPage2";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";

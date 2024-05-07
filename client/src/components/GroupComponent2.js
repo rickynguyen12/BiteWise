@@ -8,6 +8,128 @@ import {
   InputAdornment,
 } from "@mui/material";
 import "./GroupComponent2.css";
+import Stars from "./Stars";
+import Price from "./Price";
+import React, { useState } from "react";
+import Checkboxes from "./Checkboxes";
+
+const GroupComponent2 = () => {
+  const [deliverySelected, setDeliverySelected] = useState(false);
+  const [pickupSelected, setPickupSelected] = useState(false);
+  const [uberEatsSelected, setUberEatsSelected] = useState(false);
+  const [doordashSelected, setDoordashSelected] = useState(false);
+  const [postmatesSelected, setPostmatesSelected] = useState(false);
+  const [grubhubSelected, setGrubhubSelected] = useState(false);
+  const [noneSelected, setNoneSelected] = useState(false);
+
+  const handleDeliveryClick = () => {
+    setDeliverySelected(!deliverySelected);
+  };
+  const handlePickupClick = () => {
+    setPickupSelected(!pickupSelected);
+  };
+  const handleUberEatsClick = () => {
+    setUberEatsSelected(!uberEatsSelected);
+  };
+  const handleDoordashClick = () => {
+    setDoordashSelected(!doordashSelected);
+  };
+  const handlePostmatesClick = () => {
+    setPostmatesSelected(!postmatesSelected);
+  };
+  const handleGrubhubClick = () => {
+    setGrubhubSelected(!grubhubSelected);
+  };
+  const handleNoneClick = () => {
+    setNoneSelected(!noneSelected);
+  };
+  const defaultRating = localStorage.getItem("starRating");
+
+  return (
+    <div className="rectangle-groups">
+      <div className="rectangle-divs" />
+      <div className="frame-parent5s">
+        <Button
+          className={`button ${deliverySelected ? "selected" : "unselected"}`}
+          startIcon={
+            <img
+              width="20px"
+              height="20px"
+              src={deliverySelected ? "/delivery.png" : "/pickup-black.png"}
+            />
+          }
+          disableElevation={true}
+          variant="outlined"
+          sx={{
+            textTransform: "none",
+            fontSize: "16px",
+            width: "150px",
+            borderColor: "#3b9566",
+            borderRadius: "10px",
+            backgroundColor: deliverySelected ? "#3B9566" : "#C7C7C7",
+            color: deliverySelected ? "#fff" : "#404040",
+            "&:hover": {
+              backgroundColor: "#C7C7C7",
+              borderColor: "#8A8A8A",
+              fontColor: "#fff",
+              color: deliverySelected ? "#fff" : "#fff",
+            },
+            borderStyle: "dashed",
+            height: "45px",
+            marginLeft: "10px",
+          }}
+          onClick={handleDeliveryClick}
+        >
+          Delivery
+        </Button>
+        <Button
+          className={`button ${pickupSelected ? "selected" : "unselected"}`}
+          startIcon={
+            <img
+              width="20px"
+              height="20px"
+              src={pickupSelected ? "/pickup-white.png" : "/pickup.png"}
+            />
+          }
+          disableElevation={true}
+          variant="outlined"
+          sx={{
+            textTransform: "none",
+            fontSize: "16px",
+            width: "150px",
+            borderColor: "#3b9566",
+            borderRadius: "10px",
+            backgroundColor: pickupSelected ? "#3B9566" : "#C7C7C7",
+            color: pickupSelected ? "#fff" : "#404040",
+            "&:hover": {
+              backgroundColor: "#C7C7C7",
+              borderColor: "#8A8A8A",
+              fontColor: "#fff",
+              color: pickupSelected ? "#fff" : "#fff",
+            },
+            borderStyle: "dashed",
+            height: "45px",
+            marginLeft: "10px",
+          }}
+          onClick={handlePickupClick}
+        >
+          Pickup
+        </Button>
+      </div>
+      <div className="frame-wrapper3s">
+        <div className="cart-size-affectss">
+          Cart Size (affects service fees)
+        </div>
+        <div className="form-control-wrapper">
+  Button,
+  Select,
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  FormControl,
+  InputAdornment,
+} from "@mui/material";
+import "./GroupComponent2.css";
 import React, { useState } from "react";
 
 const GroupComponent2 = () => {

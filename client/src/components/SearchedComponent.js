@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import "./SearchedComponent.css";
+import { Navigate } from "react-router-dom";
 
 const SearchedComponent = ({
   image,
@@ -14,6 +15,7 @@ const SearchedComponent = ({
   propHeight,
   propMinWidth,
   propMinWidth1,
+  onClicked
 }) => {
   const notYourMothersStyle = useMemo(() => {
     return {
@@ -35,7 +37,7 @@ const SearchedComponent = ({
   }, [propMinWidth1]);
 
   return (
-    <div className="search-container">
+    <div className="search-container" onClick={onClicked}>
       <div className="search-container2">
         <img className="frame-search-image" alt="" src={image} />
         <div className="search-container-inner">
