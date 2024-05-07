@@ -8,10 +8,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import "./GroupComponent2.css";
-import Stars from "./Stars";
-import Price from "./Price";
 import React, { useState } from "react";
-import Checkboxes from "./Checkboxes";
 
 const GroupComponent2 = () => {
   const [deliverySelected, setDeliverySelected] = useState(false);
@@ -118,7 +115,7 @@ const GroupComponent2 = () => {
       </div>
       <div className="frame-wrapper3s">
         <div className="cart-size-affectss">
-          Cart Size (affects service fees)
+          Sort by
         </div>
         <div className="form-control-wrapper">
           <FormControl
@@ -188,146 +185,14 @@ const GroupComponent2 = () => {
                   style={{ marginRight: "8px" }}
                 />
               )}
+              value = "default"
             >
-              <MenuItem>Default cart size</MenuItem>
+              <MenuItem value="default">Default</MenuItem>
+              <MenuItem value="price-low-to-high">Price: Low to High</MenuItem>
+              <MenuItem value="price-high-to-low">Price: High to Low</MenuItem>
             </Select>
             <FormHelperText />
           </FormControl>
-        </div>
-      </div>
-      <div className="frame-wrapper4s">
-        <div className="ratings-parent">
-          <div className="ratings">Rating</div>
-          <div className="frame-wrapper5s">
-            <Stars defaultRating={defaultRating} />
-          </div>
-        </div>
-      </div>
-      <div className="data-aggregators">
-        <div className="logic-gates">
-          <div className="prices">Price</div>
-          <Price defaultRating={defaultRating} />
-        </div>
-      </div>
-      <div className="output-containers">
-        <div className="preferred-delivery-services">
-          Preferred Delivery Service
-        </div>
-      </div>
-      <div className="frame-wrapper6s">
-        <div className="button-parents">
-          <Button
-            className={`button ${uberEatsSelected ? "selected" : "unselected"}`}
-            disableElevation={true}
-            variant="outlined"
-            sx={{
-              textTransform: "none",
-              backgroundColor: uberEatsSelected ? "#3B9566" : "#C7C7C7",
-              color: uberEatsSelected ? "#fff" : "#404040",
-              fontSize: "16",
-              width: "150px",
-              borderColor: "#3b9566",
-              borderRadius: "10px",
-              "&:hover": { borderColor: "#3B9566" },
-              height: 43,
-            }}
-            onClick={handleUberEatsClick}
-          >
-            Uber Eats
-          </Button>
-          <Button
-            className={`button ${doordashSelected ? "selected" : "unselected"}`}
-            disableElevation={true}
-            variant="outlined"
-            sx={{
-              textTransform: "none",
-              backgroundColor: doordashSelected ? "#3B9566" : "#C7C7C7",
-              color: doordashSelected ? "#fff" : "#404040",
-              fontSize: "16",
-              width: "150px",
-              borderColor: "#3b9566",
-              borderRadius: "10px",
-              "&:hover": { borderColor: "#3B9566" },
-              height: 43,
-            }}
-            onClick={handleDoordashClick}
-          >
-            Doordash
-          </Button>
-        </div>
-      </div>
-      <div className="frame-wrapper7s">
-        <div className="button-groups">
-          <Button
-            className={`button ${
-              postmatesSelected ? "selected" : "unselected"
-            }`}
-            disableElevation={true}
-            variant="outlined"
-            sx={{
-              textTransform: "none",
-              backgroundColor: postmatesSelected ? "#3B9566" : "#C7C7C7",
-              color: postmatesSelected ? "#fff" : "#404040",
-              fontSize: "16",
-              width: "150px",
-              borderColor: "#3b9566",
-              borderRadius: "10px",
-              "&:hover": { borderColor: "#3B9566" },
-              height: 43,
-            }}
-            onClick={handlePostmatesClick}
-          >
-            Postmates
-          </Button>
-          <Button
-            className={`button ${grubhubSelected ? "selected" : "unselected"}`}
-            disableElevation={true}
-            variant="outlined"
-            sx={{
-              textTransform: "none",
-              backgroundColor: grubhubSelected ? "#3B9566" : "#C7C7C7",
-              color: grubhubSelected ? "#fff" : "#404040",
-              fontSize: "16",
-              width: "150px",
-              borderColor: "#3b9566",
-              borderRadius: "10px",
-              "&:hover": { borderColor: "#3B9566" },
-              height: 43,
-            }}
-            onClick={handleGrubhubClick}
-          >
-            Grubhub
-          </Button>
-        </div>
-      </div>
-      <div className="tree-structures">
-        <Button
-          className={`button ${noneSelected ? "selected" : "unselected"}`}
-          disableElevation={true}
-          variant="outlined"
-          sx={{
-            textTransform: "none",
-            backgroundColor: noneSelected ? "#3B9566" : "#C7C7C7",
-            color: noneSelected ? "#fff" : "#404040",
-            fontSize: "16",
-            width: "150px",
-            borderColor: "#3b9566",
-            borderRadius: "10px",
-            "&:hover": { borderColor: "#3B9566" },
-            height: 43,
-          }}
-          onClick={handleNoneClick}
-        >
-          None
-        </Button>
-      </div>
-      <div className="condition-checkers">
-        <div className="data-splitters">
-          {/* <div className="checkboxs" /> */}
-          <Checkboxes />
-          <div className="error-handlers">
-            <div className="available-nows">Available Now</div>
-          </div>
         </div>
       </div>
     </div>

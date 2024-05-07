@@ -21,8 +21,7 @@ const OwnerViewProfile = () => {
     // Fetch owner details from backend or any data source
     // Update the owner details state with fetched data
     const fetchedOwnerDetails = {
-      firstName: 'John',
-      lastName: 'Doe',
+      merchantName: "Bob's Burgers",
       phoneNumber: '123-456-7890',
       email: 'john.doe@example.com'
     };
@@ -53,8 +52,7 @@ const OwnerViewProfile = () => {
               <div className="owner-details-content17">
                 <h2 className="owner-details17">Owner Details</h2>
                 <div style={{ display: showDetails ? 'block' : 'none' }}>
-                  <p><strong>First Name:</strong> {ownerDetails.firstName}</p>
-                  <p><strong>Last Name:</strong> {ownerDetails.lastName}</p>
+                  <p><strong>Business Name:</strong> {ownerDetails.merchantName}</p>
                   <p><strong>Phone Number:</strong> {ownerDetails.phoneNumber}</p>
                   <p><strong>Email:</strong> {ownerDetails.email}</p>
                 </div>

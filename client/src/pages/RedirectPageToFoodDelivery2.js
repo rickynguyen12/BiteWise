@@ -67,7 +67,7 @@ const RedirectPageToFoodDelivery2 = () => {
         </div>
       </section>
       <div className="view-more-button-wrappers">
-        <h2 className="view-more-buttons">View More</h2>
+        <h2 className="view-more-buttons">End of Results</h2>
       </div>
     </div>
   );

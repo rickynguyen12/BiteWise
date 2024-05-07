@@ -579,7 +579,7 @@
     margin-bottom: 20px; /* Add margin to separate the button */
     margin-right: 500px;
     /* Set a fixed height */
-    height: 410px; /* Adjust the height as needed */
+    height: 350px; /* Adjust the height as needed */
     width: 500px;
     /* Allow content to overflow and add a scrollbar if necessary */
   }

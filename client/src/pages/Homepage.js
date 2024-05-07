@@ -13,8 +13,6 @@ const Homepage = () => {
       <FrameComponent4 />
       <SignalProcessor />
       <FrameComponent1 />
-      <GroupComponent />
-      <FrameComponent />
       <Footer />
     </div>
   );
