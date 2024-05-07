@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./OwnerDashboardComponent.css";
+import "./OwnerProfileComponent.css";
 
-const OwnerDashboardComponent = ({ ownerDetails }) => {
+const OwnerProfileComponent = ({ ownerDetails }) => {
   return (
     <div className="owner-dashboard">
       <div className="dashboard-options">
@@ -38,4 +38,4 @@ const OwnerDashboardComponent = ({ ownerDetails }) => {
   );
 };
 
-export default OwnerDashboardComponent;
+export default OwnerProfileComponent;
