@@ -83,16 +83,16 @@ const FoodItemPage = () => {
   };
 
   const removeFromCart = (itemId, category) => {
-    const updated = selectedItems
-      .map((item) => {
+    const updatedCartItems = cartItems
+      .map((cartItem) => {
         if (
-          item.id === itemId &&
-          item.category === category &&
-          item.quantity > 0
+          cartItem.item.id === itemId &&
+          cartItem.category === category &&
+          cartItem.quantity > 0
         ) {
-          return { ...item, quantity: item.quantity - 1 };
+          return { ...cartItem, quantity: cartItem.quantity - 1 };
         } else {
-          return item;
+          return cartItem;
         }
       })
       .filter((item) => item.quantity > 0);
