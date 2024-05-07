@@ -304,11 +304,6 @@ const Register = () => {
                         "& .MuiInputBase-input": { color: "#808080" },
                       }}
                     />
-                    <div className='ml-1'>
-                      <div>
-                        <small className={hasSixChar ? 'text-success' : 'text-danger'}> at least 6 characters</small>
-                      </div>
-                    </div>
                     <div
                       className="already-have-an-container"
                       onClick={onAlreadyHaveAnClick}
