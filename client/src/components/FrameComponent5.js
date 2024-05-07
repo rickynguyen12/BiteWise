@@ -2,8 +2,6 @@ import {
   TextField,
   Button,
   Snackbar,
-  Button,
-  Snackbar,
   IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +13,6 @@ import Cookies from 'js-cookie'; // Import the 'js-cookie' package
 import FrameComponent4 from "./FrameComponent4";
 
 const FrameComponent5 = () => {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
