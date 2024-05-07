@@ -45,8 +45,31 @@ const acceptOrder = async (req, res) => {
     }
 };
 
+const rejectOrder = async (req, res) => {
+    const { orderNumber } = req.params;
+    try {
+        // Find the order by orderNumber
+        const order = await Order.findOne({ orderNumber });
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        order.status = 'rejected'; 
+        
+        order.updatedAt = new Date();
+
+        await order.save();
+
+        res.status(200).json(order);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 export { deleteOrder };
 export { createOrder };
-export { getAllOrders };
+export { rejectOrder };
 export { acceptOrder };
