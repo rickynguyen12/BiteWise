@@ -155,8 +155,8 @@ const OwnerEditProfile = () => {
                     />
                   </div>
                 </div>
-                <div className="frame-div">
-                  <div className="frame-parent1">
+                <div className="frame-divv">
+                  <div className="frame-parent12">
                     <div className="owner-details-wrapper">
                       <h2 className="owner-details">Owner Details</h2>
                     </div>

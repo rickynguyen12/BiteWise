@@ -335,6 +335,7 @@
 .sign-in1 {
     height: 49px;
     width: 200px;
+    margin-left: 20px;
 }
 
 .sign-in-parent {
@@ -484,7 +485,7 @@
     flex-direction: column;
     background: #F8F8F8;
     width: 400px;
-    min-height: 200px;
+    height: fit-content;
     border-radius: 15px;
     padding: 25px;
 }
@@ -494,6 +495,78 @@
     font-size: 22px;
     font-weight: 400;
 }
+
+.cart-item{
+    max-width: 100%;
+    max-height: 20%;
+    display: flex;
+}
+
+.order-info{
+    display: flexbox;
+    font-size: 14px;
+}
+
+.quantity-btns{
+    width: 105px;
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+}
+
+.item-quantity{
+    width: 30px;
+    text-align: center;
+    height: 'fit-content';
+    margin-top: 7px;
+}
+
+.item-name{
+    font-size: 12px;
+}
+
+.subtotal-div{
+    max-height: 200px;
+}
+
+.item-total-div{
+    font-size: 14px;
+    display: flex;
+    color:#7a7979;
+}
+
+.label{
+    height: fit-content;
+}
+
+.value{
+    height: fit-content;
+    margin-left: 220px;
+}
+
+.taxprice-val{
+    margin-left: 255px;
+}
+
+.total-price-div{
+    font-size: 20px;
+    display: flex;
+    color: black;
+}
+
+.total-value{
+    margin-left: 220px;
+}
+
+.delivery-label{
+    width: fit-content;
+}
+
+.delivery-val{
+    margin-left: 212px;
+}
+
+
 
 
 @media screen and (max-width: 975px) {

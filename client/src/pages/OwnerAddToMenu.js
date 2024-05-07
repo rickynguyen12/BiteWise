@@ -24,7 +24,7 @@ const OwnerAddToMenu = () => {
 
                     <div className="frame-container">
                       <TextField
-                        className="frame-child"
+                        className="frame-item"
                         placeholder="Item Name"
                         variant="outlined"
                         sx={{
@@ -95,47 +95,49 @@ const OwnerAddToMenu = () => {
               </form>
             </div>
             <div className="category-input">
-              <form className="category-fields">
-                <div className="frame-parent1">
-                  <div className="category-details-wrapper">
-                    <h2 className="owner-details">Catgory</h2>
+              <form className="state-zipcode-fields">
+                <div className="state-input">
+                  <div className="zipcode-input">
+                    <div className="email-input-field">
+                      <h2 className="add-business">Category</h2>
+                    </div>
+                    <div className="phone-number-email-parent">
+                      <TextField
+                        className="phone-number-email1"
+                        placeholder="Category Name"
+                        variant="outlined"
+                        sx={{
+                          "& fieldset": { borderColor: "#1ac84b" },
+                          "& .MuiInputBase-root": {
+                            height: "54px",
+                            backgroundColor: "#fff",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                          },
+                          "& .MuiInputBase-input": { color: "#808080" },
+                        }}
+                      />
+                    </div>
+                    <div className="add-category-wrapper">
+                      <Button
+                        className="sign-in3"
+                        disableElevation={true}
+                        variant="contained"
+                        sx={{
+                          textTransform: "none",
+                          color: "#fff",
+                          fontSize: "14",
+                          background: "#2f7c31",
+                          borderRadius: "10px",
+                          "&:hover": { background: "#2f7c31" },
+                          width: 143,
+                          height: 49,
+                        }}
+                      >
+                        Add Category
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="phone-number-email-parent">
-                  <TextField
-                    className="phone-number-email1"
-                    placeholder="Category Name"
-                    variant="outlined"
-                    sx={{
-                      "& fieldset": { borderColor: "#1ac84b" },
-                      "& .MuiInputBase-root": {
-                        height: "54px",
-                        backgroundColor: "#fff",
-                        borderRadius: "10px",
-                        fontSize: "14px",
-                      },
-                      "& .MuiInputBase-input": { color: "#808080" },
-                    }}
-                  />
-                </div>
-                <div className="add-category-wrapper">
-                  <Button
-                    className="sign-in3"
-                    disableElevation={true}
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                      color: "#fff",
-                      fontSize: "14",
-                      background: "#2f7c31",
-                      borderRadius: "10px",
-                      "&:hover": { background: "#2f7c31" },
-                      width: 143,
-                      height: 49,
-                    }}
-                  >
-                    Add Category
-                  </Button>
                 </div>
               </form>
             </div>

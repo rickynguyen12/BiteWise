@@ -1,7 +1,14 @@
 import { useMemo } from "react";
 import "./PostmatesLogo.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const PostmatesLogo = ({ postmates, group, sVG, prop, min, propPadding }) => {
+  const navigate = useNavigate();
+
+  const navigateCheckout = () => {
+    navigate("/in-app-checkout");
+  };
   const postmatesLogoStyle = useMemo(() => {
     return {
       padding: propPadding,
@@ -31,7 +38,7 @@ const PostmatesLogo = ({ postmates, group, sVG, prop, min, propPadding }) => {
           </div>
         </div>
         <div className="frame-wrapperz">
-          <button className="place-order-wrapper">
+          <button className="place-order-wrapper" onClick={navigateCheckout}>
             <div className="place-order">Place Order</div>
           </button>
         </div>

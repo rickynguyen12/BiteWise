@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
+import { menuData } from "./MenuData";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
@@ -53,20 +55,26 @@ const FoodItemPage = () => {
   };
 
   const removeFromCart = (itemId, category) => {
-    const updated = selectedItems.map((item) => {
-      if (
-        item.id === itemId &&
-        item.category === category &&
-        item.quantity > 0
-      ) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
+    const updated = selectedItems
+      .map((item) => {
+        if (
+          item.id === itemId &&
+          item.category === category &&
+          item.quantity > 0
+        ) {
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          return item;
+        }
+      })
+      .filter((item) => item.quantity > 0);
     setSelectedItems(updated);
   };
 
-  const goToComparePrices = () => {};
+  const navigate = useNavigate();
+  const goToComparePrices = () => {
+    navigate("/redirect-page-to-food-delivery-app");
+  };
 
   return (
     <div className="food-item">

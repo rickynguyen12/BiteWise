@@ -27,8 +27,14 @@ dotenv.config();
 //----------------------APP----------------------//
 const app = express();
 
-// Enable CORS for all origins
-app.use(cors());
+// Enable CORS
+ app.use(cors());
+
+// Enable CORS with specific origin and credentials
+// app.use(cors({
+//   origin: 'http://localhost:3000', // Allow requests from this origin
+//   credentials: true // Allow credentials (cookies)
+// }));
 
 //--------------------MIDDLEWARE-------------------//
 // handle URL parameter

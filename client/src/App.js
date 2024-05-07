@@ -15,14 +15,16 @@ import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerEditProfile from "./pages/OwnerEditProfile";
 import OwnerEditMenu from "./pages/OwnerEditMenu";
 import IACustomerCheckout from "./pages/IACustomerCheckout";
-import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery2"; // 
-import OwnerEditMenuItem from "./pages/OwnerEditMenuItem"; // x
-import OwnerAddToMenu from "./pages/OwnerAddToMenu"; // x
-import OwnerOrders from "./pages/OwnerOrders"; // x
-import CustomerCart from "./pages/CustomerCart"; // x
-import ViewAllDeals from "./pages/ViewAllDeals"; // x
-import SearchedResults from "./pages/SearchedResults"; // x
-import IAOrderConfirmation from "./components/IAOrderConfirmation"; 
+import RedirectPageToFoodDelivery from "./pages/RedirectPageToFoodDelivery2";
+import OwnerEditMenuItem from "./pages/OwnerEditMenuItem";
+import OwnerAddToMenu from "./pages/OwnerAddToMenu";
+import OwnerOrders from "./pages/OwnerOrders";
+import CustomerCart from "./pages/CustomerCart";
+import ViewAllDeals from "./pages/ViewAllDeals";
+import SearchedResults from "./pages/SearchedResults";
+import IAOrderConfirmation from "./components/IAOrderConfirmation";
+import OwnerViewProfile from "./pages/OwnerViewProfile";
+import UserViewProfile from "./pages/UserViewProfile";
 
 function App() {
   const action = useNavigationType();
@@ -64,6 +66,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/in-app-checkout":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -90,7 +96,6 @@ function App() {
         element={<RegisterAsStoreOwner />}
       />
       <Route path="/food-item-page" element={<FoodItemPage />} />
-      <Route path="/food-item-page2" element={<FoodItemPage2 />} />
       <Route path="/owner-dashboard" element={<OwnerDashboard />} />
       <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
       <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
@@ -106,6 +111,8 @@ function App() {
       <Route path="/view-all-deals" element={<ViewAllDeals />} />
       <Route path="/searched-results" element={<SearchedResults />} />
       <Route path="/in-app-order-confirm" element={<IAOrderConfirmation />} />
+      <Route path="/owner-view-profile" element={<OwnerViewProfile />} />
+      <Route path="/user-view-profile" element={<UserViewProfile />} />
     </Routes>
   );
 }

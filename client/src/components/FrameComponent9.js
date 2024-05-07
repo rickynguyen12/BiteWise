@@ -1,7 +1,14 @@
 import { useMemo } from "react";
 import "./FrameComponent9.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const FrameComponent9 = ({ grubHub, group, prop, min, propPadding }) => {
+  const navigate = useNavigate();
+
+  const navigateCheckout = () => {
+    navigate("/in-app-checkout");
+  };
   const frameDivStyle = useMemo(() => {
     return {
       padding: propPadding,
@@ -43,7 +50,7 @@ const FrameComponent9 = ({ grubHub, group, prop, min, propPadding }) => {
           </div>
         </div>
         <div className="confirm-step-button">
-          <button className="place-order-container">
+          <button className="place-order-container" onClick={navigateCheckout}>
             <div className="place-order1">Place Order</div>
           </button>
         </div>

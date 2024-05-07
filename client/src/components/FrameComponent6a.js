@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./FrameComponent6.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const FrameComponent6a = ({
   name,
@@ -15,6 +17,11 @@ const FrameComponent6a = ({
   estimatedTime,
   numOfDeals,
 }) => {
+  const navigate = useNavigate();
+
+  const navigateCheckout = () => {
+    navigate("/in-app-checkout");
+  };
   return (
     <div className="rectangle-parents">
       <div className="frame-childs-redirect" />
@@ -91,6 +98,7 @@ const FrameComponent6a = ({
                 "&:hover": { background: "#3b9566" },
                 height: 43,
               }}
+              onClick={navigateCheckout}
             >
               Place Order
             </Button>

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { menuData } from "./MenuData";
 import FrameComponent4 from "../components/FrameComponent4";
@@ -22,6 +22,18 @@ const OwnerEditMenu = () => {
     setSelectedCategory(category);
   };
 
+  const navigate = useNavigate();
+
+  const handleEditItemClick = (itemId) => {
+    navigate(`/owner-edit-item`); // need to update to /owner-edit-item/itemId to retrieve correct item details
+  };
+
+  const handleAddClick = () => {
+    navigate(`/owner-add-to-menu`);
+  };
+
+  const handleDeleteItemClick = (itemId) => {};
+
   return (
     <div className="edit-menu">
       <FrameComponent4 />
@@ -35,7 +47,14 @@ const OwnerEditMenu = () => {
           <div className="menu-details">
             <h2>{ownerDetails.restaurantName}</h2>
             <div className="add-new">
-              <Button variant="contained" className="add-menu-button">
+              <Button
+                onClick={handleAddClick}
+                variant="contained"
+                className="add-menu-button"
+                sx={{
+                  borderRadius: "10px",
+                }}
+              >
                 Add
               </Button>
             </div>
@@ -67,10 +86,18 @@ const OwnerEditMenu = () => {
                       <p>{item.description}</p>
                     </div>
                     <div className="two-buttons">
-                      <Button variant="contained" className="edit-button">
+                      <Button
+                        onClick={() => handleEditItemClick(item.id)}
+                        variant="contained"
+                        className="edit-button"
+                      >
                         Edit Item
                       </Button>
-                      <Button variant="contained" className="delete-button">
+                      <Button
+                        onClick={() => handleDeleteItemClick(item.id)}
+                        variant="contained"
+                        className="delete-button"
+                      >
                         Delete Item
                       </Button>
                     </div>
@@ -80,7 +107,9 @@ const OwnerEditMenu = () => {
           )}
         </div>
       </div>
-      <Footer propHeight="20.9px" propHeight1="24px" />
+      <div className="dashboard-footer">
+        <Footer propHeight="20.9px" propHeight1="24px" />
+      </div>
     </div>
   );
 };
