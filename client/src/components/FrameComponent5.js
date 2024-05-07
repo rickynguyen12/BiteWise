@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import IsLoggedInLogic from "./isLoggedIn";
 import Cookies from 'js-cookie'; // Import the 'js-cookie' package
+import FrameComponent4 from "./FrameComponent4";
 
 const FrameComponent5 = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -81,52 +82,7 @@ const FrameComponent5 = () => {
   return (
     <div className="logo-area-parent">
       <div className="logo-area">
-        <div className="logo-container">
-          <div className="logo1" onClick={onLogoContainerClick}>
-            <h2 className="bitewise2">BiteWise</h2>
-            <img
-              className="subtract-icon4"
-              loading="lazy"
-              alt=""
-              src="/subtract1.svg"
-            />
-          </div>
-        </div>
-        <div className="frame-parent19">
-          <TextField
-            className="frame-child8"
-            placeholder="Enter item or restaurant you are looking for"
-            variant="outlined"
-            InputProps={{
-              endAdornment: (
-                <img width="19px" height="19px" src="/vector.svg" />
-              ),
-            }}
-            sx={{
-              "& fieldset": { borderColor: "#808080" },
-              "& .MuiInputBase-root": {
-                height: "49px",
-                backgroundColor: "#fff",
-                paddingRight: "25px",
-                borderRadius: "10px",
-              },
-              "& .MuiInputBase-input": { color: "#808080" },
-            }}
-          />
-          <div className="bag-bag">
-            <div className="bag3">
-              <img className="vector-icon6" alt="" src="/vector-1.svg" />
-              <div className="bag-inner" />
-            </div>
-          </div>
-          <IsLoggedInLogic IsLoggedIn={isLoggedIn} />
-        </div>
-        <img
-          className="image-1-icon3"
-          alt=""
-          src="/image-1@2x.png"
-          onClick={onLogoContainerClick}
-        />
+      <FrameComponent4 />  
       </div>
       <div className="frame-wrapper5">
         <header className="sign-in-container">
