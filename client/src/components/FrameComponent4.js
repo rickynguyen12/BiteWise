@@ -63,6 +63,10 @@ const FrameComponent4 = () => {
     navigate("/owner-dashboard");
   };
 
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
+
   return (
     <header className="condition-branch-wrapper">
       <div className="condition-branch">
@@ -154,7 +158,7 @@ const FrameComponent4 = () => {
             )}
           </div>
         </div>
-        <img className="image-1-icon" alt="" src="/image-1@2x.png" />
+        <img className="image-1-icon" alt="" src="/image-1@2x.png" onClick={onLogoContainerClick}/>
         <Snackbar
           open={openSnackbar}
           autoHideDuration={6000}
