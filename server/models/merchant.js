@@ -67,6 +67,16 @@ const merchantSchema = new mongoose.Schema(
       required: true,
     },
     salt: String,
+
+    logo_url: {
+      type: String,
+      trim: true,
+      maxlength: 255,
+    },
+    in_App: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

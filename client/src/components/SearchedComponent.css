@@ -29,7 +29,7 @@
 }
 .search-item {
   position: relative;
-  text-transform: lowercase;
+  text-transform: none;
   font-weight: 500;
   padding-top: 5px;
   padding-bottom: 5px;

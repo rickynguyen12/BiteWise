@@ -15,10 +15,40 @@ const FoodItemPage = () => {
     merchant: null,
     menuItems: [],
   });
+  const [uniqueCategories, setUniqueCategories] = useState(new Set());
   const searchMerchant = searchParams.get("merchant");
   console.log("Searched: ", searchMerchant);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
+
+  // Fetch Search results based on searchQuery
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/get-merch-info",
+          {
+            params: {
+              query: searchMerchant,
+            }, // Bobs Burgers
+          }
+        );
+        setSearchResults(response.data);
+        setSelectedCategory(response.data.menuItems[0].category);
+        const categoriesSet = new Set();
+        response.data.menuItems.forEach((item) => {
+          categoriesSet.add(item.category);
+        });
+        setUniqueCategories(categoriesSet);
+      } catch (error) {
+        console.error("Error sending search request:", error);
+      }
+    };
+
+    if (searchMerchant) {
+      fetchData();
+    }
+  }, [searchMerchant]);
 
   // Fetch Search results based on searchQuery
   useEffect(() => {
@@ -110,7 +140,11 @@ const FoodItemPage = () => {
         <div className="restaurant-info">
           <img
             className="restaurant-photo"
-            src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg" // TODO: CHANGE TO LOGOurl
+            src={
+              merchantData &&
+              merchantData.merchant &&
+              merchantData.merchant.logo_url
+            } // TODO: CHANGE TO LOGOurl
             alt="A placeholder Description" // Todo replace???
           />
           <div className="restaurant-details">
@@ -121,14 +155,14 @@ const FoodItemPage = () => {
                   merchantData.merchant.merchantname}
               </h2>
             </div>
-            <div className="french-patisserie2">
+            <div className="french-patisserie">
               <p>
                 {merchantData &&
                   merchantData.merchant &&
-                  merchantData.merchant.category}
+                  `${merchantData.merchant.streetAddress} ${merchantData.merchant.city}, ${merchantData.merchant.state}`}
               </p>
             </div>
-            {/* <div className="info-container">
+            <div className="info-container">
               <div className="rating">
                 <img
                   alt=""
@@ -143,7 +177,7 @@ const FoodItemPage = () => {
               <div className="delivery-time">
                 <p>15 minutes Delivery Time</p>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
@@ -151,9 +185,7 @@ const FoodItemPage = () => {
         <div className="menu-category">
           {merchantData &&
             merchantData.menuItems &&
-            Array.from(
-              new Set(merchantData.menuItems.map((item) => item.category))
-            ).map((category) => (
+            Array.from(uniqueCategories).map((category) => (
               <div
                 key={category}
                 className={`category ${
