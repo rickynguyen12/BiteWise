@@ -40,7 +40,6 @@ const restaurants = {
     
 };
 
-
 router.get('/place_order/:restaurantName', (req, res) => {
     const restaurantName = req.params.restaurantName;
     // Check if the restaurant exists 
