@@ -1,10 +1,23 @@
 import { TextField, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerAddToMenu.css";
+import axios from "axios";
 
 const OwnerAddToMenu = () => {
+  const [ownerDetails, setOwnerDetails] = useState([]);
+  useEffect(() => {
+    async function addMenuItems() {
+      const response = await axios
+        .post("https://localhost:8080/menu/add/:restaurant_id")
+        .then((res) => {
+          setOwnerDetails([...res.data]);
+        });
+    }
+    addMenuItems();
+  }, []);
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">

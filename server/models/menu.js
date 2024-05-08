@@ -27,7 +27,7 @@ const menuItemSchema = new mongoose.Schema({
 });
 
 menuItemSchema.pre("save", async function (next) {
-  const randomId = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
+  const randomId = Math.floor(Math.random() * (20000 - 100 + 1)) + 100;
   const doc = this;
   if (!doc.isNew) {
     return next();

@@ -26,6 +26,27 @@ export async function searchMerchants(searchQuery) {
   }
 }
 
+  // takes in a restID for searching
+  export async function checkoutMerchants(restID) {
+    try {    
+        const originalSearch = await Merchant.find({ restaurant_id: restID });
+
+        if(originalSearch.length < 1) {
+            return []
+        }
+
+        const similarMerchants = await Merchant.find({ category: originalSearch[0].category, merchantname: { $ne: originalSearch[0].merchantname } });
+
+        // Combine the original search and similar merchants into one array
+        const combinedArray = originalSearch.concat(similarMerchants);
+
+        return combinedArray;
+    } catch (error) {
+      console.error('Error searching merchants:', error);
+      return []; // Return an empty array in case of an error
+    }
+  };
+
 export async function searchFoods(searchQuery) {
   try {
     const regex = new RegExp(searchQuery, "i");

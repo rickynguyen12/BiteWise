@@ -8,42 +8,42 @@ import "./OwnerEditMenu.css";
 import axios from "axios";
 
 const OwnerEditMenu = () => {
-  const [ownerDetails, setOwnerDetails] = useState([]);
+  //const [ownerDetails, setOwnerDetails] = useState([]);
+
+  const [menuData, setMenuData] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function addMenuItems() {
-      const response = await axios
-        .post("https://localhost:8080/menu/add/:restaurant_id")
-        .then((res) => {
-          setOwnerDetails([...res.data]);
-        });
-    }
-    addMenuItems();
-  }, []);
+    const fetchMenuData = async () => {
+      try {
+        const restaurantId = 493; // Replace with your actual restaurant ID
+        const response = await axios.get(
+          `https://localhost:8080/menu/get/${restaurantId}`
+        );
+        setMenuData(response.data.menuItems);
+        setSelectedCategory(response.data.menuItems[0]?.category || "");
+      } catch (error) {
+        console.error("Error fetching menu data:", error);
+      }
+    };
 
-  useEffect(() => {
-    async function updateMenuItems() {
-      const response = await axios
-        .put("https://localhost:8080/menu/update/:restaurant_id/:id")
-        .then((res) => {
-          setOwnerDetails([...res.data]);
-        });
-    }
-    updateMenuItems();
+    fetchMenuData();
   }, []);
 
   //temp hardcoded owner details
-  const ownerMenuData = menuData[ownerDetails.restaurantName];
+  //const ownerMenuData = menuData[ownerDetails.restaurantName];
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    menuData[ownerDetails.restaurantName][0]?.name || []
-  );
+  // const [selectedCategory, setSelectedCategory] = useState(
+  //   menuData[ownerDetails.restaurantName][0]?.name || []
+  // );
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const handleEditItemClick = (itemId) => {
     navigate(`/owner-edit-item`); // need to update to /owner-edit-item/itemId to retrieve correct item details
@@ -66,7 +66,7 @@ const OwnerEditMenu = () => {
       <div className="edit-menu-page">
         <div className="menu-categories">
           <div className="menu-details">
-            <h2>{ownerDetails.restaurantName}</h2>
+            <h2>{menuData.restaurantName}</h2>
             <div className="add-new">
               <Button
                 onClick={handleAddClick}
@@ -81,7 +81,7 @@ const OwnerEditMenu = () => {
             </div>
           </div>
           <div className="restaurant-menu">
-            {ownerMenuData.map((categoryData) => (
+            {menuData.map((categoryData) => (
               <button
                 key={categoryData.name}
                 className={`category-button ${
@@ -98,7 +98,7 @@ const OwnerEditMenu = () => {
         <div className="menu-items">
           {selectedCategory && (
             <div>
-              {ownerMenuData
+              {menuData
                 .find((category) => category.name === selectedCategory)
                 .items.map((item) => (
                   <div key={item.id} className="menu-item">

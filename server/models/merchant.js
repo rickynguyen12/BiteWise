@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
+import { v1 as uuidv1 } from 'uuid';
 
 const merchantSchema = new mongoose.Schema(
   {
@@ -12,10 +12,8 @@ const merchantSchema = new mongoose.Schema(
     },
     restaurant_id: {
       type: Number,
-      trim: true,
-      maxlength: 64,
+      required: false,
       unique: true,
-      default: uuidv4,
     },
     streetAddress: {
       type: String,
@@ -66,6 +64,7 @@ const merchantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     salt: String,
 
     logo_url: {
@@ -82,6 +81,47 @@ const merchantSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+merchantSchema.pre("save", function (next) {
+  // Generate a random order number only if it's not already provided
+  if (!this.restaurant_id) {
+    this.restaurant_id = Math.floor(Math.random() * 500) + 1;
+  }
+  next();
+});
+
+// virtual field
+merchantSchema.virtual('password')
+    // create a temporary variable, _password, which is not stored in the database
+    .set(function(password) {
+        this._password = password;
+        // generate a timestamp, uuidv1 gives us a unique id (unix timestamp)
+        this.salt = uuidv1();
+        // encrypt the password function call
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(function() {
+        return this._password;
+    });
+
+// methods
+merchantSchema.methods = { 
+  // authenticate method
+  authenticate: function(plainText) {
+      return this.encryptPassword(plainText) === this.hashed_password;
+  },
+  // encrypt password method
+  encryptPassword: function(password) {
+      if (!password) return "";
+      try {
+          return crypto.createHmac('sha256', this.salt)
+                      .update(password)
+                      .digest('hex');
+      } catch (err) {
+          return "";
+      }
+  }
+};
 
 const Merchant = mongoose.model("Merchant", merchantSchema);
 
