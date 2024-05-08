@@ -16,6 +16,7 @@ import cors from 'cors';
 import { searchMerchants } from './searchFoods.js';
 import { searchFoods } from './searchFoods.js';
 import { getMerchantInfo } from './searchFoods.js';
+import { checkoutMerchants } from './searchFoods.js';
 
 
 // get the directory name
@@ -102,6 +103,23 @@ router.get('/get-merch-info', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 })
+
+router.get('/checkout-merchants', async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
+
+    // Log the input received in the request body
+    console.log('Received an ID:', query);
+    const returnMerchants = await checkoutMerchants(query)
+
+    res.status(200).send(returnMerchants);
+
+    // Perform any additional processing or handle the search query here
+  } catch (error) {
+    console.error('Error handling search query:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 app.use('/', router);
 //-------------------ROUTES-------------------//

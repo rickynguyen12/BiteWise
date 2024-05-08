@@ -80,7 +80,7 @@ const SearchedGroupComponent = ({searchQuery}) => {
                 propAlignSelf1="stretch"
                 propHeight="unset"
                 propMinWidth="unset"
-                propMinWidth1="21px"
+                propMinWidth1="50px"
                 onClicked={() => {
                   if(result.in_App) {
                     navigate(`/food-item-page?merchant=${result.restaurant_id}`)
@@ -104,7 +104,7 @@ const SearchedGroupComponent = ({searchQuery}) => {
                 propAlignSelf1="stretch"
                 propHeight="unset"
                 propMinWidth="unset"
-                propMinWidth1="21px"
+                propMinWidth1="50px"
                 onClicked={() => {
                   if(searchResults.merchantNames[index].in_App) {
                     navigate(`/food-item-page?merchant=${searchResults.merchantNames[index].restaurant_id}`)

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "@lottiefiles/lottie-player";
 
 const FrameComponent6a = ({
+  id,
   name,
   circleImage,
   distance,
@@ -15,13 +16,13 @@ const FrameComponent6a = ({
   deliveryService,
   deliveryFee,
   estimatedTime,
-  numOfDeals,
 }) => {
   const navigate = useNavigate();
 
   const navigateCheckout = () => {
     navigate("/in-app-checkout");
   };
+
   return (
     <div className="rectangle-parents">
       <div className="frame-childs-redirect" />
@@ -102,10 +103,10 @@ const FrameComponent6a = ({
             >
               Place Order
             </Button>
-            <Link to="/view-all-deals" className="view-all-deals-link">
+            <Link to={`/view-all-deals?merchant=${id}`}  className="view-all-deals-link">
               <div className="view-all-deals-button2">
                 <h2 className="view-all-dealss">
-                  View All Deals ({numOfDeals})
+                  View All Deals
                 </h2>
               </div>
             </Link>
