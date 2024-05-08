@@ -1,12 +1,11 @@
-import express from 'express';
-const router = express.Router();
 
+// Food Mappings
 const restaurants = {
     //mcdonalds
-    "UberEats-McDonald's": "https://www.ubereats.com/store/mcdonalds-santa-clara-st/aCRdpwDxTLSFkPiYM8gs-A?diningMode=DELIVERY",
-    "Doordash-McDonald's": "https://www.doordash.com/store/mcdonald's-san-jose-662214/?pickup=false",
-    "Grubhub-McDonald's": "https://www.grubhub.com/restaurant/mcdonalds-1299-e-santa-clara-st-san-jose/2494036",
-    "Postmates-McDonald's": "https://postmates.com/store/mcdonalds-777-story-rd/7F9BadIKQ1GHx_6uqpXyOw?diningMode=DELIVERY&sc=SEARCH_SUGGESTION",
+    "UberEats-mcdonalds": "https://www.ubereats.com/store/mcdonalds-santa-clara-st/aCRdpwDxTLSFkPiYM8gs-A?diningMode=DELIVERY",
+    "Doordash-mcdonalds": "https://www.doordash.com/store/mcdonald's-san-jose-662214/?pickup=false",
+    "Grubhub-mcdonalds": "https://www.grubhub.com/restaurant/mcdonalds-1299-e-santa-clara-st-san-jose/2494036",
+    "Postmates-mcdonalds": "https://postmates.com/store/mcdonalds-777-story-rd/7F9BadIKQ1GHx_6uqpXyOw?diningMode=DELIVERY&sc=SEARCH_SUGGESTION",
 
     
     //Mountain Mike's
@@ -18,11 +17,11 @@ const restaurants = {
 
 
     
-    // La-victoria-taqueria
-    "UberEats-LaVictoria": "https://www.ubereats.com/store/la-victoria-taqueria-4th-gish-st/73BsHi43R8WBDRD1BetvwA?diningMode=DELIVERY",
-    "Doordash-LaVictoria": "https://www.doordash.com/store/190/?event_type=autocomplete&pickup=false",
-    "Grubhub-LaVictoria": "https://www.grubhub.com/restaurant/la-victoria-taqueria-140-e-san-carlos-st-san-jose/2072725",
-    "Postmates-LaVictoria": "https://postmates.com/store/la-victoria-taqueria-san-carlos-st/BafLSzDURd2zsEXw0E0bZA?sc=SEARCH_SUGGESTION",
+    // a-victoria-taqueria
+    "UberEats-laVictoria": "https://www.ubereats.com/store/la-victoria-taqueria-4th-gish-st/73BsHi43R8WBDRD1BetvwA?diningMode=DELIVERY",
+    "Doordash-laVictoria": "https://www.doordash.com/store/190/?event_type=autocomplete&pickup=false",
+    "Grubhub-laVictoria": "https://www.grubhub.com/restaurant/la-victoria-taqueria-140-e-san-carlos-st-san-jose/2072725m",
+    "Postmates-laVictoria": "https://postmates.com/store/la-victoria-taqueria-san-carlos-st/BafLSzDURd2zsEXw0E0bZA?sc=SEARCH_SUGGESTION",
 
     
     // Sushi Maru
@@ -40,16 +39,4 @@ const restaurants = {
     
 };
 
-
-router.get('/place_order/:restaurantName', (req, res) => {
-    const restaurantName = req.params.restaurantName;
-    // Check if the restaurant exists 
-    if (restaurants.hasOwnProperty(restaurantName)) {
-       
-        res.redirect(restaurants[restaurantName]);
-    } else {
-        res.status(404).json({ error: "Restaurant not found" });
-    }
-});
-
-export default router;
+export default restaurants;

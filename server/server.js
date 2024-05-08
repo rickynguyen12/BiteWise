@@ -65,6 +65,9 @@ app.use("/menu", menuRoutes);
 import orderRoutes from './routes/order.js';
 app.use('/orders', orderRoutes);
 
+import restaurantRoutes from './routes/food_mapping.js';
+app.use('/', restaurantRoutes);
+
 
 passport.use("google", new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
