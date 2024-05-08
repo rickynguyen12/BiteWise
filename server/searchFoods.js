@@ -51,6 +51,21 @@ export async function searchMerchants(searchQuery) {
     }
   };
 
+  // takes in a restID for searching
+  export async function getOneMerchant(restID) {
+    try {    
+        const originalSearch = await Merchant.findOne({ restaurant_id: restID });
+
+        if(!originalSearch) {
+            return null
+        }
+        return originalSearch;
+    } catch (error) {
+      console.error('Error searching merchants:', error);
+      return []; // Return an empty array in case of an error
+    }
+  };
+
 export async function searchFoods(searchQuery) {
   try {
     const regex = new RegExp(searchQuery, "i");

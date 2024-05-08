@@ -2,14 +2,45 @@ import PostmatesLogo from "./PostmatesLogo";
 import FrameComponent9 from "./FrameComponent9";
 import "./UberEatsLabel.css";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "@lottiefiles/lottie-player";
+import axios from 'axios';
+import { generateUniqueArray } from "../components/getDeliveryData"
 
-const UberEatsLabel = () => {
+const UberEatsLabel = ({merchantID}) => {
+  const [merchant, setMerchant] = useState();
+  const [prices, setPrices] = useState()
+
+  const [routing, setRouting] = useState(["UberEats-", "GrubHub-", "DoorDash-", "Postmates-"]);
+  const [serviceName, setServiceNames] = useState(["Uber Eats", "GrubHub", "DoorDash", "Postmates"]);
+
+
   const navigate = useNavigate();
 
   const navigateCheckout = () => {
     navigate("/in-app-checkout");
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/get-merchant', {
+          params: {
+            query: merchantID}
+        })
+        setMerchant(response.data)
+        setPrices(generateUniqueArray(response.data.restaurant_id))
+      } catch(error) {
+        console.log('Error fetching merchant data: ', error)
+      }
+    };
+    if(merchantID) {
+      fetchData();
+    }
+  
+  }, [merchantID])
+
+
   return (
     <div className="uber-eats-label">
       <div className="rectangle-parentz">
@@ -23,35 +54,28 @@ const UberEatsLabel = () => {
                     className="deliverycom-label-child"
                     loading="lazy"
                     alt=""
-                    src="/david-circle.png"
+                    src={merchant && merchant.logo_url}
                   />
                 </div>
                 <div className="david-and-emilys-patisserie-parent">
                   <h3 className="david-and-emilys">
-                    David and Emily’s Patisserie
+                    {merchant && merchant.merchantname}
                   </h3>
                   <div className="first-child-container">
                     <div className="third-child-container">
-                      <img
-                        className="third-child-container-child"
-                        loading="lazy"
-                        alt=""
-                        src="/group-98.png"
-                      />
-                      <img
+                      {merchant && merchant.streetAddress}, {merchant && merchant.city}
+                      <div
                         className="third-child-container-item"
-                        loading="lazy"
-                        alt=""
-                        src="/group-95.png"
-                      />
+                      >
+                        {merchant && merchant.phone}
+                      </div>
                     </div>
-                    <div className="mi">2.04 mi</div>
                   </div>
                 </div>
               </div>
             </div>
             <a
-              href="/redirect-page-to-food-delivery-app" // TODO: Change this to the correct URL, use history or something
+              href={`/redirect-page-to-food-delivery-app?merchant=${merchant && merchant.restaurant_id}`}
               className="pickup-page-link"
             >
               <img
@@ -82,7 +106,7 @@ const UberEatsLabel = () => {
                       src="/pickup-black.png"
                     />
                     <div className="nineteenth-child-container">
-                      <h1 className="uber-eats">Uber Eats</h1>
+                      <h1 className="uber-eats">{merchant && serviceName[0]}</h1>
                       <div className="twenty-first-child-container">
                         <h3 className="best-deal">Best Deal</h3>
                       </div>
@@ -90,13 +114,13 @@ const UberEatsLabel = () => {
                   </div>
                   <div className="thirteenth-child-container">
                     <div className="fourteen-child-container">
-                      <div className="fifteenth-child-container">$0.49</div>
+                      <div className="fifteenth-child-container">${merchant && prices[0]}</div>
                     </div>
                     <div className="est-fee2">Est. Fee</div>
                   </div>
                   <div className="thirteenth-child-container1">
                     <div className="min-wrapper">
-                      <div className="min2">35 min</div>
+                      <div className="min2">15 min</div>
                     </div>
                     <div className="est-time2">Est. Time</div>
                   </div>
@@ -122,8 +146,8 @@ const UberEatsLabel = () => {
             postmates="Postmates"
             group="/pickup-black.png"
             sVG="/pickup2.png"
-            prop="$2.00"
-            min="35 min"
+            prop={merchant && `$${prices[1]}`}
+            min="17 min"
           />
           <img
             className="delivery-service-line"
@@ -134,8 +158,8 @@ const UberEatsLabel = () => {
           <FrameComponent9
             grubHub="GrubHub"
             group="/pickup-black.png"
-            prop="$2.07"
-            min="40 min"
+            prop={merchant && `$${prices[2]}`}
+            min="20 min"
           />
           <img
             className="delivery-service-line"
@@ -144,10 +168,10 @@ const UberEatsLabel = () => {
             src="/line-7.png"
           />
           <FrameComponent9
-            grubHub="ChowNow"
+            grubHub="Doordash"
             group="/pickup-black.png"
-            prop="$5.00"
-            min="60 min"
+            prop={merchant && `$${prices[3]}`}
+            min="35 min"
             propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
           />
           <img
@@ -156,26 +180,7 @@ const UberEatsLabel = () => {
             alt=""
             src="/line-7.png"
           />
-          <PostmatesLogo
-            postmates="delivery.com"
-            group="/pickup-black.png"
-            sVG="/pickup2.png"
-            prop="$5.95"
-            min="50 min"
-            propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
-          />
         </div>
-        {/* <div className="third-party-services-parent">
-          <div className="third-party-services">
-            <div className="third-party-services-inner"></div>
-            <img
-              className="third-party-services-child"
-              loading="lazy"
-              alt=""
-              src="/line-10.svg"
-            />
-          </div>
-        </div> */}
       </div>
     </div>
   );
