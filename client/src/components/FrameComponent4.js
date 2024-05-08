@@ -4,7 +4,6 @@ import {
   Icon,
   IconButton,
   Snackbar,
-  Snackbar,
   Button,
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
@@ -66,6 +65,17 @@ const FrameComponent4 = () => {
 
   const onLogoContainerClick = () => {
     navigate("/");
+  };
+
+  const [searchInput, setSearchInput] = useState('');
+  const handleSearch = async () => {
+    navigate(`/searched-results?query=${encodeURIComponent(searchInput)}`);
+  };
+  
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (

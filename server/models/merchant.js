@@ -1,20 +1,21 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
+
 const merchantSchema = new mongoose.Schema({
     merchantname: {
         type: String,
         trim: true,
         required: true,
         maxlength: 64,
-        unique: false,
+        unique: false, 
     },
     restaurant_id: {
-        type: String,
+        type: Number,
         trim: true,
         maxlength: 64,
         unique: true,
-        default: uuidv4 
+        default: uuidv4,
     },
     streetAddress: {
         type: String,
@@ -42,7 +43,7 @@ const merchantSchema = new mongoose.Schema({
         maxlength: 10,
         required: true,
         unique: true,
-        sparse: true
+        sparse: true 
     },
     email: {
         type: String,
@@ -66,8 +67,18 @@ const merchantSchema = new mongoose.Schema({
         required: true
     },
     salt: String,
+
+    logo_url: {
+        type: String,
+        trim: true,
+        maxlength: 255 
+    }, 
+    in_App: {
+        type: Boolean, 
+        default: false, 
+    }
 }, {
-    timestamps: true
+    timestamps: true 
 });
 
 const Merchant = mongoose.model('Merchant', merchantSchema);

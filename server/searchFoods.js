@@ -61,7 +61,7 @@ export async function getMerchantInfo(merchID) {
       menuItems: []
     };
   }
-  const retMenuItems = await MenuItem.find({restaurant_id: merchID})
+  const retMenuItems = await MenuItem.find({restaurant_id: retMerchant.restaurant_id})
 
   return {
     merchant: retMerchant,

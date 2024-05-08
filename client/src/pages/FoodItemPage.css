@@ -133,7 +133,7 @@
 
 .french-patisserie {
   position: relative;
-  text-transform: lowercase;
+  text-transform: none;
   font-weight: 500;
 }
 

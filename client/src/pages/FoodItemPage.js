@@ -12,6 +12,7 @@ import axios from 'axios'
 const FoodItemPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [merchantData, setSearchResults] = useState({merchant: null, menuItems: []});
+  const [uniqueCategories, setUniqueCategories] = useState(new Set());
   const searchMerchant = searchParams.get("merchant");
   console.log("Searched: ", searchMerchant)
 
@@ -27,6 +28,11 @@ const FoodItemPage = () => {
         });
         setSearchResults(response.data)
         setSelectedCategory(response.data.menuItems[0].category)
+        const categoriesSet = new Set();
+        response.data.menuItems.forEach(item => {
+          categoriesSet.add(item.category);
+        });
+        setUniqueCategories(categoriesSet);
       } catch (error) { 
           console.error('Error sending search request:', error);
       }
@@ -83,7 +89,7 @@ const FoodItemPage = () => {
         <div className="restaurant-info">
           <img
             className="restaurant-photo"
-            src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg" // TODO: CHANGE TO LOGOurl
+            src={merchantData && merchantData.merchant && merchantData.merchant.logo_url} // TODO: CHANGE TO LOGOurl
             alt="A placeholder Description" // Todo replace???
           />
           <div className="restaurant-details">
@@ -91,7 +97,7 @@ const FoodItemPage = () => {
               <h2>{merchantData && merchantData.merchant && merchantData.merchant.merchantname}</h2>
             </div>
             <div className="french-patisserie">
-              <p>{merchantData && merchantData.merchant && merchantData.merchant.category}</p> 
+              <p>{merchantData && merchantData.merchant && `${merchantData.merchant.streetAddress} ${merchantData.merchant.city}, ${merchantData.merchant.state}`}</p> 
             </div>
             <div className="info-container">
               <div className="rating">
@@ -114,16 +120,16 @@ const FoodItemPage = () => {
       </section>
       <div className="menu">
         <div className="menu-category">
-          {merchantData && merchantData.menuItems && merchantData.menuItems.map((item) => (
-              <div
-                key={item.category}
-                className={`category ${
-                  selectedCategory === item.category ? "selected" : ""
-                }`}
-                onClick={() => setSelectedCategory(item.category)}
-                >
-                {item.category}
-              </div>
+          {merchantData && merchantData.menuItems && Array.from(uniqueCategories).map(category => (
+            <div
+              key={category}
+              className={`category ${
+                selectedCategory === category ? "selected" : ""
+              }`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </div>
             ))}
         </div>
         <div className="menu-items">

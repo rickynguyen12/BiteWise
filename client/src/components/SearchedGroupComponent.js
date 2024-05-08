@@ -69,11 +69,11 @@ const SearchedGroupComponent = ({searchQuery}) => {
           <div className="searched-group-component">
             {selectedButton === "Restaurants" && searchResults.merchants && searchResults.merchants.map((result) => (
               <SearchedComponent
-                image="/bowl1.png" // TODO: change to result.logo_url
+                image={result.logo_url} // TODO: change to result.logo_url
                 itemName={result.merchantname}
-                restaurantName={result.category}
-                deal="10% off"
-                mins="20 Mins"
+                restaurantName={`${result.city}, ${result.state}`}
+                deal={result.category}
+                mins={result.in_App ? "BiteWise" : "Off Site"} // Conditionally set the text based on result.inApp
                 propAlignSelf="unset"
                 propWidth="307px"
                 propPadding="36px 27px 25px"
@@ -81,16 +81,23 @@ const SearchedGroupComponent = ({searchQuery}) => {
                 propHeight="unset"
                 propMinWidth="unset"
                 propMinWidth1="21px"
-                onClicked={() => navigate(`/food-item-page?merchant=${result.restaurant_id}`)}
+                onClicked={() => {
+                  if(result.in_App) {
+                    navigate(`/food-item-page?merchant=${result.restaurant_id}`)
+                  }
+                  else {
+                    navigate(`/redirect-page-to-food-delivery-app?merchant=${result.restaurant_id}`);
+                  }
+                }}
               />
             ))}
             {selectedButton === "Items" && searchResults.foods && searchResults.merchantNames && searchResults.foods.map((result, index) => (
               <SearchedComponent
-                image="/bowl1.png" // TODO: change to searchResults.merchantNames[index].logo_url
+                image={searchResults.merchantNames[index].logo_url} // TODO: change to searchResults.merchantNames[index].logo_url
                 itemName={result.name}
                 restaurantName={searchResults.merchantNames[index].merchantname}
-                deal="10% off"
-                mins="20 Mins"
+                deal={searchResults.merchantNames[index].category}
+                mins={searchResults.merchantNames[index].in_App ? "BiteWise" : "Off Site"}
                 propAlignSelf="unset"
                 propWidth="307px"
                 propPadding="36px 27px 25px"
@@ -98,7 +105,14 @@ const SearchedGroupComponent = ({searchQuery}) => {
                 propHeight="unset"
                 propMinWidth="unset"
                 propMinWidth1="21px"
-                onClicked={() => navigate(`/food-item-page?merchant=${searchResults.merchantNames[index].restaurant_id}`)}
+                onClicked={() => {
+                  if(searchResults.merchantNames[index].in_App) {
+                    navigate(`/food-item-page?merchant=${searchResults.merchantNames[index].restaurant_id}`)
+                  }
+                  else {
+                    navigate(`/redirect-page-to-food-delivery-app?merchant=${searchResults.merchantNames[index].restaurant_id}`);
+                  }
+                }}
               />
             ))}
           </div>
