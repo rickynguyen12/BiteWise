@@ -23,6 +23,7 @@ const FoodItemPage = () => {
 
   // Fetch Search results based on searchQuery
   useEffect(() => {
+    localStorage.removeItem("cart");
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -40,33 +41,6 @@ const FoodItemPage = () => {
           categoriesSet.add(item.category);
         });
         setUniqueCategories(categoriesSet);
-      } catch (error) {
-        console.error("Error sending search request:", error);
-      }
-    };
-
-    if (searchMerchant) {
-      fetchData();
-    }
-  }, [searchMerchant]);
-
-  // Fetch Search results based on searchQuery
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        localStorage.setItem("cart", JSON.stringify([]));
-        const response = await axios.get(
-          "http://localhost:8080/get-merch-info",
-          {
-            params: {
-              query: searchMerchant,
-            }, // Bobs Burgers
-          }
-        );
-        setSearchResults(response.data);
-        if (response.data.menuItems.length > 0) {
-          setSelectedCategory(response.data.menuItems[0].category);
-        }
       } catch (error) {
         console.error("Error sending search request:", error);
       }
@@ -144,7 +118,7 @@ const FoodItemPage = () => {
               merchantData &&
               merchantData.merchant &&
               merchantData.merchant.logo_url
-            } // TODO: CHANGE TO LOGOurl
+            }
             alt="A placeholder Description" // Todo replace???
           />
           <div className="restaurant-details">
@@ -161,22 +135,6 @@ const FoodItemPage = () => {
                   merchantData.merchant &&
                   `${merchantData.merchant.streetAddress} ${merchantData.merchant.city}, ${merchantData.merchant.state}`}
               </p>
-            </div>
-            <div className="info-container">
-              <div className="rating">
-                <img
-                  alt=""
-                  src="/vector-2.svg"
-                  style={{
-                    filter:
-                      "brightness(0) saturate(100%) invert(38%) sepia(99%) saturate(6100%) hue-rotate(134deg) brightness(90%) contrast(88%)",
-                  }}
-                />
-                <p>5.0</p>
-              </div>
-              <div className="delivery-time">
-                <p>15 minutes Delivery Time</p>
-              </div>
             </div>
           </div>
         </div>

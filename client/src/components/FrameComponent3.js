@@ -15,6 +15,7 @@ const FrameComponent3 = ({
   propTextTransform,
   propMinWidth1,
   offer,
+  imgSrc,
 }) => {
   const rectangleIconStyle = useMemo(() => {
     return {
@@ -62,6 +63,7 @@ const FrameComponent3 = ({
           propTextTransform,
           propMinWidth1,
           offer,
+          imgSrc,
         },
       }}
       className="link"
@@ -72,7 +74,7 @@ const FrameComponent3 = ({
             className="rectangle-icon"
             loading="lazy"
             alt=""
-            src={rectangle26}
+            src={imgSrc}
             style={rectangleIconStyle}
           />
           <div className="david-and-emilys">{davidAndEmilysPatisserie}</div>
