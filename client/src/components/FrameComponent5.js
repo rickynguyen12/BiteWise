@@ -62,8 +62,17 @@ const FrameComponent5 = () => {
         // Set the JWT token in the browser's cookies
         document.cookie = Cookies.set('jwt', response.data.jwt);
 
-        // storing username in localStorage
-        localStorage.setItem('username', response.data.username);
+        if(!isMerchant){
+          // storing username in localStorage
+          localStorage.setItem('username', response.data.username);
+          localStorage.setItem('isOwner', false);
+        } else {
+          // storing username in localStorage
+          localStorage.setItem('email', response.data.email);
+          localStorage.setItem('isOwner', true);
+        }
+        localStorage.setItem('isLoggedIn', true);
+
         setOpenSnackbar(true);
         setIsLoggedIn(true);
         setTimeout(() => {
