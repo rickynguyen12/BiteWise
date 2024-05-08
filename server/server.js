@@ -12,7 +12,7 @@ import session from "express-session";
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
 import cors from "cors";
-import { searchMerchants } from "./searchFoods.js";
+import { getOneMerchant, searchMerchants } from "./searchFoods.js";
 import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(body());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "IAMBATMAN",
     resave: false,
     saveUninitialized: true,
   })
@@ -54,10 +54,13 @@ app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://bhagyeshrathi:gNtwvWbnc31mxzIH@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
 
@@ -119,6 +122,28 @@ router.get("/checkout-merchants", async (req, res) => {
   }
 });
 
+router.get("/get-merchant", async (req, res) => {
+  try {
+    const { query } = req.query;
+    const returnMerchant = await getOneMerchant(query);
+    res.status(200).send(returnMerchant);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+router.get("/get-merchant", async (req, res) => {
+  try {
+    const { query } = req.query;
+    const returnMerchant = await getOneMerchant(query);
+    res.status(200).send(returnMerchant);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 app.use("/", router);
 //-------------------ROUTES-------------------//
 import userRoutes from "./routes/user.js";
@@ -140,8 +165,9 @@ passport.use(
   "google",
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID:
+        "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
+      clientSecret: "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",
       callbackURL: "http://localhost:8080/auth/google/callback",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },

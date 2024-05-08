@@ -14,15 +14,18 @@ const restaurants = {
     "Doordash-MountainMikes": "https://www.doordash.com/store/25672403/?cursor=eyJzdG9yZV9wcmltYXJ5X3ZlcnRpY2FsX2lkcyI6WzFdfQ==&pickup=false",
     "Grubhub-MountainMikes": "https://www.grubhub.com/restaurant/mountain-mikes-pizza-29-s-third-st-san-jose/6803144",
     "Postmates-MountainMikes": "https://postmates.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
-    "ChowNow-MountainMikes": "https://www.chownow.com/order/30209/locations/44681?deliversToMe=1&loc=San%20Jose%2C%20CA%2C%20USA",
 
-
+    //El Abuelo Taqueria
+    "UberEats-ElAbueloTaqueria": "https://www.ubereats.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
+    "Doordash-ElAbueloTaqueria": "https://www.doordash.com/store/taqueria-el-abuelo-san-jose-724437/?event_type=autocomplete&pickup=false",
+    "Grubhub-ElAbueloTaqueria": "https://www.grubhub.com/restaurant/taqueria-el-abuelo-1005-lincoln-ave-san-jose/322256",
+    "Postmates-ElAbueloTaqueria": "https://postmates.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
     
     // La-victoria-taqueria
-    "UberEats-LaVictoria": "https://www.ubereats.com/store/la-victoria-taqueria-4th-gish-st/73BsHi43R8WBDRD1BetvwA?diningMode=DELIVERY",
-    "Doordash-LaVictoria": "https://www.doordash.com/store/190/?event_type=autocomplete&pickup=false",
-    "Grubhub-LaVictoria": "https://www.grubhub.com/restaurant/la-victoria-taqueria-140-e-san-carlos-st-san-jose/2072725",
-    "Postmates-LaVictoria": "https://postmates.com/store/la-victoria-taqueria-san-carlos-st/BafLSzDURd2zsEXw0E0bZA?sc=SEARCH_SUGGESTION",
+    "UberEats-LaVictoriaTaqueria": "https://www.ubereats.com/store/la-victoria-taqueria-4th-gish-st/73BsHi43R8WBDRD1BetvwA?diningMode=DELIVERY",
+    "Doordash-LaVictoriaTaqueria": "https://www.doordash.com/store/190/?event_type=autocomplete&pickup=false",
+    "Grubhub-LaVictoriaTaqueria": "https://www.grubhub.com/restaurant/la-victoria-taqueria-140-e-san-carlos-st-san-jose/2072725",
+    "Postmates-LaVictoriaTaqueria": "https://postmates.com/store/la-victoria-taqueria-san-carlos-st/BafLSzDURd2zsEXw0E0bZA?sc=SEARCH_SUGGESTION",
 
     
     // Sushi Maru
@@ -41,11 +44,12 @@ const restaurants = {
 };
 
 router.get('/place_order/:restaurantName', (req, res) => {
-    const restaurantName = req.params.restaurantName;
+    const restaurantName = req.params.restaurantName.replace(/\s/g, '');
+    console.log("restaurantName: ", restaurantName)
     // Check if the restaurant exists 
     if (restaurants.hasOwnProperty(restaurantName)) {
-       
-        res.redirect(restaurants[restaurantName]);
+        console.log("routing to: ", restaurants[restaurantName])
+        res.status(200).send(restaurants[restaurantName]);
     } else {
         res.status(404).json({ error: "Restaurant not found" });
     }
