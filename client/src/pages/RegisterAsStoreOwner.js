@@ -29,7 +29,6 @@ const RegisterAsStoreOwner = () => {
     password: ""
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbars
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
 
   const handleChange = (e) => {
@@ -42,6 +41,7 @@ const RegisterAsStoreOwner = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     setFormSubmitted(true);
     try {
       const response = await axios.post(
@@ -49,7 +49,6 @@ const RegisterAsStoreOwner = () => {
         formData
       );
       console.log("Signup Successful:", response.data);
-      setOpenSnackbar(true); // Open Snackbar on successful registration
       setTimeout(() => {
         navigate("/login"); // Redirect to login page after a delay
       }, 2000);
@@ -102,8 +101,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="Business Name"
                         onChange={handleChange}
                         name='merchantname'
-                        variant="outlined"
                         value={formData.merchantname}
+                        variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -120,8 +119,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="Business Phone Number"
                         name='phone'
                         onChange={handleChange}
-                        variant="outlined"
                         value={formData.phone}
+                        variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -139,8 +138,8 @@ const RegisterAsStoreOwner = () => {
                       placeholder="Street Address"
                       name='streetAddress'
                       onChange={handleChange}
-                      variant="outlined"
                       value={formData.streetAddress}
+                      variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -300,8 +299,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="Username"
                         name='username'
                         onChange={handleChange}
-                        variant="outlined"
                         value={formData.username}
+                        variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -318,8 +317,8 @@ const RegisterAsStoreOwner = () => {
                       placeholder="Email"
                       name='email'
                       onChange={handleChange}
-                      variant="outlined"
                       value={formData.email}
+                      variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
