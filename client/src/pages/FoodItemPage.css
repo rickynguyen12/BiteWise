@@ -22,11 +22,12 @@
   padding: 0px var(--padding-xl);
   box-sizing: border-box;
   max-width: 100%;
+  margin-left: var(--padding-59xl);
 }
 
 .restaurant-photo {
-  width: 256px;
-  height: 256px;
+  width: 150px;
+  height: 150px;
   position: relative;
   border-radius: var(--br-3xs);
   object-fit: cover;
@@ -36,7 +37,7 @@
 .restaurant-name {
   align-self: left;
   position: relative;
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-xl);
   text-transform: capitalize;
   font-weight: 500;
   color: white;
@@ -57,7 +58,7 @@
   text-transform: lowercase;
   font-weight: 500;
   color: white;
-  line-height: 0.7;
+  line-height: 0;
 }
 
 .food-item {
@@ -131,7 +132,7 @@
   margin-right: 5px;
 }
 
-.french-patisserie {
+.french-patisserie2 {
   position: relative;
   text-transform: none;
   font-weight: 500;

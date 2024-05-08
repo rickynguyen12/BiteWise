@@ -16,7 +16,7 @@ const OwnerIncomingOrders = ({ orders, onAccept, onReject }) => {
               {order.orderItems.map((item) => (
                 <li key={item.name} className="order-item">
                   <div className="item-name">{item.name}</div>
-                  <div className="item-quantity">Qty: {item.quantity}</div>
+                  <div className="item-quantity2">Qty: {item.quantity}</div>
                 </li>
               ))}
             </ul>

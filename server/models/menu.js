@@ -1,41 +1,43 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const menuItemSchema = new mongoose.Schema({
   restaurant_id: {
     type: Number,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   id: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
-menuItemSchema.pre('save', async function(next) {
+menuItemSchema.pre("save", async function (next) {
   const randomId = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
   const doc = this;
   if (!doc.isNew) {
-    return next(); 
+    return next();
   }
 
   try {
-    const highestIdDoc = await MenuItem.findOne({ restaurant_id: doc.restaurant_id }).sort({ id: -1 });
-    
+    const highestIdDoc = await MenuItem.findOne({
+      restaurant_id: doc.restaurant_id,
+    }).sort({ id: -1 });
+
     if (highestIdDoc) {
       doc.id = highestIdDoc.id + 1;
     } else {
@@ -47,6 +49,6 @@ menuItemSchema.pre('save', async function(next) {
   }
 });
 
-const MenuItem = mongoose.model('MenuItem', menuItemSchema);
+const MenuItem = mongoose.model("MenuItem", menuItemSchema);
 
 export default MenuItem;

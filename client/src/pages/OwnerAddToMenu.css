@@ -4,6 +4,18 @@
   display: flex;
   justify-content: center;
 }
+.city-input2 {
+  border: none;
+  background-color: transparent;
+  align-self: stretch;
+  height: 47px;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-100);
+  margin-bottom: 10px;
+  z-index: 1;
+}
 .category-input {
   align-self: stretch;
   display: flex;
