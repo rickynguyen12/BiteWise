@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button } from "@mui/material";
+import axios from 'axios';
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerViewProfile.css";
@@ -10,29 +11,38 @@ const UserViewProfile = () => {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    email: ''
+    emailUser: ''
   });
 
   // State to manage the visibility of owner details
   const [showDetails, setShowDetails] = useState(true);
 
   // Function to fetch owner details, you may need to implement it according to your backend logic
-  const fetchUserDetails = () => {
-    // Fetch owner details from backend or any data source
-    // Update the owner details state with fetched data
-    const fetchedOwnerDetails = {
-      merchantName: "Bob's Burgers",
-      phoneNumber: '123-456-7890',
-      email: 'john.doe@example.com'
-    };
-    setUserDetails(fetchedOwnerDetails);
-  };
-
-  // Fetch owner details on component mount
   useEffect(() => {
+    const fetchUserDetails = async (e) => {
+      try{
+        const username= localStorage.getItem('username');
+        const response = await axios.get(`http://localhost:8080/${username}`);
+
+        const {firstname, lastname, phone, email} = response.data;
+        
+        setUserDetails({
+          firstName: firstname,
+          lastName: lastname,
+          phoneNumber: phone,
+          emailUser: email
+        });
+
+        console.log(userDetails);
+
+      } catch(error){
+        console.error(error);
+      }
+    };
+
     fetchUserDetails();
   }, []);
-
+  
   // Function to toggle the visibility of owner details
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -52,10 +62,10 @@ const UserViewProfile = () => {
               <div className="owner-details-content17">
                 <h2 className="owner-details17">User Details</h2>
                 <div style={{ display: showDetails ? 'block' : 'none' }}>
-                  <p><strong>First Name:</strong> {userDetails.firstName}</p>
-                  <p><strong>last Name:</strong> {userDetails.lastName}</p>
-                  <p><strong>Phone Number:</strong> {userDetails.phoneNumber}</p>
-                  <p><strong>Email:</strong> {userDetails.email}</p>
+                  <p style={{'fontSize': '24px'}}><strong>First Name:</strong> {userDetails.firstName}</p>
+                  <p style={{'fontSize': '24px'}}><strong>Last Name:</strong> {userDetails.lastName}</p>
+                  <p style={{'fontSize': '24px'}}><strong>Phone Number:</strong> {userDetails.phoneNumber}</p>
+                  <p style={{'fontSize': '24px'}}><strong>Email:</strong> {userDetails.emailUser}</p>
                 </div>
               </div>
               {/* End Owner Details */}
