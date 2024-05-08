@@ -2,9 +2,9 @@ import Merchant from "../models/merchant.js";
 import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
-
   try {
     // Check if username already exists
+    const {username, password} = req.body;
     const userNameExists = await Merchant.findOne({
       username: req.body.username,
     });
@@ -13,6 +13,8 @@ const register = async (req, res) => {
         error: "Username already exists",
       });
     }
+
+    console.log(req.body);
 
     // Check if email already exists
     const emailExists = await Merchant.findOne({

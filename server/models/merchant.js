@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import crypto from 'crypto';
 import { v1 as uuidv1 } from 'uuid';
 
 const merchantSchema = new mongoose.Schema(
@@ -62,11 +63,8 @@ const merchantSchema = new mongoose.Schema(
     },
     hashed_password: {
       type: String,
-      required: true,
+      required: true
     },
-
-    salt: String,
-
     logo_url: {
       type: String,
       trim: true,
@@ -76,19 +74,12 @@ const merchantSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    salt: String,
   },
   {
     timestamps: true,
   }
 );
-
-merchantSchema.pre("save", function (next) {
-  // Generate a random order number only if it's not already provided
-  if (!this.restaurant_id) {
-    this.restaurant_id = Math.floor(Math.random() * 500) + 1;
-  }
-  next();
-});
 
 // virtual field
 merchantSchema.virtual('password')
@@ -103,6 +94,7 @@ merchantSchema.virtual('password')
     .get(function() {
         return this._password;
     });
+
 
 // methods
 merchantSchema.methods = { 
@@ -122,6 +114,17 @@ merchantSchema.methods = {
       }
   }
 };
+
+
+merchantSchema.pre("save", function (next) {
+  // Generate a random order number only if it's not already provided
+  if (!this.restaurant_id) {
+    this.restaurant_id = Math.floor(Math.random() * 500) + 1;
+  }
+  next();
+});
+
+
 
 const Merchant = mongoose.model("Merchant", merchantSchema);
 
