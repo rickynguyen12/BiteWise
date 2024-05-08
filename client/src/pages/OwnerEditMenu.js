@@ -1,17 +1,38 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { menuData } from "./MenuData";
 import FrameComponent4 from "../components/FrameComponent4";
 import Footer from "../components/Footer";
 import "./OwnerEditMenu.css";
+import axios from "axios";
 
 const OwnerEditMenu = () => {
-  //temp hardcoded owner details
-  const ownerDetails = {
-    restaurantName: "David and Emily’s Patisserie",
-  };
+  const [ownerDetails, setOwnerDetails] = useState([]);
 
+  useEffect(() => {
+    async function addMenuItems() {
+      const response = await axios
+        .post("https://localhost:8080/menu/add/:restaurant_id")
+        .then((res) => {
+          setOwnerDetails([...res.data]);
+        });
+    }
+    addMenuItems();
+  }, []);
+
+  useEffect(() => {
+    async function updateMenuItems() {
+      const response = await axios
+        .put("https://localhost:8080/menu/update/:restaurant_id/:id")
+        .then((res) => {
+          setOwnerDetails([...res.data]);
+        });
+    }
+    updateMenuItems();
+  }, []);
+
+  //temp hardcoded owner details
   const ownerMenuData = menuData[ownerDetails.restaurantName];
 
   const [selectedCategory, setSelectedCategory] = useState(

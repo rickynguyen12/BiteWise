@@ -64,6 +64,11 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        is_Owner: {
+            type: Boolean, 
+            default: false, 
+        },
+        
         salt : String,
             
     }, 

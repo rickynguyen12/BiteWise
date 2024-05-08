@@ -5,6 +5,7 @@ import "./RegisterAsStoreOwner.css";
 import "./OwnerEditProfile.css";
 
 const OwnerEditProfile = () => {
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -21,7 +22,7 @@ const OwnerEditProfile = () => {
                 <div className="state-zipcode-fields-inner" />
                 <div className="state-input">
                   <div className="zipcode-input">
-                    <div className="delete-button">
+                    {/* <div className="delete-button">
                       <Button
                         className="delete"
                         disableElevation={true}
@@ -35,7 +36,7 @@ const OwnerEditProfile = () => {
                       >
                         Close Business
                       </Button>
-                    </div>
+                    </div> */}
                     <div className="email-input-field">
                       <h2 className="add-business">Business Details</h2>
                     </div>

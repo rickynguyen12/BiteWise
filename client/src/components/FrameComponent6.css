@@ -442,6 +442,8 @@
 .rectangle-parents {
   padding: 0;
   max-width: 970px !important;
+  margin-right: 200px;
+
 }
 .spinners {
   margin-left: -70px;

@@ -1,7 +1,7 @@
 import express from 'express';
 const app = express();
 
-//Food Mappings
+// Food Mappings
 const restaurants = {
     "Bbot": "https://try.bbot.menu",
     "Brandibble": "https://www.brandibble.co",

@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerViewProfile.css";
 
-const OwnerViewProfile = () => {
+const UserViewProfile = () => {
   // Assuming you have owner details stored in state
-  const [ownerDetails, setOwnerDetails] = useState({
+  const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -17,7 +17,7 @@ const OwnerViewProfile = () => {
   const [showDetails, setShowDetails] = useState(true);
 
   // Function to fetch owner details, you may need to implement it according to your backend logic
-  const fetchOwnerDetails = () => {
+  const fetchUserDetails = () => {
     // Fetch owner details from backend or any data source
     // Update the owner details state with fetched data
     const fetchedOwnerDetails = {
@@ -25,12 +25,12 @@ const OwnerViewProfile = () => {
       phoneNumber: '123-456-7890',
       email: 'john.doe@example.com'
     };
-    setOwnerDetails(fetchedOwnerDetails);
+    setUserDetails(fetchedOwnerDetails);
   };
 
   // Fetch owner details on component mount
   useEffect(() => {
-    fetchOwnerDetails();
+    fetchUserDetails();
   }, []);
 
   // Function to toggle the visibility of owner details
@@ -45,16 +45,17 @@ const OwnerViewProfile = () => {
           <FrameComponent4 />
           <div className="business-registration-parent17">
             <header className="business-registration17">
-              <h2 className="register-business17">Business Profile</h2>
+              <h2 className="register-business17">User Profile</h2>
             </header>
             <div className="owner-details-box17">
               {/* Owner Details */}
               <div className="owner-details-content17">
-                <h2 className="owner-details17">Owner Details</h2>
+                <h2 className="owner-details17">User Details</h2>
                 <div style={{ display: showDetails ? 'block' : 'none' }}>
-                  <p><strong>Business Name:</strong> {ownerDetails.merchantName}</p>
-                  <p><strong>Phone Number:</strong> {ownerDetails.phoneNumber}</p>
-                  <p><strong>Email:</strong> {ownerDetails.email}</p>
+                  <p><strong>First Name:</strong> {userDetails.firstName}</p>
+                  <p><strong>last Name:</strong> {userDetails.lastName}</p>
+                  <p><strong>Phone Number:</strong> {userDetails.phoneNumber}</p>
+                  <p><strong>Email:</strong> {userDetails.email}</p>
                 </div>
               </div>
               {/* End Owner Details */}
@@ -88,4 +89,4 @@ const OwnerViewProfile = () => {
   );
 };
 
-export default OwnerViewProfile;
+export default UserViewProfile;

@@ -53,8 +53,23 @@ const OwnerEditMenuItem = () => {
                       />
                     </div>
                     <TextField
-                      className="city-input"
+                      className="city-input2"
                       placeholder="Description"
+                      variant="outlined"
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "200px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
+                    <TextField
+                      className="city-input2"
+                      placeholder="Category"
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },

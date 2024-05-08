@@ -458,17 +458,18 @@
   gap: var(--gap-45xl-6);
   max-width: 100%;
 }
-.frame-parents {
+.frame-parents-compare-prices {
   width: 1684px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: left;
   justify-content: flex-start;
   max-width: 100%;
   text-align: left;
   font-size: var(--font-size-5xl);
   color: var(--color-gray-200);
   font-family: var(--font-poppins);
+  margin-left: 40px;
 }
 .view-more-buttons {
   margin: 0;
@@ -485,6 +486,8 @@
   align-items: flex-start;
   justify-content: center;
   padding: 0px 350px 0px 400px;
+  margin-left: 235px;
+  margin-top: 20px;
 }
 .redirect-page-to-food-deliverys {
   width: 100%;

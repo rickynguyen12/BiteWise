@@ -124,11 +124,17 @@
 .frame-parent8 {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--gap-23xl);
   min-width: 200px;
+}
+.frame-parent8 .frame-component-container {
+  width: calc(
+    50% - var(--gap-23xl) / 2
+  ); /* Adjust width for two items per row */
 }
 .frame-parent10 {
   flex: 1;
