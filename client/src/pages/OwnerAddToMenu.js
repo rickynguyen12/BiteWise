@@ -11,7 +11,7 @@ const OwnerAddToMenu = () => {
   useEffect(() => {
     async function addMenuItems() {
       const response = await axios
-        .post("https://localhost:8080/menu/add/:restaurant_id")
+        .post(`https://localhost:8080/menu/add/:restaurant_id`)
         .then((res) => {
           setOwnerDetails([...res.data]);
         });

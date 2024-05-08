@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import "./FrameComponent4.css";
-import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const FrameComponent4 = () => {
   const navigate = useNavigate();
@@ -67,11 +67,11 @@ const FrameComponent4 = () => {
     navigate("/");
   };
 
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const handleSearch = async () => {
     navigate(`/searched-results?query=${encodeURIComponent(searchInput)}`);
   };
-  
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSearch();
@@ -171,7 +171,12 @@ const FrameComponent4 = () => {
             )}
           </div>
         </div>
-        <img className="image-1-icon" alt="" src="/image-1@2x.png" onClick={onLogoContainerClick}/>
+        <img
+          className="image-1-icon"
+          alt=""
+          src="/image-1@2x.png"
+          onClick={onLogoContainerClick}
+        />
         <Snackbar
           open={openSnackbar}
           autoHideDuration={6000}
