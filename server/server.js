@@ -1,5 +1,5 @@
 import express from "express";
-// import bodyParser from 'body-parser';
+import bodyParser from 'body-parser';
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
@@ -28,6 +28,8 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //--------------------MIDDLEWARE-------------------//
 // handle URL parameter
