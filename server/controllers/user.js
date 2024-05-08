@@ -1,23 +1,24 @@
-import {User} from '../models/user.js';
-import jwt from 'jsonwebtoken';
+import { User } from "../models/user.js";
+import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
-  
   // check if username already exists
   const userNameExists = await User.findOne({
-    username: req.body.username
+    username: req.body.username,
   });
-  if (userNameExists) return res.status(403).json({
-    error: "Username already exists"
-  });
+  if (userNameExists)
+    return res.status(403).json({
+      error: "Username already exists",
+    });
 
   // check if email already exists
   const emailExists = await User.findOne({
-    email: req.body.email
+    email: req.body.email,
   });
-  if (emailExists) return res.status(403).json({
-    error: "Email already exists"
-  });
+  if (emailExists)
+    return res.status(403).json({
+      error: "Email already exists",
+    });
 
   // create new user if username and email are unique
   console.log(req.body);
@@ -25,15 +26,14 @@ const register = async (req, res) => {
   await user.save();
   res.status(201).json({
     message: "Signup Successfull, Please Login to continue.",
-    redirect: "/"
+    redirect: "/",
   });
-
 };
 
 const homepage = async (req, res) => {
   res.status(200).json({
-    message:"Successful!"
-  })
+    message: "Successful!",
+  });
 };
 
 const login = async (req, res) => {
@@ -43,7 +43,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    // if no user found 
+    // if no user found
     if (!user) {
       return res.status(400).json({
         error: "Invalid Credentials",
@@ -58,27 +58,29 @@ const login = async (req, res) => {
     }
 
     // generate a token with user id and jwt secret
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
+
     // // persist the token as 'jwt' in cookie with an expiry date
     // res.cookie('jwt', token, { expire: new Date() + 9999, httpOnly: true });
 
     // // Set the token in the response headers
     // res.set('Set-Cookie', `jwt=${token}; HttpOnly`);
     // Set the token in the response headers
-    res.cookie('jwt', token, {
+    res.cookie("jwt", token, {
       expire: new Date() + 9999,
       httpOnly: true,
-      sameSite: 'None',
+      sameSite: "None",
     });
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
     // return the response with user
     const { username } = user;
     return res.json({
       message: "Login Successfull",
       username,
-      jwt: token
+      jwt: token,
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -90,7 +92,7 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   // clear the cookie
-  res.clearCookie('jwt');
+  res.clearCookie("jwt");
 
   return res.status(200).json({
     message: "Logout Successfull",
@@ -101,9 +103,11 @@ const validate = async (req, res) => {
   try {
     // Check if the JWT token is present
     if (!req.body.jwt) {
-      return res.status(401).json({ error: "Unauthorized: JWT token is missing" });
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: JWT token is missing" });
     }
-    
+
     const jwtToken = req.body.jwt;
     // Verify the JWT token
     const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
@@ -114,12 +118,14 @@ const validate = async (req, res) => {
   } catch (err) {
     // Handle errors, such as token expiration or invalid signature
     console.error("JWT Validation Error:", err.message);
-    return res.status(401).json({ error: "Unauthorized: JWT token is invalid" });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized: JWT token is invalid" });
   }
 };
 
-export {register};
-export {homepage};
-export {login};
-export {logout};
-export {validate};
+export { register };
+export { homepage };
+export { login };
+export { logout };
+export { validate };

@@ -451,27 +451,24 @@
   .create-your-account {
     font-size: var(--font-size-lgi);
   }
-  
+
   .or-divider {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px; /* Adjust the margin as needed */
   }
-  
+
   .divider-line {
     flex-grow: 1;
     border: none;
     height: 1px; /* Adjust the height as needed */
     background-color: #ddd; /* Adjust the color as needed */
   }
-  
+
   .or-text {
     margin: 0 10px; /* Adjust the margin as needed */
     color: #777; /* Adjust the color as needed */
     font-weight: bold; /* Adjust the font weight as needed */
   }
-  
-  
-
 }

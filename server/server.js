@@ -1,22 +1,20 @@
-
-import express from 'express';
+import express from "express";
 // import bodyParser from 'body-parser';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
-import morgan from 'morgan';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
-import { body, validationResult } from 'express-validator';
-import {json, urlencoded} from 'express';
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import morgan from "morgan";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import { body, validationResult } from "express-validator";
+import { json, urlencoded } from "express";
 import session from "express-session";
-import passport from 'passport';
-import GoogleStrategy from 'passport-google-oauth20';
-import cors from 'cors';
-import { searchMerchants } from './searchFoods.js';
-import { searchFoods } from './searchFoods.js';
-import { getMerchantInfo } from './searchFoods.js';
-
+import passport from "passport";
+import GoogleStrategy from "passport-google-oauth20";
+import cors from "cors";
+import { searchMerchants } from "./searchFoods.js";
+import { searchFoods } from "./searchFoods.js";
+import { getMerchantInfo } from "./searchFoods.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -27,98 +25,120 @@ dotenv.config();
 //----------------------APP----------------------//
 const app = express();
 
-// Enable CORS
- app.use(cors());
-
-// Enable CORS with specific origin and credentials
-// app.use(cors({
-//   origin: 'http://localhost:3000', // Allow requests from this origin
-//   credentials: true // Allow credentials (cookies)
-// }));
+// Enable CORS for all origins
+app.use(cors());
 
 //--------------------MIDDLEWARE-------------------//
 // handle URL parameter
-app.use(urlencoded({extended: true}));
-// logger 
-app.use(morgan('dev'));
+app.use(urlencoded({ extended: true }));
+// logger
+app.use(morgan("dev"));
 app.use(json());
 app.use(cookieParser());
 app.use(body());
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 //--------------------DB----------------------//
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("DB connected"))
-.catch(err => console.log(err))
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("DB connected"))
+  .catch((err) => console.log(err));
 
 //-------------------Searching-------------------//
 const router = express.Router();
-router.get('/search-query', async (req, res) => {
+router.get("/search-query", async (req, res) => {
   try {
     const { query } = req.query; // Assuming the request body contains a 'query' property
 
     // Log the input received in the request body
-    console.log('Received search query:', query);
-    const returnMerchants = await searchMerchants(query)
-    const {foods, merchantNames} = await searchFoods(query)
-    
+    console.log("Received search query:", query);
+    const returnMerchants = await searchMerchants(query);
+    const { foods, merchantNames } = await searchFoods(query);
+
     const combinedData = {
       merchants: returnMerchants,
       foods: foods,
-      merchantNames: merchantNames
-    }
+      merchantNames: merchantNames,
+    };
     res.status(200).send(combinedData);
 
     // Perform any additional processing or handle the search query here
   } catch (error) {
-    console.error('Error handling search query:', error);
-    res.status(500).send('Internal server error');
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
   }
 });
 
-router.get('/get-merch-info', async (req, res) => {
+router.get("/get-merch-info", async (req, res) => {
   try {
     const { query } = req.query;
-    console.log("Looking for rest_id: ", query)
-    const {merchant, menuItems} = await getMerchantInfo(query);
+    console.log("Looking for rest_id: ", query);
+    const { merchant, menuItems } = await getMerchantInfo(query);
     const combinedData = {
       merchant: merchant,
-      menuItems: menuItems
-    }
+      menuItems: menuItems,
+    };
     res.status(200).send(combinedData);
-  } catch(error) {
-    console.error('Error handling search query:', error);
-    res.status(500).send('Internal server error');
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
   }
-})
+});
 
-app.use('/', router);
+app.use("/", router);
 //-------------------ROUTES-------------------//
-import userRoutes from './routes/user.js';
+import userRoutes from "./routes/user.js";
 app.use("/", userRoutes);
 
-passport.use("google", new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:8080/auth/google/callback",
-  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-}, async (accessToken, refreshToken, profile, cb) => {
-  console.log("accessToken", accessToken);
-  console.log("refreshToken", refreshToken);
-  console.log("profile", profile);
-  return cb(null, profile);
-}));
+import merchantRoutes from "./routes/merchant.js";
+app.use("/merchant", merchantRoutes);
+
+import menuRoutes from "./routes/menu.js";
+app.use("/menu", menuRoutes);
+
+import orderRoutes from "./routes/order.js";
+app.use("/orders", orderRoutes);
+
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8080/auth/google/callback",
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      console.log("accessToken", accessToken);
+      console.log("refreshToken", refreshToken);
+      console.log("profile", profile);
+      return cb(null, profile);
+    }
+  )
+);
 
 passport.serializeUser((user, cb) => {
   cb(null, user);
@@ -129,6 +149,6 @@ passport.deserializeUser((user, cb) => {
 });
 
 //-------------------LISTENER-------------------//
-app.listen(process.env.PORT || 8080, function() {
-  console.log("Server is running on port 8080")
+app.listen(process.env.PORT || 8080, function () {
+  console.log("Server is running on port 8080");
 });

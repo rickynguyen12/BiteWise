@@ -5,6 +5,7 @@ import "./RegisterAsStoreOwner.css";
 import "./OwnerEditProfile.css";
 
 const OwnerEditProfile = () => {
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
