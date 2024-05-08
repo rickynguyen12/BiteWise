@@ -58,7 +58,7 @@ const login = async (req, res) => {
     }
 
     // generate a token with user id and jwt secret
-    const token = jwt.sign({ _id: user._id }, "IAMBATMAN", {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
 
@@ -110,7 +110,7 @@ const validate = async (req, res) => {
 
     const jwtToken = req.body.jwt;
     // Verify the JWT token
-    const decoded = jwt.verify(jwtToken, "IAMBATMAN");
+    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
     // If decoding is successful, return a success response
     console.log("Decoded JWT:", decoded);
