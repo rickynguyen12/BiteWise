@@ -5,7 +5,6 @@ const addMenuItem = async (req, res) => {
     const { restaurant_id } = req.params; 
     const menuItem = new Menu({
       restaurant_id: restaurant_id, 
-      id: req.body.id,
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
