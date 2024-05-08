@@ -16,8 +16,25 @@ const FrameComponent4 = () => {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn') || false;
-  console.log(`isLoggedIn: ${isLoggedIn}`);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) return; // Skip if already logged in
+    const jwt = Cookies.get("jwt");
+    // validate jwt cookie and expiry
+    jwt &&
+      axios
+        .post("http://localhost:8080/validate", { jwt })
+        .then((response) => {
+          console.log("JWT Valid:", response.data);
+          setIsLoggedIn(true); // Update isLoggedIn state to true
+        })
+        .catch((error) => {
+          console.error("JWT Invalid:", error);
+          setIsLoggedIn(false); // Update isLoggedIn state to false
+          // Cookies.remove('jwt'); // Remove jwt cookie if needed
+        });
+  }, [isLoggedIn]); // Add isLoggedIn to dependency array
 
   const onSignInClick = () => {
     navigate("/login");
@@ -30,18 +47,9 @@ const FrameComponent4 = () => {
   const onLogoutClick = async () => {
     try {
       const response = await axios.get("http://localhost:8080/logout");
-      
-      if(localStorage.getItem('isOwner') === false){
-        localStorage.removeItem('username');
-      } else if(localStorage.getItem('isOwner') === true){
-        localStorage.removeItem('restaurant_id');
-      }
-
-      localStorage.removeItem('cartItems');
-      localStorage.removeItem('isOwner');
-      localStorage.removeItem('isLoggedIn');
-      console.log("Logout Successful:", response.data);
+      console.log("Login Successful:", response.data);
       setOpenSnackbar(true);
+      setIsLoggedIn(false); // Update isLoggedIn state to false
       Cookies.remove("jwt"); // Remove jwt cookie
       setTimeout(() => {
         navigate("/login");
@@ -49,6 +57,10 @@ const FrameComponent4 = () => {
     } catch (error) {
       console.error("Logout Failed:", error);
     }
+  };
+
+  const onClickDashboard = () => {
+    navigate("/owner-dashboard");
   };
 
   const onLogoContainerClick = () => {
@@ -101,9 +113,7 @@ const FrameComponent4 = () => {
           <div className="sign-in4-container">
             {isLoggedIn && ( // Conditional rendering based on isLoggedIn state
               <Button
-                onClick={() => {
-                  (localStorage.getItem('isOwner') === 'true') ? navigate('/owner-dashboard') : navigate('/user-view-profile');
-                }}
+                onClick={onClickDashboard}
                 sx={{
                   marginRight: "12px",
                   marginLeft: "-22px",
@@ -171,7 +181,7 @@ const FrameComponent4 = () => {
           open={openSnackbar}
           autoHideDuration={6000}
           onClose={handleCloseSnackbar}
-          message={isLoggedIn ? "Login Successful!" : "Logout Successful."}
+          message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
           action={
             <IconButton
               size="small"

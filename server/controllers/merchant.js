@@ -75,10 +75,10 @@ const login = async (req, res) => {
     res.cookie("jwt", token, { expire: new Date() + 9999, httpOnly: true });
 
     // return the response with user
-    const { email } = merchant;
+    const { username } = merchant;
     return res.json({
-      message: "Login Successful",
-      email,
+      message: "Login Successfull",
+      username,
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -119,23 +119,21 @@ const updateMerchant = async (req, res) => {
 
 //get Merchant details
 const getMerchantDetails = async (req, res) => {
-  const { merchant_email } = req.params;
+  const { email } = req.params;
 
   try {
-    const merchant = await Merchant.findOne({ merchant_email });
+    const merchant = await Merchant.findOne({ email });
     if (!merchant) {
       return res.status(404).json({ message: "Merchant not found" });
     }
 
-    const { merchantname, phone, username, email, streetAddress, restaurant_id } = merchant;
+    const { merchantname, phone, username } = merchant;
 
     res.json({
       username,
       merchantname,
       email,
       phone,
-      streetAddress,
-      restaurant_id
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
