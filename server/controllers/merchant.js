@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const register = async (req, res) => {
   try {
     // Check if username already exists
+    const {username, password} = req.body;
     const userNameExists = await Merchant.findOne({
       username: req.body.username,
     });
@@ -13,16 +14,17 @@ const register = async (req, res) => {
       });
     }
 
+    console.log(req.body);
+
     // Check if email already exists
     const emailExists = await Merchant.findOne({
       email: req.body.email,
     });
     if (emailExists) {
       return res.status(403).json({
-        error: "Email already exists",
+        error: "Account already exists. Please login through the login portal.",
       });
     }
-
     // Create new merchant
     const merchant = new Merchant(req.body);
     await merchant.save();
