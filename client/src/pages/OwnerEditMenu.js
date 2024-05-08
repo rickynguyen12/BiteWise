@@ -1,136 +1,162 @@
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { menuData } from "./MenuData";
-import FrameComponent4 from "../components/FrameComponent4";
+import { TextField, Button } from "@mui/material";
 import Footer from "../components/Footer";
-import "./OwnerEditMenu.css";
+import FrameComponent4 from "../components/FrameComponent4";
 import axios from "axios";
+import { useMenuItemContext } from "../components/MenuItemContext"; // Import the MenuItemContext
 
 const OwnerEditMenu = () => {
-  //const [ownerDetails, setOwnerDetails] = useState([]);
+  const { state: menuItemState } = useMenuItemContext(); // Access the menu item context state
 
-  const [menuData, setMenuData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const navigate = useNavigate();
+  const [itemName, setItemName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
-    const fetchMenuData = async () => {
-      try {
-        const restaurantId = 493; // Replace with your actual restaurant ID
-        const response = await axios.get(
-          `https://localhost:8080/menu/get/${restaurantId}`
+    if (menuItemState.menuItem) {
+      setItemName(menuItemState.menuItem.name);
+      setPrice(menuItemState.menuItem.price);
+      setDescription(menuItemState.menuItem.description);
+      setCategory(menuItemState.menuItem.category);
+    }
+  }, [menuItemState.menuItem]);
+
+  const handleUpdate = async () => {
+    try {
+      if (menuItemState.menuItem) {
+        const updatedItem = {
+          ...menuItemState.menuItem,
+          name: itemName,
+          price: price,
+          description: description,
+          category: category,
+        };
+        const response = await axios.put(
+          `https://localhost:8080/menu/update/${updatedItem.restaurant_id}/${updatedItem.id}`,
+          updatedItem
         );
-        setMenuData(response.data.menuItems);
-        setSelectedCategory(response.data.menuItems[0]?.category || "");
-      } catch (error) {
-        console.error("Error fetching menu data:", error);
+        console.log("Menu item updated:", response.data);
       }
-    };
-
-    fetchMenuData();
-  }, []);
-
-  //temp hardcoded owner details
-  //const ownerMenuData = menuData[ownerDetails.restaurantName];
-
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   menuData[ownerDetails.restaurantName][0]?.name || []
-  // );
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    } catch (error) {
+      console.error("Error updating menu item:", error);
+    }
   };
-
-  //const navigate = useNavigate();
-
-  const handleEditItemClick = (itemId) => {
-    navigate(`/owner-edit-item`); // need to update to /owner-edit-item/itemId to retrieve correct item details
-  };
-
-  const handleAddClick = () => {
-    navigate(`/owner-add-to-menu`);
-  };
-
-  const handleDeleteItemClick = (itemId) => {};
 
   return (
-    <div className="edit-menu">
-      <FrameComponent4 />
-      <div className="edit-menu-parent">
-        <header className="edit-menu2">
-          <h2 className="edit-menu1">Edit Menu</h2>
-        </header>
-      </div>
-      <div className="edit-menu-page">
-        <div className="menu-categories">
-          <div className="menu-details">
-            <h2>{menuData.restaurantName}</h2>
-            <div className="add-new">
-              <Button
-                onClick={handleAddClick}
-                variant="contained"
-                className="add-menu-button"
-                sx={{
-                  borderRadius: "10px",
-                }}
-              >
-                Add
-              </Button>
-            </div>
-          </div>
-          <div className="restaurant-menu">
-            {menuData.map((categoryData) => (
-              <button
-                key={categoryData.name}
-                className={`category-button ${
-                  selectedCategory === categoryData.name ? "active" : ""
-                }`}
-                onClick={() => handleCategoryClick(categoryData.name)}
-              >
-                {categoryData.name}
-              </button>
-            ))}
-          </div>
-          <hr className="category-divider" />
-        </div>
-        <div className="menu-items">
-          {selectedCategory && (
-            <div>
-              {menuData
-                .find((category) => category.name === selectedCategory)
-                .items.map((item) => (
-                  <div key={item.id} className="menu-item">
-                    <div className="item-details">
-                      <h3>{item.name}</h3>
-                      <p>{item.description}</p>
+    <div className="register-as-store-owner">
+      <section className="store-registration">
+        <div className="subtract-button-parent">
+          <FrameComponent4 />
+          <div className="business-registration-parent">
+            <header className="business-registration">
+              <h2 className="register-business">Edit Menu</h2>
+            </header>
+            <div className="phone-number-input">
+              <form className="state-zipcode-fields">
+                <div className="state-input">
+                  <div className="zipcode-input">
+                    <div className="email-input-field">
+                      <h2 className="add-business">Item</h2>
                     </div>
-                    <div className="two-buttons">
-                      <Button
-                        onClick={() => handleEditItemClick(item.id)}
-                        variant="contained"
-                        className="edit-button"
-                      >
-                        Edit Item
-                      </Button>
-                      <Button
-                        onClick={() => handleDeleteItemClick(item.id)}
-                        variant="contained"
-                        className="delete-button"
-                      >
-                        Delete Item
-                      </Button>
+                    <div className="frame-container">
+                      <TextField
+                        className="frame-item"
+                        placeholder="Item Name"
+                        variant="outlined"
+                        value={itemName}
+                        onChange={(e) => setItemName(e.target.value)}
+                        sx={{
+                          "& fieldset": { borderColor: "#1ac84b" },
+                          "& .MuiInputBase-root": {
+                            height: "47px",
+                            backgroundColor: "#fff",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                          },
+                          "& .MuiInputBase-input": { color: "#808080" },
+                        }}
+                      />
+                      <TextField
+                        className="frame-item"
+                        placeholder="Price"
+                        variant="outlined"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        sx={{
+                          "& fieldset": { borderColor: "#1ac84b" },
+                          "& .MuiInputBase-root": {
+                            height: "49px",
+                            backgroundColor: "#fff",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                          },
+                          "& .MuiInputBase-input": { color: "#808080" },
+                        }}
+                      />
                     </div>
+                    <TextField
+                      className="city-input2"
+                      placeholder="Description"
+                      variant="outlined"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "200px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
+                    <TextField
+                      className="city-input2"
+                      placeholder="Category"
+                      variant="outlined"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "200px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
                   </div>
-                ))}
+                </div>
+                <div className="sign-in-wrapper">
+                  <Button
+                    className="sign-in3"
+                    disableElevation={true}
+                    variant="contained"
+                    onClick={handleUpdate}
+                    sx={{
+                      textTransform: "none",
+                      color: "#fff",
+                      fontSize: "14",
+                      background: "#2f7c31",
+                      borderRadius: "10px",
+                      "&:hover": { background: "#2f7c31" },
+                      width: 143,
+                      height: 49,
+                    }}
+                  >
+                    Update
+                  </Button>
+                </div>
+              </form>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-      <div className="dashboard-footer">
-        <Footer propHeight="20.9px" propHeight1="24px" />
-      </div>
+      </section>
+      <Footer propHeight="20.9px" propHeight1="24px" />
     </div>
   );
 };

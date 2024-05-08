@@ -1,8 +1,8 @@
+// FoodItemPage.js
+
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
-import { menuData } from "./MenuData";
-import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
@@ -17,11 +17,14 @@ const FoodItemPage = () => {
   });
   const [uniqueCategories, setUniqueCategories] = useState(new Set());
   const searchMerchant = searchParams.get("merchant");
-  console.log("Searched: ", searchMerchant);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const navigate = useNavigate();
+  
+  const goToCart = () => {
+    navigate("/cart", { state: { selectedItems } });
+  };
 
-  // Fetch Search results based on searchQuery
   useEffect(() => {
     localStorage.removeItem("cart");
     const fetchData = async () => {
@@ -31,7 +34,7 @@ const FoodItemPage = () => {
           {
             params: {
               query: searchMerchant,
-            }, // Bobs Burgers
+            }
           }
         );
         setSearchResults(response.data);
@@ -54,7 +57,6 @@ const FoodItemPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    // Load cart items from local storage
     const storedCartItems = JSON.parse(localStorage.getItem("cart"));
     if (storedCartItems) {
       setSelectedItems(storedCartItems);
@@ -69,7 +71,6 @@ const FoodItemPage = () => {
     if (existingItem !== -1) {
       const updated = [...selectedItems];
       updated[existingItem].quantity += 1;
-      // selectedItems[existingItem].quantity += 1;
       setSelectedItems(updated);
       localStorage.setItem("cart", JSON.stringify(updated));
     } else {
@@ -100,13 +101,6 @@ const FoodItemPage = () => {
     localStorage.setItem("cart", JSON.stringify(updated));
   };
 
-  const navigate = useNavigate();
-  const goToCart = () => {
-    navigate("/cart", { state: { selectedItems } });
-  };
-
-  console.log(merchantData);
-
   return (
     <div className="food-item">
       <FrameComponent4 />
@@ -119,7 +113,7 @@ const FoodItemPage = () => {
               merchantData.merchant &&
               merchantData.merchant.logo_url
             }
-            alt="A placeholder Description" // Todo replace???
+            alt="A placeholder Description"
           />
           <div className="restaurant-details">
             <div className="restaurant-name">
@@ -193,7 +187,6 @@ const FoodItemPage = () => {
           </p>
           <div className="cart-items">
             {selectedItems.map((item, index) => {
-              // Render the item only if its quantity is greater than 0
               if (item.quantity > 0) {
                 return (
                   <div key={index} className="cart-item">
@@ -230,7 +223,7 @@ const FoodItemPage = () => {
                   </div>
                 );
               }
-              return null; // Return null for items with quantity 0 to skip rendering
+              return null;
             })}
           </div>
           <button onClick={goToCart} className="compare-prices">

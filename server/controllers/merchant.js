@@ -1,4 +1,4 @@
-import {Merchant} from "../models/merchant.js";
+import Merchant from "../models/merchant.js";
 import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
