@@ -40,14 +40,7 @@ app.use(cookieParser());
 app.use(body());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
+    secret: "IAMBATMAN",
     resave: false,
     saveUninitialized: true,
   })
@@ -62,7 +55,7 @@ app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect("mongodb+srv://bhagyeshrathi:gNtwvWbnc31mxzIH@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -145,8 +138,8 @@ passport.use(
   "google",
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID: "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
+      clientSecret: "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",
       callbackURL: "http://localhost:8080/auth/google/callback",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },

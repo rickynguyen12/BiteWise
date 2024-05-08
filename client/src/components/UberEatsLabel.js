@@ -51,7 +51,7 @@ const UberEatsLabel = () => {
               </div>
             </div>
             <a
-              href="/redirect-page-to-food-delivery-app"
+              href="/redirect-page-to-food-delivery-app" // TODO: Change this to the correct URL, use history or something
               className="pickup-page-link"
             >
               <img
