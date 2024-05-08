@@ -236,6 +236,7 @@
 }
 
 .first-name-parent {
+    height: fit-content;
     align-self: stretch;
     display: flex;
     flex-direction: row;
