@@ -24,6 +24,7 @@ const FoodItemPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        localStorage.setItem("cart", JSON.stringify([]));
         const response = await axios.get(
           "http://localhost:8080/get-merch-info",
           {
@@ -32,12 +33,10 @@ const FoodItemPage = () => {
             }, // Bobs Burgers
           }
         );
-        console.log("Response from API:", response.data);
         setSearchResults(response.data);
         if (response.data.menuItems.length > 0) {
           setSelectedCategory(response.data.menuItems[0].category);
         }
-        console.log("Updated merchantData:", response.data);
       } catch (error) {
         console.error("Error sending search request:", error);
       }
@@ -50,20 +49,32 @@ const FoodItemPage = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const addToCart = (item, category, restaurantId) => {
+  useEffect(() => {
+    // Load cart items from local storage
+    const storedCartItems = JSON.parse(localStorage.getItem("cart"));
+    if (storedCartItems) {
+      setSelectedItems(storedCartItems);
+    }
+  }, []);
+
+  const addToCart = (item, category, restaurantName) => {
     const existingItem = selectedItems.findIndex(
       (selectedItem) =>
         selectedItem.id === item.id && selectedItem.category === category
     );
     if (existingItem !== -1) {
       const updated = [...selectedItems];
-      selectedItems[existingItem].quantity += 1;
+      updated[existingItem].quantity += 1;
+      // selectedItems[existingItem].quantity += 1;
       setSelectedItems(updated);
+      localStorage.setItem("cart", JSON.stringify(updated));
     } else {
-      setSelectedItems([
+      const updatedItems = [
         ...selectedItems,
-        { ...item, quantity: 1, category, restaurantId },
-      ]);
+        { ...item, quantity: 1, category, restaurantName },
+      ];
+      setSelectedItems(updatedItems);
+      localStorage.setItem("cart", JSON.stringify(updatedItems));
     }
   };
 
@@ -82,6 +93,7 @@ const FoodItemPage = () => {
       })
       .filter((item) => item.quantity > 0);
     setSelectedItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   const navigate = useNavigate();
@@ -139,15 +151,17 @@ const FoodItemPage = () => {
         <div className="menu-category">
           {merchantData &&
             merchantData.menuItems &&
-            merchantData.menuItems.map((item) => (
+            Array.from(
+              new Set(merchantData.menuItems.map((item) => item.category))
+            ).map((category) => (
               <div
-                key={item.category}
+                key={category}
                 className={`category ${
-                  selectedCategory === item.category ? "selected" : ""
+                  selectedCategory === category ? "selected" : ""
                 }`}
-                onClick={() => setSelectedCategory(item.category)}
+                onClick={() => setSelectedCategory(category)}
               >
-                {item.category}
+                {category}
               </div>
             ))}
         </div>
@@ -162,7 +176,13 @@ const FoodItemPage = () => {
                   </div>
                   <button
                     className="add-button"
-                    onClick={() => addToCart(menuItem, menuItem.category)}
+                    onClick={() =>
+                      addToCart(
+                        menuItem,
+                        menuItem.category,
+                        merchantData.merchant.merchantname
+                      )
+                    }
                   >
                     Add +
                   </button>

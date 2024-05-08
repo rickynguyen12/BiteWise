@@ -127,11 +127,23 @@
 }
 .restaurant-name2 {
   margin-top: 20px;
-  border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
   color: black;
   font-weight: 600;
   font-size: 20px;
+}
+.restaurant-name3 {
+  margin-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  color: #3b9566;
+  font-weight: 600;
+  font-size: 20px;
+}
+.restaurant-name-group {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #ccc;
 }
 .cart-item-name {
   font-size: 18px;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -6,24 +6,22 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./CustomerCart.css";
 
 const CustomerCart = () => {
-  // Hardcoded data for restaurant name and cart items
-  // const [cartData, setCartData] = useState({
-  //   restaurantName: "David and Emily’s Patisserie",
-  //   cartItems: [
-  //     { id: 1, itemName: "Pain au Chocolat", quantity: 2 },
-  //     { id: 2, itemName: "Plain Croissant", quantity: 1 },
-  //     { id: 3, itemName: "Chocolate Cake", quantity: 1 },
-  //   ],
-  // });
-
   const location = useLocation();
   console.log("Location state:", location.state);
   const navigate = useNavigate();
-  const [cartData, setCartData] = useState(location.state.selectedItems || []);
-  // const cartData = location?.cartData || {
-  //   restaurantName: "",
-  //   cartItems: [],
-  // };
+  const [cartData, setCartData] = useState([]);
+
+  useEffect(() => {
+    const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartData(cartFromStorage);
+    localStorage.setItem("cartItems", JSON.stringify(cartFromStorage));
+  }, []);
+
+  const setCartLocalStorage = (cartData) => {
+    localStorage.setItem("cart", JSON.stringify(cartData));
+    localStorage.setItem("cartItems", JSON.stringify(cartData));
+  };
+
   console.log("Cart data:", cartData);
   const handleQuantityChange = (itemId, newQuantity) => {
     const updatedCartItems = cartData
@@ -43,20 +41,19 @@ const CustomerCart = () => {
       .filter(Boolean);
 
     setCartData(updatedCartItems);
+    setCartLocalStorage(updatedCartItems);
   };
 
   const handleRemoveItem = (itemId) => {
     const updatedCartItems = cartData.filter((item) => item.id !== itemId);
     setCartData(updatedCartItems);
-
-    // setCartData((prevData) => ({
-    //   ...prevData,
-    //   cartItems: prevData.cartItems.filter((item) => item.id !== itemId),
-    // }));
+    setCartLocalStorage(updatedCartItems);
   };
 
   const handleCheckout = () => {
-    navigate(`/in-app-checkout`);
+    navigate(`/in-app-checkout`, {
+      state: { cartData },
+    });
   };
 
   return (
@@ -68,7 +65,12 @@ const CustomerCart = () => {
         </header>
       </div>
       <div className="cart-details">
-        <div className="restaurant-name2">From {cartData?.restaurantName}</div>
+        <div className="restaurant-name-group">
+          <div className="restaurant-name2">From</div>
+          <div className="restaurant-name3">
+            {cartData.length > 0 && cartData[0].restaurantName}
+          </div>
+        </div>
         {console.log("Cart data:", cartData)}
         {cartData?.map((item) => (
           <div key={item.id} className="cart-item2">
