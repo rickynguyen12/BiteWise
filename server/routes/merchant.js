@@ -10,6 +10,7 @@ import { login } from "../controllers/merchant.js";
 import { logout } from "../controllers/merchant.js";
 import { updateMerchant } from "../controllers/merchant.js";
 import { getMerchantDetails } from "../controllers/merchant.js";
+import { validate } from "../controllers/merchant.js";
 
 // import middlewares
 import { merchantRegisterValidator } from "../middlewares/merchant.js";
@@ -33,5 +34,6 @@ router.get("/logout", logout);
 // Route for updating merchant information
 router.put("/updateInfo/:restaurant_id", updateMerchant);
 router.get("/:email", getMerchantDetails);
+router.post("/validate", validate);
 
 export default router;

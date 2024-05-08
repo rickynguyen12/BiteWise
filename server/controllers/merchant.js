@@ -140,9 +140,35 @@ const getMerchantDetails = async (req, res) => {
   }
 };
 
+const validate = async (req, res) => {
+  try {
+    // Check if the JWT token is present
+    if (!req.body.jwt) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: JWT token is missing" });
+    }
+
+    const jwtToken = req.body.jwt;
+    // Verify the JWT token
+    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
+
+    // If decoding is successful, return a success response
+    console.log("Decoded JWT:", decoded);
+    return res.status(200).json({ message: "JWT Valid" });
+  } catch (err) {
+    // Handle errors, such as token expiration or invalid signature
+    console.error("JWT Validation Error:", err.message);
+    return res
+      .status(401)
+      .json({ error: "Unauthorized: JWT token is invalid" });
+  }
+};
+
 export { register };
 export { login };
 export { homepage };
 export { logout };
 export { updateMerchant };
 export { getMerchantDetails };
+export { validate };
