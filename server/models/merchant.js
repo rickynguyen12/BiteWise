@@ -1,21 +1,17 @@
-import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
+import mongoose from 'mongoose';
 
-const merchantSchema = new mongoose.Schema(
-  {
+const merchantSchema = new mongoose.Schema({
     merchantname: {
-      type: String,
-      trim: true,
-      required: true,
-      maxlength: 64,
-      unique: false,
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 64,
+        unique: false
     },
-    restaurant_id: {
-      type: Number,
-      trim: true,
-      maxlength: 64,
-      unique: true,
-      default: uuidv4,
+    restaurant_id: { 
+        type: Number, 
+        required: false,
+        unique: true 
     },
     streetAddress: {
       type: String,
@@ -38,12 +34,12 @@ const merchantSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-      type: String,
-      trim: true,
-      maxlength: 10,
-      required: true,
-      unique: true,
-      sparse: true,
+        type: String,
+        trim: true,
+        maxlength: 10,
+        required: true,
+        unique: true,
+        sparse: true
     },
     email: {
       type: String,
@@ -66,22 +62,30 @@ const merchantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    
     salt: String,
 
     logo_url: {
-      type: String,
-      trim: true,
-      maxlength: 255,
+        type: String,
+        trim: true,
+        maxlength: 255
     },
     in_App: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
+});
+
+merchantSchema.pre('save', function(next) {
+    // Generate a random order number only if it's not already provided
+    if (!this.restaurant_id) {
+        this.restaurant_id = Math.floor(Math.random() * 500) + 1;
+    }
+    next();
+});
+
 
 const Merchant = mongoose.model("Merchant", merchantSchema);
 

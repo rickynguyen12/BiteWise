@@ -131,26 +131,24 @@ app.use("/merchant", merchantRoutes);
 import menuRoutes from "./routes/menu.js";
 app.use("/menu", menuRoutes);
 
-import orderRoutes from "./routes/order.js";
-app.use("/orders", orderRoutes);
+import orderRoutes from './routes/order.js';
+app.use('/orders', orderRoutes);
 
-passport.use(
-  "google",
-  new GoogleStrategy(
-    {
-      clientID: "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
-      clientSecret: "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",
-      callbackURL: "http://localhost:8080/auth/google/callback",
-      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    },
-    async (accessToken, refreshToken, profile, cb) => {
-      console.log("accessToken", accessToken);
-      console.log("refreshToken", refreshToken);
-      console.log("profile", profile);
-      return cb(null, profile);
-    }
-  )
-);
+import restaurantRoutes from './routes/food_mapping.js';
+app.use('/', restaurantRoutes);
+
+
+passport.use("google", new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:8080/auth/google/callback",
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+}, async (accessToken, refreshToken, profile, cb) => {
+  console.log("accessToken", accessToken);
+  console.log("refreshToken", refreshToken);
+  console.log("profile", profile);
+  return cb(null, profile);
+}));
 
 passport.serializeUser((user, cb) => {
   cb(null, user);

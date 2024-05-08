@@ -55,10 +55,34 @@ const addMenuItem = async (req, res) => {
     }
   };
 
+  const getMenuItems = async (req, res) => {
+    const { restaurant_id } = req.params;
+
+    try {
+        // Find all menu items with the given restaurant ID
+        const menuItems = await Menu.find({ restaurant_id });
+
+        if (menuItems.length === 0) {
+            return res.status(404).json({ message: 'No menu items found for the restaurant' });
+        }
+
+        res.json({ menuItems });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+
+
+
+
+  
+
 export {
     addMenuItem,
     removeMenuItem,
-    updateMenuItem
+    updateMenuItem,
+    getMenuItems
 };
         
   
