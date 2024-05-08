@@ -22,7 +22,6 @@ const register = async (req, res) => {
         error: "Email already exists",
       });
     }
-
     // Create new merchant
     const merchant = new Merchant(req.body);
     await merchant.save();

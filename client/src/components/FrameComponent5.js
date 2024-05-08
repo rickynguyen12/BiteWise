@@ -15,6 +15,11 @@ import FrameComponent4 from "./FrameComponent4";
 const FrameComponent5 = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isOwner, setIsOwner] = useState(false); // false = user, true = merchant
+  const [userClicked, setUserClicked] = useState(false);
+  const [ownerClicked, setOwnerClicked] = useState(false);
+
+
   const navigate = useNavigate();
 
   const onLogoContainerClick = () => {
@@ -49,9 +54,10 @@ const FrameComponent5 = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/login", formData);
-      console.log("Login Successful:", response.data);
+      console.log("Login Successful:", response.data.message);
       // Set the JWT token in the browser's cookies
       document.cookie = Cookies.set('jwt', response.data.jwt);
+      console.log(response.data.username);
       setOpenSnackbar(true);
       setIsLoggedIn(true);
       setTimeout(() => {
@@ -64,6 +70,19 @@ const FrameComponent5 = () => {
       }
     }
   };
+
+  const handleUser = () => {
+    setOwnerClicked(false);
+    setUserClicked(true);
+    setIsOwner(false);
+  };
+
+  const handleMerchant = () => {
+    setOwnerClicked(true);
+    setUserClicked(false);
+    setIsOwner(true);
+  };
+
 
   const handleLogout = async () => {
     try {
@@ -95,7 +114,47 @@ const FrameComponent5 = () => {
             <h3 className="welcome-to-bitewise">Welcome to BiteWise!</h3>
           </div>
           <form className="frame-form">
-            <div className="frame-child9" />
+            <div className="frame-child9">
+              <Button
+                className="user-merch-btns"
+                disableElevation={true}
+                onClick={handleUser}
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  color: userClicked ? "#307651": "#fff",
+                  fontSize: "14",
+                  background: userClicked ? 'white' : "#307651",
+                  border: userClicked ? '1px black solid' : 'none',
+                  borderRadius: "10px",
+                  "&:hover": { background: "whitesmoke", color: '#307651' },
+                  height: 49,
+                }}
+              >
+                User
+              </Button>
+              <Button
+                className="user-merch-btns"
+                disableElevation={true}
+                onClick={handleMerchant}
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  color: ownerClicked ? "#307651": "#fff",
+                  fontSize: "14",
+                  background: ownerClicked ? 'white' : "#307651",
+                  border: ownerClicked ? '1px black solid' : 'none',
+                  borderRadius: "10px",
+                  "&:hover": { 
+                    background: "whitesmoke", 
+                    color: '#307651'
+                  },
+                  height: 49,
+                }}
+              >
+                Merchant
+              </Button>
+            </div>
             <div className="inputs-wrapper">
               <TextField
                 className="inputs"
