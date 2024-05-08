@@ -9,14 +9,13 @@ import cookieParser from "cookie-parser";
 import { body, validationResult } from "express-validator";
 import { json, urlencoded } from "express";
 import session from "express-session";
-import passport from 'passport';
-import GoogleStrategy from 'passport-google-oauth20';
-import cors from 'cors';
-import { searchMerchants } from './searchFoods.js';
-import { searchFoods } from './searchFoods.js';
-import { getMerchantInfo } from './searchFoods.js';
-import { checkoutMerchants } from './searchFoods.js';
-
+import passport from "passport";
+import GoogleStrategy from "passport-google-oauth20";
+import cors from "cors";
+import { searchMerchants } from "./searchFoods.js";
+import { searchFoods } from "./searchFoods.js";
+import { getMerchantInfo } from "./searchFoods.js";
+import { checkoutMerchants } from "./searchFoods.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -101,22 +100,22 @@ router.get("/get-merch-info", async (req, res) => {
     console.error("Error handling search query:", error);
     res.status(500).send("Internal server error");
   }
-})
+});
 
-router.get('/checkout-merchants', async (req, res) => {
+router.get("/checkout-merchants", async (req, res) => {
   try {
     const { query } = req.query; // Assuming the request body contains a 'query' property
 
     // Log the input received in the request body
-    console.log('Received an ID:', query);
-    const returnMerchants = await checkoutMerchants(query)
+    console.log("Received an ID:", query);
+    const returnMerchants = await checkoutMerchants(query);
 
     res.status(200).send(returnMerchants);
 
     // Perform any additional processing or handle the search query here
   } catch (error) {
-    console.error('Error handling search query:', error);
-    res.status(500).send('Internal server error');
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
   }
 });
 
@@ -133,6 +132,9 @@ app.use("/menu", menuRoutes);
 
 import orderRoutes from "./routes/order.js";
 app.use("/orders", orderRoutes);
+
+import restaurantRoutes from "./routes/food_mapping.js";
+app.use("/", restaurantRoutes);
 
 passport.use(
   "google",

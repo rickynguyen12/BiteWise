@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
 
 const merchantSchema = new mongoose.Schema(
   {
@@ -12,10 +11,8 @@ const merchantSchema = new mongoose.Schema(
     },
     restaurant_id: {
       type: Number,
-      trim: true,
-      maxlength: 64,
+      required: false,
       unique: true,
-      default: uuidv4,
     },
     streetAddress: {
       type: String,
@@ -66,6 +63,7 @@ const merchantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     salt: String,
 
     logo_url: {
@@ -82,6 +80,14 @@ const merchantSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+merchantSchema.pre("save", function (next) {
+  // Generate a random order number only if it's not already provided
+  if (!this.restaurant_id) {
+    this.restaurant_id = Math.floor(Math.random() * 500) + 1;
+  }
+  next();
+});
 
 const Merchant = mongoose.model("Merchant", merchantSchema);
 
