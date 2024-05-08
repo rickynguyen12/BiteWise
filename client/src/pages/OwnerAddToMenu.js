@@ -5,18 +5,78 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerAddToMenu.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OwnerAddToMenu = () => {
   const [ownerDetails, setOwnerDetails] = useState([]);
+  const user = localStorage.getItem("username");
+  const [id, setId] = useState("");
+
+  const [name, setItemName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleNameChange = (event) => {
+    setItemName(event.target.value);
+  };
+
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const handleClick = async () => {
+    if (id) {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/menu/add/${id}`,
+          {
+            // having item_id be blank
+            restaurant_id: id,
+            name: name, // Pass 'name' to the backend
+            price: price, // Similarly, you can pass 'price', 'description', 'category' as needed
+            description: description,
+            category: category,
+          }
+        );
+        navigate("/owner-dashboard");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   useEffect(() => {
     async function addMenuItems() {
-      const response = await axios
-        .post(`https://localhost:8080/menu/add/:restaurant_id`)
-        .then((res) => {
-          setOwnerDetails([...res.data]);
-        });
+      if (user) {
+        try {
+          const response = await axios.get(
+            "http://localhost:8080/search-user",
+            {
+              params: {
+                query: user,
+              }, // Bob
+            }
+          );
+          setId(response.data.restaurant_id);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
-    addMenuItems();
+    if (user) {
+      addMenuItems();
+    }
   }, []);
   return (
     <div className="register-as-store-owner">
@@ -39,6 +99,8 @@ const OwnerAddToMenu = () => {
                       <TextField
                         className="frame-item"
                         placeholder="Item Name"
+                        value={name}
+                        onChange={handleNameChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -54,6 +116,8 @@ const OwnerAddToMenu = () => {
                       <TextField
                         className="frame-item"
                         placeholder="Price"
+                        value={price}
+                        onChange={handlePriceChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -70,6 +134,8 @@ const OwnerAddToMenu = () => {
                     <TextField
                       className="city-input2"
                       placeholder="Description"
+                      value={description}
+                      onChange={handleDescriptionChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -86,6 +152,8 @@ const OwnerAddToMenu = () => {
                       className="city-input2"
                       placeholder="Category"
                       variant="outlined"
+                      value={category}
+                      onChange={handleCategoryChange}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -115,6 +183,7 @@ const OwnerAddToMenu = () => {
                         width: 143,
                         height: 49,
                       }}
+                      onClick={handleClick}
                     >
                       Add Item
                     </Button>

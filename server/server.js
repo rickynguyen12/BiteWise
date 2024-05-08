@@ -16,6 +16,8 @@ import { getOneMerchant, searchMerchants } from "./searchFoods.js";
 import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
+import Merchants from "./models/merchant.js";
+import User from "./models/user.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -146,6 +148,19 @@ router.get("/get-merchant", async (req, res) => {
   }
 });
 
+router.get("/search-user", async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
+
+    const returnMerchants = await Merchants.findOne({ username: query });
+
+    res.status(200).send(returnMerchants);
+  }
+  catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
 app.use("/", router);
 //-------------------ROUTES-------------------//
 import userRoutes from "./routes/user.js";

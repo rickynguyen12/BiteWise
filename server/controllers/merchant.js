@@ -67,7 +67,7 @@ const login = async (req, res) => {
     }
 
     // generate a token with user id and jwt secret
-    const token = jwt.sign({ _id: merchant._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ _id: merchant._id }, "IAMBATMAN", {
       expiresIn: "24h",
     });
 
