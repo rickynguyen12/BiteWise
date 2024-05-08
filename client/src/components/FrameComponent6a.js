@@ -14,13 +14,29 @@ const FrameComponent6a = ({
   features,
   icon,
   deliveryService,
-  deliveryFee,
+  deliveryFees,
   estimatedTime,
+  routeIndex,
 }) => {
   const navigate = useNavigate();
-
-  const navigateCheckout = () => {
-    navigate("/in-app-checkout");
+  const deliveryFee = `$${Math.min(...deliveryFees)}`
+  routeIndex = deliveryFees.indexOf(Math.min(...deliveryFees))
+  const routing = ["UberEats-", "GrubHub-", "DoorDash-", "Postmates-"];
+  const serviceName = ["Uber Eats", "GrubHub", "DoorDash", "Postmates"];
+  deliveryService = serviceName[routeIndex]
+  const navigateCheckout = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/place_order/${routing[routeIndex]}${name}`);
+      if(response) {
+        const redirectURL = await response.text();
+        window.location.href = redirectURL;
+      }
+      else {
+        throw new Error("Error placing order")
+      }
+    } catch(error) {
+      console.log('Error rerouting to outside service: ', error)
+    }
   };
 
   return (

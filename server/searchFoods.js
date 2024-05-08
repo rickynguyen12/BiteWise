@@ -4,22 +4,24 @@ import MenuItem from "./models/menu.js";
 export async function searchMerchants(searchQuery) {
   try {
     const regex = new RegExp(searchQuery, "i");
+    const originalSearch = await Merchant.findOne({ merchantname: regex });
 
-    const originalSearch = await Merchant.find({ merchantname: regex });
-
-    if (originalSearch.length < 1) {
+    if (!originalSearch) {
       return [];
     }
 
+    const combinedArray = [];
+    combinedArray.push(originalSearch)
+
     const similarMerchants = await Merchant.find({
-      category: originalSearch[0].category,
-      merchantname: { $ne: originalSearch[0].merchantname },
+      category: originalSearch.category,
+      restaurant_id: { $ne: originalSearch.restaurant_id },
     });
 
     // Combine the original search and similar merchants into one array
-    const combinedArray = originalSearch.concat(similarMerchants);
+    const retArray = combinedArray.concat(similarMerchants);
 
-    return combinedArray;
+    return retArray;
   } catch (error) {
     console.error("Error searching merchants:", error);
     return []; // Return an empty array in case of an error
@@ -29,18 +31,20 @@ export async function searchMerchants(searchQuery) {
   // takes in a restID for searching
   export async function checkoutMerchants(restID) {
     try {    
-        const originalSearch = await Merchant.find({ restaurant_id: restID });
+        const originalSearch = await Merchant.findOne({ restaurant_id: restID });
 
         if(originalSearch.length < 1) {
             return []
         }
+        const combinedArray = [];
+        combinedArray.push(originalSearch)
 
-        const similarMerchants = await Merchant.find({ category: originalSearch[0].category, merchantname: { $ne: originalSearch[0].merchantname } });
+        const similarMerchants = await Merchant.find({ category: originalSearch.category, restaurant_id: { $ne: originalSearch.restaurant_id } });
 
         // Combine the original search and similar merchants into one array
-        const combinedArray = originalSearch.concat(similarMerchants);
+        const retArray = combinedArray.concat(similarMerchants);
 
-        return combinedArray;
+        return retArray;
     } catch (error) {
       console.error('Error searching merchants:', error);
       return []; // Return an empty array in case of an error

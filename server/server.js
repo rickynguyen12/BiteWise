@@ -40,7 +40,7 @@ app.use(cookieParser());
 app.use(body());
 app.use(
   session({
-    secret: "IAMBATMAN",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -55,7 +55,7 @@ app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose
-  .connect("mongodb+srv://bhagyeshrathi:gNtwvWbnc31mxzIH@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
