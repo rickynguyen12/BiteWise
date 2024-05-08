@@ -70,11 +70,16 @@ const merchantSchema = new mongoose.Schema({
         trim: true,
         maxlength: 255
     },
+    is_Owner: {
+        type: Boolean, 
+        default: true, 
+    },
     in_App: {
         type: Boolean,
         default: false
     }
-}, {
+    }, 
+    {
     timestamps: true
 });
 
