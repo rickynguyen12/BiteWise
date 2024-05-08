@@ -1,7 +1,6 @@
 import PostmatesLogo from "./PostmatesLogo";
 import FrameComponent9 from "./FrameComponent9";
 import "./UberEatsLabel.css";
-import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "@lottiefiles/lottie-player";
 import axios from 'axios';
@@ -9,19 +8,54 @@ import { generateUniqueArray } from "../components/getDeliveryData"
 
 const UberEatsLabel = ({merchantID}) => {
   const [merchant, setMerchant] = useState();
-  const [prices, setPrices] = useState()
+  const [prices, setPrices] = useState();
 
-  const [routing, setRouting] = useState(["UberEats-", "GrubHub-", "DoorDash-", "Postmates-"]);
-  const [serviceName, setServiceNames] = useState(["Uber Eats", "GrubHub", "DoorDash", "Postmates"]);
+  const [routing, setRouting] = useState(["UberEats-", "Grubhub-", "Doordash-", "Postmates-"]);
+  const [serviceName, setServiceNames] = useState(["Uber Eats", "Grubhub", "Doordash", "Postmates"]);
 
+  // Create a custom comparator function
 
-  const navigate = useNavigate();
+  const compareServices = (a, b) => {
+    // Find the index of a and b in the serviceName array
+    const indexA = serviceName.indexOf(a);
+    const indexB = serviceName.indexOf(b);
+    
+    // Compare prices based on the index
+    return prices[indexA] - prices[indexB];
+  };
 
-  const navigateCheckout = () => {
-    navigate("/in-app-checkout");
+  const compareRoutes = (a, b) => {
+    // Find the index of a and b in the serviceName array
+    const indexA = routing.indexOf(a);
+    const indexB = routing.indexOf(b);
+    
+    // Compare prices based on the index
+    return prices[indexA] - prices[indexB];
+  };
+
+  const navigateCheckout = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/place_order/${routing[0]}${merchant && merchant.merchantname}`);
+      if(response) {
+        const redirectURL = await response.text();
+        window.location.href = redirectURL;
+      }
+      else {
+        throw new Error("Error placing order")
+      }
+    } catch(error) {
+      console.log('Error rerouting to outside service: ', error)
+    }
   };
 
   useEffect(() => {
+    const runCompare = (priced, merchanted) => {
+      if(priced && merchanted) {
+        setServiceNames(serviceName.sort(compareServices))
+        setRouting(routing.sort(compareRoutes))
+        setPrices(prices.sort((a, b) => a - b))
+      }
+    }
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/get-merchant', {
@@ -30,6 +64,9 @@ const UberEatsLabel = ({merchantID}) => {
         })
         setMerchant(response.data)
         setPrices(generateUniqueArray(response.data.restaurant_id))
+
+        // Sort the serviceName array using the custom comparator function
+        runCompare(prices, merchant)
       } catch(error) {
         console.log('Error fetching merchant data: ', error)
       }
@@ -38,7 +75,7 @@ const UberEatsLabel = ({merchantID}) => {
       fetchData();
     }
   
-  }, [merchantID])
+  }, [merchantID, serviceName, prices, routing])
 
 
   return (
@@ -143,11 +180,12 @@ const UberEatsLabel = ({merchantID}) => {
             </div>
           </div>
           <PostmatesLogo
-            postmates="Postmates"
+            postmates={merchant && serviceName[1]}
             group="/pickup-black.png"
             sVG="/pickup2.png"
             prop={merchant && `$${prices[1]}`}
             min="17 min"
+            url={`http://localhost:8080/place_order/${routing[1]}${merchant && merchant.merchantname}`}
           />
           <img
             className="delivery-service-line"
@@ -156,10 +194,11 @@ const UberEatsLabel = ({merchantID}) => {
             src="/line-7.png"
           />
           <FrameComponent9
-            grubHub="GrubHub"
+            grubHub={merchant && serviceName[2]}
             group="/pickup-black.png"
             prop={merchant && `$${prices[2]}`}
             min="20 min"
+            url={`http://localhost:8080/place_order/${routing[2]}${merchant && merchant.merchantname}`}
           />
           <img
             className="delivery-service-line"
@@ -168,11 +207,12 @@ const UberEatsLabel = ({merchantID}) => {
             src="/line-7.png"
           />
           <FrameComponent9
-            grubHub="Doordash"
+            grubHub={merchant && serviceName[3]}
             group="/pickup-black.png"
             prop={merchant && `$${prices[3]}`}
             min="35 min"
             propPadding="0px var(--padding-12xl) 0px var(--padding-19xl)"
+            url={`http://localhost:8080/place_order/${routing[3]}${merchant && merchant.merchantname}`}
           />
           <img
             className="delivery-service-line"

@@ -14,7 +14,6 @@ const restaurants = {
     "Doordash-MountainMikes": "https://www.doordash.com/store/25672403/?cursor=eyJzdG9yZV9wcmltYXJ5X3ZlcnRpY2FsX2lkcyI6WzFdfQ==&pickup=false",
     "Grubhub-MountainMikes": "https://www.grubhub.com/restaurant/mountain-mikes-pizza-29-s-third-st-san-jose/6803144",
     "Postmates-MountainMikes": "https://postmates.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
-    "ChowNow-MountainMikes": "https://www.chownow.com/order/30209/locations/44681?deliversToMe=1&loc=San%20Jose%2C%20CA%2C%20USA",
 
     //El Abuelo Taqueria
     "UberEats-ElAbueloTaqueria": "https://www.ubereats.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",

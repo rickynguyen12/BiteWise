@@ -1,17 +1,14 @@
-import { Button } from "@mui/material";
 import FrameComponent4 from "../components/FrameComponent4";
 import GroupComponent2 from "../components/GroupComponent2";
-import FrameComponent6 from "../components/FrameComponent6";
 import FrameComponent6a from "../components/FrameComponent6a";
 import "./RedirectPageToFoodDelivery.css";
 import { generateUniqueArray } from "../components/getDeliveryData"
 
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const RedirectPageToFoodDelivery2 = () => {
-  const navigate = useNavigate();
   const [searchedParams, setSearchParams] = useSearchParams();
   const [searchedRestuarants, setSearchResults] = useState([]);
   console.log("Clicked Restuarant: ", searchedParams.get("merchant"))
@@ -54,6 +51,8 @@ const RedirectPageToFoodDelivery2 = () => {
         setSortedArray(sortedByMaxPrice);
         setSortedPrices(sortedPricesByMaxPrice);
         break;
+      default:
+        break;
     }
   }
 
@@ -83,7 +82,7 @@ const RedirectPageToFoodDelivery2 = () => {
     if (searchQuery) {
       fetchData();
     }
-  }, [searchedParams])
+  }, [searchedParams, offAppRest, prices])
 
   return (
     <div className="redirect-page-to-food-deliverys">

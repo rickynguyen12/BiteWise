@@ -1,13 +1,22 @@
 import { useMemo } from "react";
 import "./FrameComponent9.css";
-import { useNavigate } from "react-router-dom";
 import "@lottiefiles/lottie-player";
 
-const FrameComponent9 = ({ grubHub, group, prop, min, propPadding }) => {
-  const navigate = useNavigate();
+const FrameComponent9 = ({ grubHub, group, prop, min, propPadding, url }) => {;
 
-  const navigateCheckout = () => {
-    navigate("/in-app-checkout");
+  const navigateCheckout = async () => {
+    try {
+      const response = await fetch(url);
+      if(response) {
+        const redirectURL = await response.text();
+        window.location.href = redirectURL;
+      }
+      else {
+        throw new Error("Error placing order")
+      }
+    } catch(error) {
+      console.log('Error rerouting to outside service: ', error)
+    }
   };
   const frameDivStyle = useMemo(() => {
     return {
