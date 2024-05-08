@@ -5,6 +5,7 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerAddToMenu.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OwnerAddToMenu = () => {
   const [ownerDetails, setOwnerDetails] = useState([]);
@@ -15,6 +16,8 @@ const OwnerAddToMenu = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+
+  const navigate = useNavigate()
 
   const handleNameChange = event => {
     setItemName(event.target.value);
@@ -44,6 +47,7 @@ const OwnerAddToMenu = () => {
             description: description,
             category: category
           })
+        navigate("/owner-dashboard")
       } catch(error) {
         console.log(error)
     }

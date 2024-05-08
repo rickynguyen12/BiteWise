@@ -3,9 +3,97 @@ import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerEditProfile.css";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const OwnerEditProfile = () => {
+  const user = localStorage.getItem('username');
+  const navigate = useNavigate()
 
+  const [name, setItemName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZip] = useState("");
+  const [category, setCategory] = useState("");
+  const [email, setEmail] = useState("")
+
+  const handleNameChange = event => {
+    setItemName(event.target.value);
+  }
+
+  const handlePhoneChange = event => {
+    setPhone(event.target.value);
+  }
+
+  const handleStreetChange = event => {
+    setStreet(event.target.value);
+  }
+  const handleCityChange = event => {
+    setCity(event.target.value);
+  }
+  const handleStateChange = event => {
+    setState(event.target.value);
+  }
+  const handleZipChange = event => {
+    setZip(event.target.value);
+  }
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
+  }
+
+  const [merchant, setMerchant] = useState();
+
+  const handleClick = async () => {
+    if(merchant) {
+      try {
+        const response = await axios
+          .put(`http://localhost:8080/merchant/updateInfo/${merchant.restaurant_id}`, {
+            // having item_id be blank
+            merchantname: name, // Pass 'name' to the backend
+            phone: phone, // Similarly, you can pass 'price', 'description', 'category' as needed
+            streetAddress: street,
+            city: city,
+            state: state,
+            zipCode: zipCode,
+            category: category,
+            email: category
+          })
+        navigate("/owner-dashboard")
+      } catch(error) {
+        console.log(error)
+    }
+    }
+  }
+
+  useEffect(() => {
+    async function getOwnerProfile() {
+      if (user) {
+        try {
+          const response = await axios.get("http://localhost:8080/search-user", {
+            params: {
+              query: user}
+          })
+          setMerchant(response.data);
+          setItemName(response.data.merchantname)
+          setPhone(response.data.phone)
+          setStreet(response.data.streetAddress)
+          setCity(response.data.city)
+          setState(response.data.state)
+          setZip(response.data.zipCode)
+          setCategory(response.data.category)
+          setEmail(response.data.email)
+        } catch(error) {
+            console.log(error)
+        }
+      }
+    }
+    if(user) {
+      getOwnerProfile();
+    }
+  }, [user]);
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -45,6 +133,8 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="frame-child"
                         placeholder="Business Name"
+                        value={name}
+                        onChange={handleNameChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -60,6 +150,8 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="frame-item"
                         placeholder="Business Phone Number"
+                        value={phone}
+                        onChange={handlePhoneChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -76,6 +168,8 @@ const OwnerEditProfile = () => {
                     <TextField
                       className="city-input"
                       placeholder="Street Address"
+                      value={street}
+                      onChange={handleStreetChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -93,6 +187,8 @@ const OwnerEditProfile = () => {
                         <TextField
                           className="subtract-icon2"
                           placeholder="City"
+                          value={city}
+                          onChange={handleCityChange}
                           variant="outlined"
                           sx={{
                             "& fieldset": { borderColor: "#1ac84b" },
@@ -109,6 +205,8 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="delivery-info-label"
                         placeholder="State"
+                        value={state}
+                        onChange={handleStateChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -125,6 +223,8 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="delivery-info-label1"
                         placeholder="Zip code"
+                        value={zipCode}
+                        onChange={handleZipChange}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -142,6 +242,8 @@ const OwnerEditProfile = () => {
                     <TextField
                       className="city-input1"
                       placeholder="Category"
+                      value={category}
+                      onChange={handleEmailChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -154,83 +256,36 @@ const OwnerEditProfile = () => {
                         "& .MuiInputBase-input": { color: "#808080" },
                       }}
                     />
+                    <TextField
+                      className="phone-number-email1"
+                      placeholder="Email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      variant="outlined"
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "54px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="frame-divv">
                   <div className="frame-parent12">
-                    <div className="owner-details-wrapper">
-                      <h2 className="owner-details">Owner Details</h2>
-                    </div>
-                    <div className="last-name-input">
-                      <TextField
-                        className="phone-number-input1"
-                        placeholder="First Name"
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "47px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                            fontSize: "14px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
-                      <TextField
-                        className="last-name-input-child"
-                        placeholder="Last Name"
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "49px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                            fontSize: "14px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
-                    </div>
                   </div>
                   <div className="phone-number-email-parent">
-                    <TextField
-                      className="phone-number-email"
-                      placeholder="Phone Number"
-                      variant="outlined"
-                      sx={{
-                        "& fieldset": { borderColor: "#1ac84b" },
-                        "& .MuiInputBase-root": {
-                          height: "54px",
-                          backgroundColor: "#fff",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                        },
-                        "& .MuiInputBase-input": { color: "#808080" },
-                      }}
-                    />
-                    <TextField
-                      className="phone-number-email1"
-                      placeholder="Email"
-                      variant="outlined"
-                      sx={{
-                        "& fieldset": { borderColor: "#1ac84b" },
-                        "& .MuiInputBase-root": {
-                          height: "54px",
-                          backgroundColor: "#fff",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                        },
-                        "& .MuiInputBase-input": { color: "#808080" },
-                      }}
-                    />
                   </div>
                   <div className="sign-in-wrapper">
                     <Button
                       className="sign-in3"
                       disableElevation={true}
                       variant="contained"
+                      onClick={handleClick}
                       sx={{
                         textTransform: "none",
                         color: "#fff",

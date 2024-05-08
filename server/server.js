@@ -17,6 +17,7 @@ import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
 import Merchants from "./models/merchant.js";
+import User from "./models/user.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -160,7 +161,6 @@ router.get("/search-user", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-
 app.use("/", router);
 //-------------------ROUTES-------------------//
 import userRoutes from "./routes/user.js";
