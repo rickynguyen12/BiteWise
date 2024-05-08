@@ -103,6 +103,7 @@ const RegisterAsStoreOwner = () => {
                         onChange={handleChange}
                         name='merchantname'
                         variant="outlined"
+                        value={formData.merchantname}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -120,6 +121,7 @@ const RegisterAsStoreOwner = () => {
                         name='phone'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.phone}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -138,6 +140,7 @@ const RegisterAsStoreOwner = () => {
                       name='streetAddress'
                       onChange={handleChange}
                       variant="outlined"
+                      value={formData.streetAddress}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -157,6 +160,7 @@ const RegisterAsStoreOwner = () => {
                           name='city'
                           onChange={handleChange}
                           variant="outlined"
+                          value={formData.city}
                           sx={{
                             "& fieldset": { borderColor: "#1ac84b" },
                             "& .MuiInputBase-root": {
@@ -175,6 +179,7 @@ const RegisterAsStoreOwner = () => {
                         name='state'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.state}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -193,6 +198,7 @@ const RegisterAsStoreOwner = () => {
                         name='zipCode'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.zipCode}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -212,6 +218,7 @@ const RegisterAsStoreOwner = () => {
                       name='category'
                       onChange={handleChange}
                       variant="outlined"
+                      value={formData.category}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -229,6 +236,7 @@ const RegisterAsStoreOwner = () => {
                       name='logo_url'
                       onChange={handleChange}
                       variant="outlined"
+                      value={formData.logo_url}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -254,6 +262,7 @@ const RegisterAsStoreOwner = () => {
                         name='firstname'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.firstname}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -271,6 +280,7 @@ const RegisterAsStoreOwner = () => {
                         name='lastname'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.lastname}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -291,6 +301,7 @@ const RegisterAsStoreOwner = () => {
                         name='username'
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.username}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -308,6 +319,7 @@ const RegisterAsStoreOwner = () => {
                       name='email'
                       onChange={handleChange}
                       variant="outlined"
+                      value={formData.email}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -325,6 +337,7 @@ const RegisterAsStoreOwner = () => {
                       variant="outlined"
                       onChange={handleChange}
                       name="password"
+                      value = {formData.password}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
