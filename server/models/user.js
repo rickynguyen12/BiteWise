@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
             trim: true,
             required: true,
             maxlength: 32,
-            unique: true,
+            unique: false,
         },
         lastname: {
             type: String,
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
             trim: true,
             maxlength: 10,
             required: false,
-            unique: true,
+            unique: false,
             sparse: true
         },
         orders: {
