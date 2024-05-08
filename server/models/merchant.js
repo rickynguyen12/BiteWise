@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { v1 as uuidv1 } from 'uuid';
 
 const merchantSchema = new mongoose.Schema(
   {
@@ -88,6 +89,39 @@ merchantSchema.pre("save", function (next) {
   }
   next();
 });
+
+// virtual field
+merchantSchema.virtual('password')
+    // create a temporary variable, _password, which is not stored in the database
+    .set(function(password) {
+        this._password = password;
+        // generate a timestamp, uuidv1 gives us a unique id (unix timestamp)
+        this.salt = uuidv1();
+        // encrypt the password function call
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(function() {
+        return this._password;
+    });
+
+// methods
+merchantSchema.methods = { 
+  // authenticate method
+  authenticate: function(plainText) {
+      return this.encryptPassword(plainText) === this.hashed_password;
+  },
+  // encrypt password method
+  encryptPassword: function(password) {
+      if (!password) return "";
+      try {
+          return crypto.createHmac('sha256', this.salt)
+                      .update(password)
+                      .digest('hex');
+      } catch (err) {
+          return "";
+      }
+  }
+};
 
 const Merchant = mongoose.model("Merchant", merchantSchema);
 

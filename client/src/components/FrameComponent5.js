@@ -15,9 +15,10 @@ import FrameComponent4 from "./FrameComponent4";
 const FrameComponent5 = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isOwner, setIsOwner] = useState(false); // false = user, true = merchant
-  const [userClicked, setUserClicked] = useState(false);
+  const [isMerchant, setIsMerchant] = useState(false); // false = user, true = merchant
+  const [userClicked, setUserClicked] = useState(true);
   const [ownerClicked, setOwnerClicked] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
 
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const FrameComponent5 = () => {
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const handleCloseSnackbar = () => {
@@ -52,21 +53,28 @@ const FrameComponent5 = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post("http://localhost:8080/login", formData);
-      console.log("Login Successful:", response.data.message);
-      // Set the JWT token in the browser's cookies
-      document.cookie = Cookies.set('jwt', response.data.jwt);
-      console.log(response.data.username);
-      setOpenSnackbar(true);
-      setIsLoggedIn(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      const response = await axios.post(
+        isMerchant ? "http://localhost:8080/merchant/login" : "http://localhost:8080/login",
+        formData);
+        console.log("Login Successful:", response.data.message);
+        // Set the JWT token in the browser's cookies
+        document.cookie = Cookies.set('jwt', response.data.jwt);
+
+        // storing username in localStorage
+        localStorage.setItem('username', response.data.username);
+        setOpenSnackbar(true);
+        setIsLoggedIn(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
     } catch (error) {
-      console.error("Login Failed:", error);
-      if (error.response) {
-        console.error("Response Data:", error.response.data);
+      if(error.response && error.response.status == 400){
+        const {error: errorMessage} = error.response.data
+        setErrorMsg(errorMessage);
+      } else {
+        setErrorMsg('We encountered an unexpected error.');
       }
     }
   };
@@ -74,13 +82,13 @@ const FrameComponent5 = () => {
   const handleUser = () => {
     setOwnerClicked(false);
     setUserClicked(true);
-    setIsOwner(false);
+    setIsMerchant(false);
   };
 
   const handleMerchant = () => {
     setOwnerClicked(true);
     setUserClicked(false);
-    setIsOwner(true);
+    setIsMerchant(true);
   };
 
 
@@ -127,7 +135,7 @@ const FrameComponent5 = () => {
                   background: userClicked ? 'white' : "#307651",
                   border: userClicked ? '1px black solid' : 'none',
                   borderRadius: "10px",
-                  "&:hover": { background: "whitesmoke", color: '#307651' },
+                  "&:hover": { background: "#e4e8e1", color: '#307651' },
                   height: 49,
                 }}
               >
@@ -146,7 +154,7 @@ const FrameComponent5 = () => {
                   border: ownerClicked ? '1px black solid' : 'none',
                   borderRadius: "10px",
                   "&:hover": { 
-                    background: "whitesmoke", 
+                    background: "#e4e8e1", 
                     color: '#307651'
                   },
                   height: 49,
@@ -161,6 +169,7 @@ const FrameComponent5 = () => {
                 placeholder="Email"
                 name = "email"
                 value={formData.email}
+                error={(errorMsg != "") ? errorMsg : ""}
                 onChange={handleChange}
                 required
                 variant="outlined"
@@ -180,6 +189,9 @@ const FrameComponent5 = () => {
               name = "password"
               value={formData.password}
               onChange={handleChange}
+              error={(errorMsg != "") ? errorMsg : ""}
+              helperText={errorMsg}
+              type='password'
               required
               placeholder="Password"
               variant="outlined"
