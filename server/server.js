@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
@@ -17,7 +17,6 @@ import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
 import Merchants from "./models/merchant.js";
-import User from "./models/user.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -58,12 +57,10 @@ app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose
-  .connect(process.env.MONGO_URI,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
 
@@ -154,8 +151,7 @@ router.get("/search-user", async (req, res) => {
     const returnMerchants = await Merchants.findOne({ username: query });
 
     res.status(200).send(returnMerchants);
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error handling search query:", error);
     res.status(500).send("Internal server error");
   }

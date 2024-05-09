@@ -24,6 +24,8 @@ const OwnerEditMenu = () => {
           `http://localhost:8080/menu/get/${restaurantId}`
         );
 
+        console.log(response.data);
+
         const uniqueCategories = Array.from(
           new Set(response.data.map((item) => item.category))
         );
@@ -91,7 +93,9 @@ const OwnerEditMenu = () => {
       <div className="edit-menu-page">
         <div className="menu-categories">
           <div className="menu-details">
-            <h2>Restaurant ID: {menuData[0].restaurant_id}</h2>
+            {menuData.length > 0 && (
+              <h2>Restaurant ID: {menuData[0].restaurant_id}</h2>
+            )}
             <div className="add-new">
               <Button
                 onClick={handleAddClick}
