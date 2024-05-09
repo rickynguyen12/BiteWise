@@ -5,12 +5,14 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerAddToMenu.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const OwnerAddToMenu = () => {
   const [ownerDetails, setOwnerDetails] = useState([]);
   const user = localStorage.getItem("username");
   const [id, setId] = useState("");
+  const location = useLocation();
+  const { restaurantId } = location.state;
 
   const [name, setItemName] = useState("");
   const [price, setPrice] = useState("");
@@ -36,20 +38,21 @@ const OwnerAddToMenu = () => {
   };
 
   const handleClick = async () => {
-    if (id) {
+    if (restaurantId) {
       try {
         const response = await axios.post(
-          `http://localhost:8080/menu/add/${id}`,
+          `http://localhost:8080/menu/add/${restaurantId}`,
           {
             // having item_id be blank
-            restaurant_id: id,
-            name: name, // Pass 'name' to the backend
-            price: price, // Similarly, you can pass 'price', 'description', 'category' as needed
+            restaurant_id: restaurantId,
+            name: name,
+            price: price,
             description: description,
             category: category,
           }
         );
-        navigate("/owner-dashboard");
+
+        navigate("/owner-edit-menu");
       } catch (error) {
         console.log(error);
       }
@@ -191,53 +194,6 @@ const OwnerAddToMenu = () => {
                 </div>
               </form>
             </div>
-            {/* <div className="category-input">
-              <form className="state-zipcode-fields">
-                <div className="state-input">
-                  <div className="zipcode-input">
-                    <div className="email-input-field">
-                      <h2 className="add-business">Category</h2>
-                    </div>
-                    <div className="phone-number-email-parent">
-                      <TextField
-                        className="phone-number-email1"
-                        placeholder="Category Name"
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "54px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                            fontSize: "14px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
-                    </div>
-                    <div className="add-category-wrapper">
-                      <Button
-                        className="sign-in3"
-                        disableElevation={true}
-                        variant="contained"
-                        sx={{
-                          textTransform: "none",
-                          color: "#fff",
-                          fontSize: "14",
-                          background: "#2f7c31",
-                          borderRadius: "10px",
-                          "&:hover": { background: "#2f7c31" },
-                          width: 143,
-                          height: 49,
-                        }}
-                      >
-                        Add Category
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div> */}
           </div>
         </div>
       </section>

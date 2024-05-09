@@ -107,16 +107,17 @@ function App() {
           path="/redirect-page-to-food-delivery-app"
           element={<RedirectPageToFoodDelivery />}
         />
-        <Route path="/owner-edit-item" element={<OwnerEditMenuItem />} />
+        {/* <Route path="/owner-edit-item" element={<OwnerEditMenuItem />} /> */}
+        <Route
+          path="/owner-edit-item/:restaurantId/:itemId"
+          element={<OwnerEditMenuItem />}
+        />
         <Route path="/owner-add-to-menu" element={<OwnerAddToMenu />} />
         <Route path="/owner-orders" element={<OwnerOrders />} />
         <Route path="/cart" element={<CustomerCart />} />
         <Route path="/view-all-deals" element={<ViewAllDeals />} />
         <Route path="/searched-results" element={<SearchedResults />} />
-        <Route
-          path="/in-app-order-confirm"
-          element={<IAOrderConfirmation />}
-        />
+        <Route path="/in-app-order-confirm" element={<IAOrderConfirmation />} />
         <Route path="/owner-view-profile" element={<OwnerViewProfile />} />
         <Route path="/user-view-profile" element={<UserViewProfile />} />
       </Routes>

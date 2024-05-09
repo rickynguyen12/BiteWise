@@ -1,25 +1,52 @@
 import { TextField, Button } from "@mui/material";
+import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import React, { useState, useEffect } from "react";
 import "./RegisterAsStoreOwner.css";
 import axios from "axios";
 
-const OwnerEditMenuItem = ({ location }) => {
+const OwnerEditMenuItem = () => {
+  const { restaurantId, itemId } = useParams();
   const [ownerDetails, setOwnerDetails] = useState([]);
-  const itemId = location?.state?.itemId;
-  const restaurantId = location?.state?.restaurantId;
+  const [updatedItemDetails, setUpdatedItemDetails] = useState({
+    newName: "",
+    newPrice: "",
+    newDescription: "",
+    newCategory: "",
+  });
 
-  useEffect(() => {
-    async function updateMenuItems() {
-      const response = await axios
-        .put(`http://localhost:8080/menu/update/${restaurantId}/${itemId}`)
-        .then((res) => {
-          setOwnerDetails([...res.data]);
-        });
+  const handleUpdateItem = async () => {
+    const { newName, newPrice, newDescription, newCategory } =
+      updatedItemDetails;
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/menu/update/${restaurantId}/${itemId}`,
+        {
+          name: newName,
+          price: newPrice,
+          description: newDescription,
+          category: newCategory,
+        }
+      );
+      const updatedItem = response.data;
+
+      setOwnerDetails([...ownerDetails, updatedItem]);
+
+      console.log("Data updated:", updatedItem);
+      window.location.href = `/owner-edit-menu`;
+    } catch (error) {
+      console.error("Error updating menu items:", error);
     }
-    updateMenuItems();
-  }, []);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedItemDetails({
+      ...updatedItemDetails,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -41,6 +68,9 @@ const OwnerEditMenuItem = ({ location }) => {
                         className="frame-item"
                         placeholder="Item Name"
                         variant="outlined"
+                        name="newName"
+                        value={updatedItemDetails.newName}
+                        onChange={handleInputChange}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -56,6 +86,9 @@ const OwnerEditMenuItem = ({ location }) => {
                         className="frame-item"
                         placeholder="Price"
                         variant="outlined"
+                        name="newPrice"
+                        value={updatedItemDetails.newPrice}
+                        onChange={handleInputChange}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -72,6 +105,9 @@ const OwnerEditMenuItem = ({ location }) => {
                       className="city-input2"
                       placeholder="Description"
                       variant="outlined"
+                      name="newDescription"
+                      value={updatedItemDetails.newDescription}
+                      onChange={handleInputChange}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -87,6 +123,9 @@ const OwnerEditMenuItem = ({ location }) => {
                       className="city-input2"
                       placeholder="Category"
                       variant="outlined"
+                      name="newCategory"
+                      value={updatedItemDetails.newCategory}
+                      onChange={handleInputChange}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -115,6 +154,7 @@ const OwnerEditMenuItem = ({ location }) => {
                       width: 143,
                       height: 49,
                     }}
+                    onClick={handleUpdateItem}
                   >
                     Update
                   </Button>

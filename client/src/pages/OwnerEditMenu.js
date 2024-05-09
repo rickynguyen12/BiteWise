@@ -8,8 +8,6 @@ import "./OwnerEditMenu.css";
 import axios from "axios";
 
 const OwnerEditMenu = () => {
-  //const [ownerDetails, setOwnerDetails] = useState([]);
-
   const [menuData, setMenuData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
@@ -30,10 +28,9 @@ const OwnerEditMenu = () => {
           new Set(response.data.map((item) => item.category))
         );
 
-        // Set categories state to the array of unique categories
         setCategories(uniqueCategories);
         setMenuData(response.data);
-        setSelectedCategory(response.data.menuItems[0]?.category || "");
+        setSelectedCategory(menuData[0]?.category || "");
       } catch (error) {
         console.error("Error fetching menu data:", error);
       }
@@ -42,25 +39,16 @@ const OwnerEditMenu = () => {
     fetchMenuData();
   }, []);
 
-  //temp hardcoded owner details
-  //const ownerMenuData = menuData[ownerDetails.restaurantName];
-
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   menuData[ownerDetails.restaurantName][0]?.name || []
-  // );
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
-  //const navigate = useNavigate();
-
   const handleEditItemClick = (restaurantId, itemId) => {
-    navigate(`/owner-edit-item`, { state: { restaurantId, itemId } }); // need to update to /owner-edit-item/itemId to retrieve correct item details
+    navigate(`/owner-edit-item/${restaurantId}/${itemId}`);
   };
 
-  const handleAddClick = () => {
-    navigate(`/owner-add-to-menu`);
+  const handleAddClick = (restaurantId) => {
+    navigate(`/owner-add-to-menu`, { state: { restaurantId } });
   };
 
   const handleDeleteItemClick = async (restaurant_id, itemId) => {
@@ -68,11 +56,6 @@ const OwnerEditMenu = () => {
       await axios.delete(
         `http://localhost:8080/menu/remove/${restaurant_id}/${itemId}`
       );
-      // Assuming the response contains updated menu items after deletion
-      // Update menuData state with the updated menu items
-      // Make sure to replace setMenuData with the correct state setter for menuData
-      // You might also need to fetch the updated menu items again from the server if necessary
-      // Example: fetchMenuData();
       const response = await axios.get(
         `http://localhost:8080/menu/get/${restaurant_id}`
       );
@@ -98,7 +81,7 @@ const OwnerEditMenu = () => {
             )}
             <div className="add-new">
               <Button
-                onClick={handleAddClick}
+                onClick={() => handleAddClick(menuData[0]?.restaurant_id)}
                 variant="contained"
                 className="add-menu-button"
                 sx={{
