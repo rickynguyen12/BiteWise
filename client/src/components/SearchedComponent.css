@@ -4,7 +4,7 @@
   border-radius: var(--br-3xs);
   background-color: var(--color-whitesmoke-100);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: center;
   padding: var(--padding-6xl);
@@ -29,7 +29,7 @@
 }
 .search-item {
   position: relative;
-  text-transform: lowercase;
+  text-transform: none;
   font-weight: 500;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -83,14 +83,8 @@
   text-overflow: ellipsis;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 1920px) {
   .search-name {
     font-size: var(--h4-size);
-  }
-
-  .search-container {
-    padding-top: var(--padding-xl);
-    padding-bottom: var(--padding-xl);
-    box-sizing: border-box;
   }
 }

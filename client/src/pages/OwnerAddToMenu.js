@@ -1,10 +1,23 @@
 import { TextField, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./RegisterAsStoreOwner.css";
 import "./OwnerAddToMenu.css";
+import axios from "axios";
 
 const OwnerAddToMenu = () => {
+  const [ownerDetails, setOwnerDetails] = useState([]);
+  useEffect(() => {
+    async function addMenuItems() {
+      const response = await axios
+        .post("https://localhost:8080/menu/add/:restaurant_id")
+        .then((res) => {
+          setOwnerDetails([...res.data]);
+        });
+    }
+    addMenuItems();
+  }, []);
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -55,8 +68,23 @@ const OwnerAddToMenu = () => {
                       />
                     </div>
                     <TextField
-                      className="city-input"
+                      className="city-input2"
                       placeholder="Description"
+                      variant="outlined"
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "200px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
+                    <TextField
+                      className="city-input2"
+                      placeholder="Category"
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -94,7 +122,7 @@ const OwnerAddToMenu = () => {
                 </div>
               </form>
             </div>
-            <div className="category-input">
+            {/* <div className="category-input">
               <form className="state-zipcode-fields">
                 <div className="state-input">
                   <div className="zipcode-input">
@@ -140,7 +168,7 @@ const OwnerAddToMenu = () => {
                   </div>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

@@ -1,46 +1,48 @@
-import Merchant from '../models/merchant.js'
-import jwt from 'jsonwebtoken';
+import Merchant from "../models/merchant.js";
+import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   try {
     // Check if username already exists
+    const {username, password} = req.body;
     const userNameExists = await Merchant.findOne({
-      username: req.body.username
+      username: req.body.username,
     });
     if (userNameExists) {
       return res.status(403).json({
-        error: "Username already exists"
+        error: "Username already exists",
       });
     }
+
+    console.log(req.body);
 
     // Check if email already exists
     const emailExists = await Merchant.findOne({
-      email: req.body.email
+      email: req.body.email,
     });
     if (emailExists) {
       return res.status(403).json({
-        error: "Email already exists"
+        error: "Account already exists. Please login through the login portal.",
       });
     }
-
     // Create new merchant
     const merchant = new Merchant(req.body);
     await merchant.save();
     res.status(201).json({
-      message: "Signup Successful, Please Login to continue."
+      message: "Signup Successful, Please Login to continue.",
     });
   } catch (error) {
     console.error("Error occurred during merchant registration:", error);
     res.status(500).json({
-      error: "An unexpected error occurred during registration"
+      error: "An unexpected error occurred during registration",
     });
   }
 };
 
 const homepage = async (req, res) => {
   res.status(200).json({
-    message:"Successful!"
-  })
+    message: "Successful!",
+  });
 };
 
 const login = async (req, res) => {
@@ -50,7 +52,7 @@ const login = async (req, res) => {
   try {
     const merchant = await Merchant.findOne({ email });
 
-    // if no user found 
+    // if no user found
     if (!merchant) {
       return res.status(400).json({
         error: "Invalid Credentials",
@@ -65,10 +67,12 @@ const login = async (req, res) => {
     }
 
     // generate a token with user id and jwt secret
-    const token = jwt.sign({ _id: merchant._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ _id: merchant._id }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
     // persist the token as 'jwt' in cookie with an expiry date
-    res.cookie('jwt', token, { expire: new Date() + 9999, httpOnly: true });
+    res.cookie("jwt", token, { expire: new Date() + 9999, httpOnly: true });
 
     // return the response with user
     const { username } = merchant;
@@ -86,28 +90,85 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   // clear the cookie
-  res.clearCookie('jwt');
+  res.clearCookie("jwt");
 
   return res.status(200).json({
     message: "Logout Successfull",
   });
 };
 
-
+//Update merchant info
 const updateMerchant = async (req, res) => {
   const { restaurant_id } = req.params;
   const updates = req.body;
 
   try {
-    const updatedMerchant = await Merchant.findOneAndUpdate({ restaurant_id }, updates, { new: true });
+    const updatedMerchant = await Merchant.findOneAndUpdate(
+      { restaurant_id },
+      updates,
+      { new: true }
+    );
     if (!updatedMerchant) {
-      return res.status(404).json({ message: 'Merchant not found' });
+      return res.status(404).json({ message: "Merchant not found" });
     }
-    res.json({ message: 'Merchant updated successfully', updatedMerchant });
+    res.json({ message: "Merchant updated successfully", updatedMerchant });
   } catch (error) {
-    res.status(500).json({ message: 'Could not update merchant information' });
+    res.status(500).json({ message: "Could not update merchant information" });
   }
 };
 
+//get Merchant details
+const getMerchantDetails = async (req, res) => {
+  const { email } = req.params;
 
-export {register,login,homepage,logout,updateMerchant};
+  try {
+    const merchant = await Merchant.findOne({ email });
+    if (!merchant) {
+      return res.status(404).json({ message: "Merchant not found" });
+    }
+
+    const { merchantname, phone, username } = merchant;
+
+    res.json({
+      username,
+      merchantname,
+      email,
+      phone,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const validate = async (req, res) => {
+  try {
+    // Check if the JWT token is present
+    if (!req.body.jwt) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: JWT token is missing" });
+    }
+
+    const jwtToken = req.body.jwt;
+    // Verify the JWT token
+    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
+
+    // If decoding is successful, return a success response
+    console.log("Decoded JWT:", decoded);
+    return res.status(200).json({ message: "JWT Valid" });
+  } catch (err) {
+    // Handle errors, such as token expiration or invalid signature
+    console.error("JWT Validation Error:", err.message);
+    return res
+      .status(401)
+      .json({ error: "Unauthorized: JWT token is invalid" });
+  }
+};
+
+export { register };
+export { login };
+export { homepage };
+export { logout };
+export { updateMerchant };
+export { getMerchantDetails };
+export { validate };

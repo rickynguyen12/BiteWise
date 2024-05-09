@@ -4,6 +4,8 @@ import OwnerHistoryOrders from "../components/OwnerHistoryOrders";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerOrders.css";
+import axios from "axios"; // Import Axios
+
 
 const OwnerOrders = () => {
   // Hard-coded incoming and history orders for testing
@@ -71,25 +73,49 @@ const OwnerOrders = () => {
     },
   ]);
 
-  const handleAcceptOrder = (orderId) => {
-    console.log("Accepted order:", orderId);
-    // Update order status to 'Accepted'
-    setIncomingOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: "Accepted" } : order
-      )
-    );
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // const handleAcceptOrder = (orderId) => {
+  //   console.log("Accepted order:", orderId);
+  //   // Update order status to 'Accepted'
+  //   setIncomingOrders((prevOrders) =>
+  //     prevOrders.map((order) =>
+  //       order.id === orderId ? { ...order, status: "Accepted" } : order
+  //     )
+  //   );
+  // };
+
+  const handleAcceptOrder = async (orderId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/accept/${orderId}`
+      );
+      console.log("Order Accepted:", response.data);
+    } catch (error) {
+      console.error("Error Accepting Order:", error);
+    }
   };
 
-  const handleRejectOrder = (orderId) => {
-    // Implement logic to reject the order
-    console.log("Rejected order:", orderId);
-    // Update order status to 'Rejected'
-    setIncomingOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: "Rejected" } : order
-      )
-    );
+  // const handleRejectOrder = (orderId) => {
+  //   // Implement logic to reject the order
+  //   console.log("Rejected order:", orderId);
+  //   // Update order status to 'Rejected'
+  //   setIncomingOrders((prevOrders) =>
+  //     prevOrders.map((order) =>
+  //       order.id === orderId ? { ...order, status: "Rejected" } : order
+  //     )
+  //   );
+  // };
+
+  const handleRejectOrder = async (orderId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/reject/${orderId}`
+      );
+      console.log("Order Rejected:", response.data);
+    } catch (error) {
+      console.error("Error Rejecting Order:", error);
+    }
   };
 
   return (

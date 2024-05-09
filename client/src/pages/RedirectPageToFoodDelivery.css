@@ -458,17 +458,18 @@
   gap: var(--gap-45xl-6);
   max-width: 100%;
 }
-.frame-parents {
+.frame-parents-compare-prices {
   width: 1684px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: left;
   justify-content: flex-start;
   max-width: 100%;
   text-align: left;
   font-size: var(--font-size-5xl);
   color: var(--color-gray-200);
   font-family: var(--font-poppins);
+  margin-left: 40px;
 }
 .view-more-buttons {
   margin: 0;
