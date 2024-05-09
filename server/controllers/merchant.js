@@ -47,11 +47,11 @@ const homepage = async (req, res) => {
 
 const login = async (req, res) => {
   // find the user based on email
-  const { email, password } = req.body;
-
+  const merchant_email = req.body.email;
+  const password = req.body.password;
   try {
-    const merchant = await Merchant.findOne({ email });
-
+    const merchant = await Merchant.findOne({ email: merchant_email });
+    console.log(merchant);
     // if no user found
     if (!merchant) {
       return res.status(400).json({
@@ -119,10 +119,9 @@ const updateMerchant = async (req, res) => {
 
 //get Merchant details
 const getMerchantDetails = async (req, res) => {
-  const { merchant_email } = req.params;
-
+  const merchant_email = req.params.merchant_email;
   try {
-    const merchant = await Merchant.findOne({ merchant_email });
+    const merchant = await Merchant.findOne({ email: merchant_email });
     if (!merchant) {
       return res.status(404).json({ message: "Merchant not found" });
     }

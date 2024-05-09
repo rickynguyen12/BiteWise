@@ -79,7 +79,7 @@ const FrameComponent5 = () => {
           navigate("/");
         }, 2000);
     } catch (error) {
-      if(error.response && error.response.status == 400){
+      if(error.response && error.response.status === 400){
         const {error: errorMessage} = error.response.data
         setErrorMsg(errorMessage);
       } else {
@@ -104,7 +104,7 @@ const FrameComponent5 = () => {
   const handleLogout = async () => {
     try {
       const response = await axios.get("http://localhost:8080/logout");
-      console.log("Login Successful:", response.data);
+      console.log("Logout Successful:", response.data);
       setOpenSnackbar(true);
       setIsLoggedIn(false);
       setTimeout(() => {

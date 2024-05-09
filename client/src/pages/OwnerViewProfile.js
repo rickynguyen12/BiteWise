@@ -24,7 +24,7 @@ const OwnerViewProfile = () => {
     const fetchOwnerDetails = async (e) => {
       try{
         const merchant_email= localStorage.getItem('email');
-        const response = await axios.get(`http://localhost:8080/${merchant_email}`);
+        const response = await axios.get(`http://localhost:8080/merchant/${merchant_email}`);
 
         const { username,
           merchantname,
