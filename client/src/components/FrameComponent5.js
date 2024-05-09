@@ -19,8 +19,6 @@ const FrameComponent5 = () => {
   const [userClicked, setUserClicked] = useState(true);
   const [ownerClicked, setOwnerClicked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
-
   const navigate = useNavigate();
 
   const onLogoContainerClick = () => {
