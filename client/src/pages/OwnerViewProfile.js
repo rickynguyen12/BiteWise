@@ -3,6 +3,7 @@ import { TextField, Button } from "@mui/material";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerViewProfile.css";
+import axios from 'axios';
 
 const OwnerViewProfile = () => {
   // Assuming you have owner details stored in state
@@ -27,16 +28,13 @@ const OwnerViewProfile = () => {
           merchantname,
           email,
           phone,
-          streetAddress,
-          restaurant_id} = response.data;
+        } = response.data;
         
         setOwnerDetails({
           Username: username,
           Merchantname: merchantname,
           Email: email,
           Phone: phone,
-          StreetAddress: streetAddress,
-          Restaurant_id: restaurant_id
         });
 
         

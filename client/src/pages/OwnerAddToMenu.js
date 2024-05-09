@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const OwnerAddToMenu = () => {
   const [ownerDetails, setOwnerDetails] = useState([]);
   const user = localStorage.getItem("username");
-  const [id, setId] = useState("");
+  const id = localStorage.getItem('restaurant_id');
 
   const [name, setItemName] = useState("");
   const [price, setPrice] = useState("");
@@ -56,28 +56,7 @@ const OwnerAddToMenu = () => {
     }
   };
 
-  useEffect(() => {
-    async function addMenuItems() {
-      if (user) {
-        try {
-          const response = await axios.get(
-            "http://localhost:8080/search-user",
-            {
-              params: {
-                query: user,
-              }, // Bob
-            }
-          );
-          setId(response.data.restaurant_id);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-    if (user) {
-      addMenuItems();
-    }
-  }, []);
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">

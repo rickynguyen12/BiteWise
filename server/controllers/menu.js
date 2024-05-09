@@ -70,9 +70,9 @@ const getMenuItems = async (req, res) => {
         .status(404)
         .json({ message: "No menu items found for the restaurant" });
     }
-
-    //res.json({ menuItems });
+    
     res.status(200).send(menuItems);
+    
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -68,7 +68,8 @@ const FrameComponent5 = () => {
           localStorage.setItem('isOwner', false);
         } else {
           // storing username in localStorage
-          localStorage.setItem('restaurant_id', response.data.email);
+          localStorage.setItem('restaurant_email', response.data.email);
+          localStorage.setItem('restaurant_id', response.data.restaurant_id);
           localStorage.setItem('isOwner', true);
         }
         localStorage.setItem('isLoggedIn', true);

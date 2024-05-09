@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { menuData } from "./MenuData";
 import FrameComponent4 from "../components/FrameComponent4";
 import Footer from "../components/Footer";
 import "./OwnerEditMenu.css";
@@ -19,7 +18,7 @@ const OwnerEditMenu = () => {
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const restaurantId = 372; // Replace with your actual restaurant ID
+        const restaurantId = localStorage.getItem('restaurant_id'); // Replace with your actual restaurant ID
         const response = await axios.get(
           `http://localhost:8080/menu/get/${restaurantId}`
         );
@@ -41,13 +40,6 @@ const OwnerEditMenu = () => {
 
     fetchMenuData();
   }, []);
-
-  //temp hardcoded owner details
-  //const ownerMenuData = menuData[ownerDetails.restaurantName];
-
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   menuData[ownerDetails.restaurantName][0]?.name || []
-  // );
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);

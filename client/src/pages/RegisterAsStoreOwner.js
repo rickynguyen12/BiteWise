@@ -26,7 +26,7 @@ const RegisterAsStoreOwner = () => {
     in_App: true,
     username: "",
     email: "",
-    password: ""
+    password: "",
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
@@ -56,6 +56,7 @@ const RegisterAsStoreOwner = () => {
       console.error("Signup Failed:", error);
 
       if (error.response) {
+        setErrorMessage(error.response.message);
         console.error("Response Data:", error.response.data);
       }
     }

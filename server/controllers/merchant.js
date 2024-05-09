@@ -74,9 +74,11 @@ const login = async (req, res) => {
 
     // return the response with user
     const merchEmail = merchant.email;
+    const restId = merchant.restaurant_id;
     return res.json({
       message: "Login Successful",
       email: merchEmail,
+      restaurant_id: restId
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -124,7 +126,7 @@ const getMerchantDetails = async (req, res) => {
       return res.status(404).json({ message: "Merchant not found" });
     }
 
-    const { merchantname, phone, username } = merchant;
+    const { merchantname, email, phone, username } = merchant;
 
     res.json({
       username,
