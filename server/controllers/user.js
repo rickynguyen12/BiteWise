@@ -124,32 +124,8 @@ const validate = async (req, res) => {
   }
 };
 
-const getUserDetails = async (req, res) => {
-  const { username } = req.params;
-
-  try {
-    const user = await User.findOne({ username });
-    console.log(user);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const { firstname, lastname, phone, email} = user;
-
-    res.json({
-      firstname,
-      lastname,
-      phone,
-      email
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 export { register };
 export { homepage };
 export { login };
 export { logout };
 export { validate };
-export {getUserDetails};

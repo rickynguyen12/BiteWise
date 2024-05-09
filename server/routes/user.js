@@ -11,7 +11,6 @@ import { homepage } from "../controllers/user.js";
 import { login } from "../controllers/user.js";
 import { logout } from "../controllers/user.js";
 import { validate } from "../controllers/user.js";
-import { getUserDetails } from "../controllers/user.js";
 
 // import middlewares
 import { userRegisterValidator } from "../middlewares/user.js";
@@ -79,6 +78,5 @@ router.post("/register", userRegisterValidator, register);
 router.post("/login", login);
 router.get("/logout", logout);
 router.post("/validate", validate);
-router.get("/:username", getUserDetails);
 
 export default router;

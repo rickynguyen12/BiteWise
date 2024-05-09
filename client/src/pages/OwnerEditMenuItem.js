@@ -5,12 +5,15 @@ import React, { useState, useEffect } from "react";
 import "./RegisterAsStoreOwner.css";
 import axios from "axios";
 
-const OwnerEditMenuItem = () => {
+const OwnerEditMenuItem = ({ location }) => {
   const [ownerDetails, setOwnerDetails] = useState([]);
+  const itemId = location?.state?.itemId;
+  const restaurantId = location?.state?.restaurantId;
+
   useEffect(() => {
     async function updateMenuItems() {
       const response = await axios
-        .put("https://localhost:8080/menu/update/:restaurant_id/:id")
+        .put(`http://localhost:8080/menu/update/${restaurantId}/${itemId}`)
         .then((res) => {
           setOwnerDetails([...res.data]);
         });

@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   try {
-    // Check if username already exists
-    const {username, password} = req.body;
     const userNameExists = await Merchant.findOne({
       username: req.body.username,
     });
@@ -75,10 +73,10 @@ const login = async (req, res) => {
     res.cookie("jwt", token, { expire: new Date() + 9999, httpOnly: true });
 
     // return the response with user
-    const { email } = merchant;
+    const merchEmail = merchant.email;
     return res.json({
       message: "Login Successful",
-      email,
+      email: merchEmail,
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -126,15 +124,13 @@ const getMerchantDetails = async (req, res) => {
       return res.status(404).json({ message: "Merchant not found" });
     }
 
-    const { merchantname, phone, username, email, streetAddress, restaurant_id } = merchant;
+    const { merchantname, phone, username } = merchant;
 
     res.json({
       username,
       merchantname,
       email,
       phone,
-      streetAddress,
-      restaurant_id
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

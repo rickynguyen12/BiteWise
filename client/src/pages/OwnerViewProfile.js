@@ -8,12 +8,10 @@ import axios from 'axios';
 const OwnerViewProfile = () => {
   // Assuming you have owner details stored in state
   const [ownerDetails, setOwnerDetails] = useState({
-      Username: '',
-      Merchantname: '',
-      Email: '',
-      Phone: '',
-      StreetAddress: '',
-      Restaurant_id: 0,
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: ''
   });
 
   // State to manage the visibility of owner details
@@ -71,9 +69,9 @@ const OwnerViewProfile = () => {
               <div className="owner-details-content17">
                 <h2 className="owner-details17">Owner Details</h2>
                 <div style={{ display: showDetails ? 'block' : 'none' }}>
-                  <p><strong>Business Name:</strong> {ownerDetails.Merchantname}</p>
-                  <p><strong>Phone Number:</strong> {ownerDetails.Phone}</p>
-                  <p><strong>Email:</strong> {ownerDetails.Email}</p>
+                  <p><strong>Business Name:</strong> {ownerDetails.merchantName}</p>
+                  <p><strong>Phone Number:</strong> {ownerDetails.phoneNumber}</p>
+                  <p><strong>Email:</strong> {ownerDetails.email}</p>
                 </div>
               </div>
               {/* End Owner Details */}

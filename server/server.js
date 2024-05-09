@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
@@ -16,6 +16,7 @@ import { getOneMerchant, searchMerchants } from "./searchFoods.js";
 import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
+import Merchants from "./models/merchant.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -41,7 +42,7 @@ app.use(cookieParser());
 app.use(body());
 app.use(
   session({
-    secret: "IAMBATMAN",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -56,13 +57,10 @@ app.use(passport.session());
 
 //--------------------DB----------------------//
 mongoose
-  .connect(
-    "mongodb+srv://bhagyeshrathi:gNtwvWbnc31mxzIH@cluster0.cssmcqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
 
@@ -146,6 +144,18 @@ router.get("/get-merchant", async (req, res) => {
   }
 });
 
+router.get("/search-user", async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
+
+    const returnMerchants = await Merchants.findOne({ username: query });
+
+    res.status(200).send(returnMerchants);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
 app.use("/", router);
 //-------------------ROUTES-------------------//
 import userRoutes from "./routes/user.js";
@@ -167,9 +177,8 @@ passport.use(
   "google",
   new GoogleStrategy(
     {
-      clientID:
-        "243203716267-8vs54hok705sqmmej3456v41cns8rl3n.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:8080/auth/google/callback",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },

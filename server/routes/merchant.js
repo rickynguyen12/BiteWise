@@ -32,6 +32,6 @@ router.get("/logout", logout);
 
 // Route for updating merchant information
 router.put("/updateInfo/:restaurant_id", updateMerchant);
-router.get("/:merchant_email", getMerchantDetails);
+router.get("/:email", getMerchantDetails);
 
 export default router;
