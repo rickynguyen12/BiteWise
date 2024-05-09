@@ -49,24 +49,20 @@ const IACustomerCheckout = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    /**
-         * {
-            _id: ObjectId,
-            userId: ObjectId, // stored in local storage or cookies
-            restaurantId: ObjectId, // stored in local storage or cookies after displaying
-            items: [String], // add item name for each cart data
-            status: String,  // n/a
-            totalPrice: Number, // totalprice
-            paymentMethod: String, // credit card
-            confirmationNumber: String, // generate random
-            deliveryDetails: Object, // message
-            createdAt: Date, // date
-            }
-
-         */
     e.preventDefault();
-    console.log(formData);
+    if(validateFName(formData.fname) != "" ||
+    validateFName(formData.lname) != "" ||
+    validateState(formData.state) ||
+    validateAddress(formData.address1) != "" ||
+    validateAddress(formData.address2) != "" ||
+    validateCity(formData.city) != "" ||
+    validateZipCode(formData.zipCode) != ""
+  ){
+    return false;
+  } else {
+    localStorage.setItem('cartItems', []);
     navigate("/in-app-order-confirm");
+  }
   };
 
   // validation functions

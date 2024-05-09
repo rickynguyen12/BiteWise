@@ -62,15 +62,24 @@ const FrameComponent5 = () => {
         // Set the JWT token in the browser's cookies
         document.cookie = Cookies.set('jwt', response.data.jwt);
 
-        // storing username in localStorage
-        localStorage.setItem('username', response.data.username);
+        if(!isMerchant){
+          // storing username in localStorage
+          localStorage.setItem('username', response.data.username);
+          localStorage.setItem('isOwner', false);
+        } else {
+          // storing username in localStorage
+          localStorage.setItem('restaurant_id', response.data.email);
+          localStorage.setItem('isOwner', true);
+        }
+        localStorage.setItem('isLoggedIn', true);
+
         setOpenSnackbar(true);
         setIsLoggedIn(true);
         setTimeout(() => {
           navigate("/");
         }, 2000);
     } catch (error) {
-      if(error.response && error.response.status == 400){
+      if(error.response && error.response.status === 400){
         const {error: errorMessage} = error.response.data
         setErrorMsg(errorMessage);
       } else {
@@ -95,7 +104,7 @@ const FrameComponent5 = () => {
   const handleLogout = async () => {
     try {
       const response = await axios.get("http://localhost:8080/logout");
-      console.log("Login Successful:", response.data);
+      console.log("Logout Successful:", response.data);
       setOpenSnackbar(true);
       setIsLoggedIn(false);
       setTimeout(() => {

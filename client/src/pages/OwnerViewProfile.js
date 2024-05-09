@@ -3,6 +3,7 @@ import { TextField, Button } from "@mui/material";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerViewProfile.css";
+import axios from 'axios';
 
 const OwnerViewProfile = () => {
   // Assuming you have owner details stored in state
@@ -17,19 +18,35 @@ const OwnerViewProfile = () => {
   const [showDetails, setShowDetails] = useState(true);
 
   // Function to fetch owner details, you may need to implement it according to your backend logic
-  const fetchOwnerDetails = () => {
-    // Fetch owner details from backend or any data source
-    // Update the owner details state with fetched data
-    const fetchedOwnerDetails = {
-      merchantName: "Bob's Burgers",
-      phoneNumber: '123-456-7890',
-      email: 'john.doe@example.com'
-    };
-    setOwnerDetails(fetchedOwnerDetails);
-  };
-
-  // Fetch owner details on component mount
   useEffect(() => {
+    const fetchOwnerDetails = async (e) => {
+      try{
+        const merchant_email= localStorage.getItem('email');
+        const response = await axios.get(`http://localhost:8080/merchant/${merchant_email}`);
+
+        const { username,
+          merchantname,
+          email,
+          phone,
+          streetAddress,
+          restaurant_id} = response.data;
+        
+        setOwnerDetails({
+          Username: username,
+          Merchantname: merchantname,
+          Email: email,
+          Phone: phone,
+          StreetAddress: streetAddress,
+          Restaurant_id: restaurant_id
+        });
+
+        
+
+      } catch(error){
+        console.error(error);
+      }
+    };
+
     fetchOwnerDetails();
   }, []);
 
