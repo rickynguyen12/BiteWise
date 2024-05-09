@@ -48,7 +48,9 @@ const FrameComponent2 = ({
   const navigate = useNavigate();
 
   const handleFrameClick = () => {
-    navigate(`/searched-results?query=${encodeURIComponent(notYourMothersFalafel)}`);
+    navigate(
+      `/searched-results?query=${encodeURIComponent(notYourMothersFalafel)}`
+    );
   };
 
   return (
@@ -62,12 +64,12 @@ const FrameComponent2 = ({
           <div className="faasos-wraps" style={faasosWrapsStyle}>
             {faasosWrapsRolls}
           </div>
-          <div className="input-processor">
+          {/* <div className="input-processor">
             <img className="output-handler-icon" alt="" src="/vector-2.svg" />
             <div className="div">{rating}</div>
-          </div>
+          </div> */}
         </div>
-        <div className="antdesignstarfilled-parent">
+        {/* <div className="antdesignstarfilled-parent">
           <div className="antdesignstarfilled">
             <img className="data-aggregator-icon" alt="" src="/vector-10.svg" />
             <div className="div2" style={div2Style}>
@@ -78,7 +80,7 @@ const FrameComponent2 = ({
             <img className="group-icon1" alt="" src="/group.svg" />
             <div className="mins1">{mins}</div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

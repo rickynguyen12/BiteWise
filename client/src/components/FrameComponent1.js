@@ -63,7 +63,7 @@ const FrameComponent1 = () => {
             <div className="frame-parent12">
               <FrameComponent2
                 rectangle26="/rectangle-26-3@2x.png"
-                notYourMothersFalafel="Desi Express"
+                notYourMothersFalafel="Kovai Cafe"
                 faasosWrapsRolls={`Authentic Indian Cuisine`}
                 prop="$10 off"
                 mins="20 Mins"
@@ -72,8 +72,8 @@ const FrameComponent1 = () => {
               />
               <FrameComponent2
                 rectangle26="/rectangle-26-4@2x.png"
-                notYourMothersFalafel="Halal Shack"
-                faasosWrapsRolls={`Healthy Halal Food ToGo`}
+                notYourMothersFalafel="Mountain Mike's Pizza"
+                faasosWrapsRolls={`Pizza`}
                 prop="15% off"
                 mins="20 Mins"
                 rating="4.0"
@@ -83,7 +83,7 @@ const FrameComponent1 = () => {
             <div className="frame-parent13">
               <FrameComponent2
                 rectangle26="/rectangle-26-5@2x.png"
-                notYourMothersFalafel="Chipotle Mexican Grill"
+                notYourMothersFalafel="La Victoria Taqueria"
                 faasosWrapsRolls="Burritos, Tacos & more"
                 prop="5% off"
                 mins="25 Mins"
@@ -92,7 +92,7 @@ const FrameComponent1 = () => {
               />
               <FrameComponent2
                 rectangle26="/rectangle-26-6@2x.png"
-                notYourMothersFalafel="Gong Cha - Bubble Tea & Desserts"
+                notYourMothersFalafel="Boba Loca"
                 faasosWrapsRolls="boba bar"
                 prop="$5 off"
                 mins="15 Mins"
