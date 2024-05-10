@@ -9,11 +9,14 @@ import axios from "axios";
 const OwnerEditMenuItem = () => {
   const { restaurantId, itemId } = useParams();
   const [ownerDetails, setOwnerDetails] = useState([]);
+
+  const item_info = JSON.parse(localStorage.getItem('item_info'));
+  localStorage.removeItem('item_info');
   const [updatedItemDetails, setUpdatedItemDetails] = useState({
-    newName: "",
-    newPrice: "",
-    newDescription: "",
-    newCategory: "",
+    newName: item_info.name,
+    newPrice: item_info.price,
+    newDescription: item_info.description,
+    newCategory: item_info.category
   });
 
   const handleUpdateItem = async () => {
