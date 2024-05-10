@@ -74,9 +74,11 @@ const login = async (req, res) => {
 
     // return the response with user
     const merchEmail = merchant.email;
+    const {restaurant_id} = merchant;
     return res.json({
       message: "Login Successful",
       email: merchEmail,
+      restaurant_id
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -115,7 +117,6 @@ const updateMerchant = async (req, res) => {
   }
 };
 
-//get Merchant details
 const getMerchantDetails = async (req, res) => {
   const merchant_email = req.params.merchant_email;
   try {
@@ -124,13 +125,15 @@ const getMerchantDetails = async (req, res) => {
       return res.status(404).json({ message: "Merchant not found" });
     }
 
-    const { merchantname, phone, username } = merchant;
+    const { merchantname, phone, username, email, streetAddress, restaurant_id } = merchant;
 
     res.json({
       username,
       merchantname,
       email,
       phone,
+      streetAddress,
+      restaurant_id
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

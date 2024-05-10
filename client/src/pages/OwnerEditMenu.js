@@ -12,12 +12,13 @@ const OwnerEditMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
+  const restaurantId = localStorage.getItem('restaurant_id');
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const restaurantId = 372; // Replace with your actual restaurant ID
         const response = await axios.get(
           `http://localhost:8080/menu/get/${restaurantId}`
         );
