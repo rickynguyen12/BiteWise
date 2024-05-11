@@ -19,23 +19,24 @@ const FrameComponent6a = ({
   routeIndex,
 }) => {
   const navigate = useNavigate();
-  const deliveryFee = `$${Math.min(...deliveryFees)}`
-  routeIndex = deliveryFees.indexOf(Math.min(...deliveryFees))
-  const routing = ["UberEats-", "GrubHub-", "DoorDash-", "Postmates-"];
+  const deliveryFee = `$${Math.min(...deliveryFees)}`;
+  routeIndex = deliveryFees.indexOf(Math.min(...deliveryFees));
+  const routing = ["UberEats-", "Grubhub-", "Doordash-", "Postmates-"];
   const serviceName = ["Uber Eats", "GrubHub", "DoorDash", "Postmates"];
-  deliveryService = serviceName[routeIndex]
+  deliveryService = serviceName[routeIndex];
   const navigateCheckout = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/place_order/${routing[routeIndex]}${name}`);
-      if(response) {
+      const response = await fetch(
+        `http://localhost:8080/place_order/${routing[routeIndex]}${name}`
+      );
+      if (response) {
         const redirectURL = await response.text();
         window.location.href = redirectURL;
+      } else {
+        throw new Error("Error placing order");
       }
-      else {
-        throw new Error("Error placing order")
-      }
-    } catch(error) {
-      console.log('Error rerouting to outside service: ', error)
+    } catch (error) {
+      console.log("Error rerouting to outside service: ", error);
     }
   };
 
@@ -119,11 +120,12 @@ const FrameComponent6a = ({
             >
               Place Order
             </Button>
-            <Link to={`/view-all-deals?merchant=${id}`}  className="view-all-deals-link">
+            <Link
+              to={`/view-all-deals?merchant=${id}`}
+              className="view-all-deals-link"
+            >
               <div className="view-all-deals-button2">
-                <h2 className="view-all-dealss">
-                  View All Deals
-                </h2>
+                <h2 className="view-all-dealss">View All Deals</h2>
               </div>
             </Link>
           </div>

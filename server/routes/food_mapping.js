@@ -25,11 +25,11 @@ const restaurants = {
   //Mountain Mike's
   "UberEats-MountainMike's":
     "https://www.ubereats.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
-  "Doordash-Mountain Mike's":
+  "Doordash-MountainMike's":
     "https://www.doordash.com/store/25672403/?cursor=eyJzdG9yZV9wcmltYXJ5X3ZlcnRpY2FsX2lkcyI6WzFdfQ==&pickup=false",
-  "Grubhub-Mountain Mike's":
+  "Grubhub-MountainMike's":
     "https://www.grubhub.com/restaurant/mountain-mikes-pizza-29-s-third-st-san-jose/6803144",
-  "Postmates-Mountain Mike's":
+  "Postmates-MountainMike's":
     "https://postmates.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
 
   //El Abuelo Taqueria
@@ -37,9 +37,9 @@ const restaurants = {
     "https://www.ubereats.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
   "Doordash-ElAbueloTaqueria":
     "https://www.doordash.com/store/taqueria-el-abuelo-san-jose-724437/?event_type=autocomplete&pickup=false",
-  "Grubhub-El Abuelo Taqueria":
+  "Grubhub-ElAbueloTaqueria":
     "https://www.grubhub.com/restaurant/taqueria-el-abuelo-1005-lincoln-ave-san-jose/322256",
-  "Postmates-El Abuelo Taqueria":
+  "Postmates-ElAbueloTaqueria":
     "https://postmates.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
 
   // La-victoria-taqueria
