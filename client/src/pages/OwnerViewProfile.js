@@ -71,9 +71,13 @@ const OwnerViewProfile = () => {
               <div className="owner-details-content17">
                 <h2 className="owner-details17">Owner Details</h2>
                 <div style={{ display: showDetails ? 'block' : 'none', fontSize: '24px' }}>
+                  <p><strong>Restaurant ID:</strong> {ownerDetails.Restaurant_id}</p>
+                  <p><strong>Username:</strong> {ownerDetails.Username}</p>
                   <p><strong>Business Name:</strong> {ownerDetails.Merchantname}</p>
                   <p><strong>Phone Number:</strong> {ownerDetails.Phone}</p>
                   <p><strong>Email:</strong> {ownerDetails.Email}</p>
+                  <p><strong>Street Address:</strong> {ownerDetails.StreetAddress}</p>
+                 
                 </div>
               </div>
               {/* End Owner Details */}
