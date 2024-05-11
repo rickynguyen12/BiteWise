@@ -1,75 +1,57 @@
-import Order from '../models/order.js';
+import mongoose from "mongoose";
 
-const createOrder = async (req, res) => {
-    try {
-        const newOrder = new Order(req.body);
-        await newOrder.save();
-        res.status(201).json(newOrder);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
+const orderSchema = new mongoose.Schema({
+  orderNumber: {
+    type: Number,
+    value : Math.floor(Math.random() * 300) + 1,
+    required: false,
+    unique: true,
+  },
+  merchant: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Merchant",
+    required: false,
+  },
+  items: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MenuItem",
+    },
+  ],
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  restaurant_id: {
+    type: Number,
+    required: true,
+  },
+  username: {
+    type: String,
+    trim: true,
+    required: true,
+    maxlength: 32,
+    unique: true,
+    lowercase: true,
+  }
+});
 
-const deleteOrder = async (req, res) => {
-    const { orderNumber } = req.params;
-    try {
-        const deletedOrder = await Order.findOneAndDelete({ orderNumber });
-        if (!deletedOrder) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-        res.status(200).json({ message: 'Order deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
+orderSchema.pre("save", function (next) {
+  // Generate a random order number only if it's not already provided
+  if (!this.orderNumber) {
+    this.orderNumber = Math.floor(Math.random() * 300) + 1;
+  }
+  next();
+});
 
-const acceptOrder = async (req, res) => {
-    const { orderNumber } = req.params;
-    try {
-        // Find the order by orderNumber
-        const order = await Order.findOne({ orderNumber });
-
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
-        order.status = 'accepted';
-
-        order.updatedAt = new Date();
-
-        await order.save();
-
-        res.status(200).json(order);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-const rejectOrder = async (req, res) => {
-    const { orderNumber } = req.params;
-    try {
-        // Find the order by orderNumber
-        const order = await Order.findOne({ orderNumber });
-
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
-        order.status = 'rejected'; 
-        
-        order.updatedAt = new Date();
-
-        await order.save();
-
-        res.status(200).json(order);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-
-
-export { deleteOrder };
-export { createOrder };
-export { rejectOrder };
-export { acceptOrder };
+const Order = mongoose.model("Order", orderSchema);
+export default Order;
