@@ -9,8 +9,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const OwnerAddToMenu = () => {
   const user = localStorage.getItem("username");
-  const restaurantId = localStorage.getItem('restaurant_id');
-  
+  const restaurantId = localStorage.getItem("restaurant_id");
+
   const [name, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");

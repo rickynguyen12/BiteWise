@@ -12,7 +12,7 @@ const OwnerEditMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
-  const restaurantId = localStorage.getItem('restaurant_id');
+  const restaurantId = localStorage.getItem("restaurant_id");
 
   const navigate = useNavigate();
 
@@ -44,8 +44,18 @@ const OwnerEditMenu = () => {
     setSelectedCategory(category);
   };
 
-  const handleEditItemClick = (restaurantId, itemId, name, description, price, category) => {
-    localStorage.setItem('item_info', JSON.stringify({name, description, price, category}));
+  const handleEditItemClick = (
+    restaurantId,
+    itemId,
+    name,
+    description,
+    price,
+    category
+  ) => {
+    localStorage.setItem(
+      "item_info",
+      JSON.stringify({ name, description, price, category })
+    );
     navigate(`/owner-edit-item/${restaurantId}/${itemId}`);
   };
 
@@ -123,13 +133,15 @@ const OwnerEditMenu = () => {
                     <div className="two-buttons">
                       <Button
                         onClick={() =>
-                          handleEditItemClick(item.restaurant_id, 
-                          item.id,
-                          item.name,
-                          item.description,
-                          item.price,
-                          item.category
-                        )}
+                          handleEditItemClick(
+                            item.restaurant_id,
+                            item.id,
+                            item.name,
+                            item.description,
+                            item.price,
+                            item.category
+                          )
+                        }
                         variant="contained"
                         className="edit-button"
                       >

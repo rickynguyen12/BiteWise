@@ -12,7 +12,6 @@ import axios from "axios"; // Import Axios
 import "./RegisterAsStoreOwner.css";
 import FrameComponent4 from "../components/FrameComponent4";
 
-
 const RegisterAsStoreOwner = () => {
   const [formData, setFormData] = useState({
     merchantname: "",
@@ -26,7 +25,7 @@ const RegisterAsStoreOwner = () => {
     in_App: true,
     username: "",
     email: "",
-    password: ""
+    password: "",
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
@@ -82,7 +81,6 @@ const RegisterAsStoreOwner = () => {
     else return "";
   };
 
-
   const validateCity = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
       return "City can only contain letters (a-z A-Z) only!";
@@ -112,7 +110,6 @@ const RegisterAsStoreOwner = () => {
       return "Zip Code can only contain numbers only!";
     else return "";
   };
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -183,7 +180,7 @@ const RegisterAsStoreOwner = () => {
                         className="frame-child-name"
                         placeholder="Business Name"
                         onChange={handleChange}
-                        name='merchantname'
+                        name="merchantname"
                         error={validateFName(formData.merchantname)}
                         helperText={validateFName(formData.merchantname)}
                         value={formData.merchantname}
@@ -202,7 +199,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="frame-item"
                         placeholder="Business Phone Number"
-                        name='phone'
+                        name="phone"
                         onChange={handleChange}
                         value={formData.phone}
                         error={validPhone(formData.phone)}
@@ -223,7 +220,7 @@ const RegisterAsStoreOwner = () => {
                     <TextField
                       className="city-input"
                       placeholder="Street Address"
-                      name='streetAddress'
+                      name="streetAddress"
                       onChange={handleChange}
                       value={formData.streetAddress}
                       error={validateAddress(formData.streetAddress)}
@@ -245,7 +242,7 @@ const RegisterAsStoreOwner = () => {
                         <TextField
                           className="subtract-icon2"
                           placeholder="City"
-                          name='city'
+                          name="city"
                           onChange={handleChange}
                           error={validateCity(formData.city)}
                           helperText={validateCity(formData.city)}
@@ -266,7 +263,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="delivery-info-label"
                         placeholder="State"
-                        name='state'
+                        name="state"
                         onChange={handleChange}
                         error={validateState(formData.state)}
                         helperText={validateState(formData.state)}
@@ -287,7 +284,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="delivery-info-label1"
                         placeholder="Zip code"
-                        name='zipCode'
+                        name="zipCode"
                         onChange={handleChange}
                         variant="outlined"
                         error={validateZipCode(formData.zipCode)}
@@ -309,7 +306,7 @@ const RegisterAsStoreOwner = () => {
                     <TextField
                       className="city-input1"
                       placeholder="Category"
-                      name='category'
+                      name="category"
                       onChange={handleChange}
                       variant="outlined"
                       error={validateFName(formData.category)}
@@ -322,16 +319,15 @@ const RegisterAsStoreOwner = () => {
                           backgroundColor: "#fff",
                           borderRadius: "10px",
                           fontSize: "14px",
-                          
                         },
                         "& .MuiInputBase-input": { color: "#808080" },
-                        marginBottom: '20px'
+                        marginBottom: "20px",
                       }}
                     />
                     <TextField
                       className="city-input1"
                       placeholder="Logo Image URL"
-                      name='logo_url'
+                      name="logo_url"
                       onChange={handleChange}
                       variant="outlined"
                       value={formData.logo_url}
@@ -357,7 +353,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="phone-number-input1"
                         placeholder="First Name"
-                        name='firstname'
+                        name="firstname"
                         onChange={handleChange}
                         variant="outlined"
                         sx={{
@@ -374,7 +370,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="last-name-input-child"
                         placeholder="Last Name"
-                        name='lastname'
+                        name="lastname"
                         onChange={handleChange}
                         variant="outlined"
                         sx={{
@@ -392,29 +388,29 @@ const RegisterAsStoreOwner = () => {
                   </div>
                   <div className="phone-number-email-parent">
                     <TextField
-                        className="phone-number-email"
-                        placeholder="Username"
-                        name='username'
-                        onChange={handleChange}
-                        error={validUsername(formData.username)}
-                        helperText={validUsername(formData.username)}
-                        value={formData.username}
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "54px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                            fontSize: "14px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
+                      className="phone-number-email"
+                      placeholder="Username"
+                      name="username"
+                      onChange={handleChange}
+                      error={validUsername(formData.username)}
+                      helperText={validUsername(formData.username)}
+                      value={formData.username}
+                      variant="outlined"
+                      sx={{
+                        "& fieldset": { borderColor: "#1ac84b" },
+                        "& .MuiInputBase-root": {
+                          height: "54px",
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                        },
+                        "& .MuiInputBase-input": { color: "#808080" },
+                      }}
+                    />
                     <TextField
                       className="phone-number-email"
                       placeholder="Email"
-                      name='email'
+                      name="email"
                       onChange={handleChange}
                       error={validEmail(formData.email)}
                       helperText={validEmail(formData.email)}
@@ -454,7 +450,7 @@ const RegisterAsStoreOwner = () => {
                   </div>
                   <div className="sign-in-wrapper">
                     <Button
-                      type='submit'
+                      type="submit"
                       className="sign-in3"
                       disableElevation={true}
                       variant="contained"

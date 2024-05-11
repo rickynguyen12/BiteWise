@@ -16,8 +16,8 @@ const FrameComponent4 = () => {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  const isMerchant = localStorage.getItem('isOwner');
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isMerchant = localStorage.getItem("isOwner");
 
   const onSignInClick = () => {
     navigate("/login");
@@ -33,15 +33,14 @@ const FrameComponent4 = () => {
       console.log("Login Successful:", response.data);
       setOpenSnackbar(true);
 
-      if(isMerchant == 'true'){
-        localStorage.removeItem('username');
+      if (isMerchant == "true") {
+        localStorage.removeItem("username");
       } else {
-        localStorage.removeItem('restaurant_id');
-        localStorage.removeItem('email');
-
+        localStorage.removeItem("restaurant_id");
+        localStorage.removeItem("email");
       }
-      localStorage.removeItem('isOwner');
-      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem("isOwner");
+      localStorage.removeItem("isLoggedIn");
 
       Cookies.remove("jwt"); // Remove jwt cookie
       setTimeout(() => {
@@ -103,7 +102,9 @@ const FrameComponent4 = () => {
             {isLoggedIn && ( // Conditional rendering based on isLoggedIn state
               <Button
                 onClick={() => {
-                  (isMerchant === 'true') ? navigate('/owner-dashboard') : navigate('/user-view-profile');
+                  isMerchant === "true"
+                    ? navigate("/owner-dashboard")
+                    : navigate("/user-view-profile");
                 }}
                 sx={{
                   marginRight: "12px",
