@@ -46,24 +46,26 @@ const IACustomerCheckout = () => {
   useEffect(() => {
     const cartFromStorage = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartData(cartFromStorage);
+    localStorage.removeItem("cart");
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(validateFName(formData.fname) != "" ||
-    validateFName(formData.lname) != "" ||
-    validateState(formData.state) != "" ||
-    validateAddress(formData.address1) != "" ||
-    validateAddress(formData.address2) != "" ||
-    validateCity(formData.city) != "" ||
-    validateZipCode(formData.zipCode) != ""
-  ){
-    return false;
-  } else {
-    localStorage.setItem('cartItems', JSON.stringify([]));
-    localStorage.setItem('cart', JSON.stringify([]));
-    navigate("/in-app-order-confirm");
-  }
+    if (
+      validateFName(formData.fname) != "" ||
+      validateFName(formData.lname) != "" ||
+      validateState(formData.state) != "" ||
+      validateAddress(formData.address1) != "" ||
+      validateAddress(formData.address2) != "" ||
+      validateCity(formData.city) != "" ||
+      validateZipCode(formData.zipCode) != ""
+    ) {
+      return false;
+    } else {
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      localStorage.setItem("cart", JSON.stringify([]));
+      navigate("/in-app-order-confirm");
+    }
   };
 
   // validation functions
@@ -121,6 +123,7 @@ const IACustomerCheckout = () => {
       .filter(Boolean);
 
     setCartData(updatedCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   };
 
   const [formData, setFormData] = useState({

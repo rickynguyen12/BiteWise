@@ -20,8 +20,9 @@ const FoodItemPage = () => {
 
   const [selectedCategory, setSelectedCategory] = useState([]);
   const navigate = useNavigate();
-  
+
   const goToCart = () => {
+    localStorage.setItem("cart", JSON.stringify(selectedItems));
     navigate("/cart", { state: { selectedItems } });
   };
 
@@ -34,7 +35,7 @@ const FoodItemPage = () => {
           {
             params: {
               query: searchMerchant,
-            }
+            },
           }
         );
         setSearchResults(response.data);
@@ -72,14 +73,12 @@ const FoodItemPage = () => {
       const updated = [...selectedItems];
       updated[existingItem].quantity += 1;
       setSelectedItems(updated);
-      localStorage.setItem("cart", JSON.stringify(updated));
     } else {
       const updatedItems = [
         ...selectedItems,
         { ...item, quantity: 1, category, restaurantName },
       ];
       setSelectedItems(updatedItems);
-      localStorage.setItem("cart", JSON.stringify(updatedItems));
     }
   };
 
@@ -98,7 +97,6 @@ const FoodItemPage = () => {
       })
       .filter((item) => item.quantity > 0);
     setSelectedItems(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
   };
 
   return (

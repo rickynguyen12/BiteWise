@@ -11,16 +11,47 @@ const CustomerCart = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState([]);
 
-  useEffect(() => {
-    const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartData(cartFromStorage);
-    localStorage.setItem("cartItems", JSON.stringify(cartFromStorage));
-  }, []);
-
   const setCartLocalStorage = (cartData) => {
-    localStorage.setItem("cart", JSON.stringify(cartData));
     localStorage.setItem("cartItems", JSON.stringify(cartData));
   };
+
+  useEffect(() => {
+    const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartItemsFromStorage =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    if (cartFromStorage.length > 0) {
+      const incomingHasDifferentRestaurant = cartFromStorage.some(
+        (item) =>
+          !cartItemsFromStorage.some(
+            (existingItem) =>
+              existingItem.restaurantName === item.restaurantName
+          )
+      );
+
+      if (incomingHasDifferentRestaurant) {
+        cartItemsFromStorage = cartFromStorage;
+      } else {
+        cartFromStorage.forEach((item) => {
+          const existingItemIndex = cartItemsFromStorage.findIndex(
+            (existingItem) => existingItem.id === item.id
+          );
+          if (existingItemIndex === -1) {
+            cartItemsFromStorage.push(item);
+          } else {
+            if (item.quantity === 0) {
+              cartItemsFromStorage[existingItemIndex].quantity = item.quantity;
+            }
+            cartItemsFromStorage[existingItemIndex].quantity += item.quantity;
+          }
+        });
+      }
+    }
+
+    setCartData(cartItemsFromStorage);
+    localStorage.setItem("cartItems", JSON.stringify(cartItemsFromStorage));
+    localStorage.removeItem("cart");
+  }, []);
 
   console.log("Cart data:", cartData);
   const handleQuantityChange = (itemId, newQuantity) => {
@@ -103,8 +134,11 @@ const CustomerCart = () => {
         ))}
 
         <div className="compare-prices-container">
-          <Button className="compare-prices" onClick={handleCheckout}
-          disabled={cartData.length === 0}>
+          <Button
+            className="compare-prices"
+            onClick={handleCheckout}
+            disabled={cartData.length === 0}
+          >
             Proceed to Checkout
           </Button>
         </div>
