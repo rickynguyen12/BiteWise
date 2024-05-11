@@ -78,7 +78,7 @@ const FrameComponent1 = () => {
               />
               <FrameComponent2
                 rectangle26="/rectangle-26-4@2x2.png"
-                notYourMothersFalafel="Mountain Mike's Pizza"
+                notYourMothersFalafel="Mountain Mike's"
                 faasosWrapsRolls={`Pizza`}
                 prop="15% off"
                 mins="20 Mins"
