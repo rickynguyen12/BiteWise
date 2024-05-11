@@ -68,6 +68,28 @@ const rejectOrder = async (req, res) => {
     }
 };
 
+const completeOrder = async (req, res) => {
+    const { orderNumber } = req.params;
+    try {
+        // Find the order by orderNumber
+        const order = await Order.findOne({ orderNumber });
+
+        if (!order || order.status !== 'accepted') {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        order.status = 'completed'; 
+        
+        order.updatedAt = new Date();
+
+        await order.save();
+
+        res.status(200).json(order);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 const getOrders = async (req, res) => {
     const { restaurantId } = req.params;
@@ -92,4 +114,5 @@ export { deleteOrder };
 export { createOrder };
 export { rejectOrder };
 export { acceptOrder };
+export { completeOrder };
 export { getOrders };
