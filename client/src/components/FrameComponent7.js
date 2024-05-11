@@ -5,9 +5,23 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import "./FrameComponent7.css";
 
 const FrameComponent7 = () => {
+  const navigate = useNavigate();
+  const onSignInClick = () => {
+    navigate("/login");
+  };
+
+  const onCartClick = () => {
+    navigate("/cart");
+  };
+
+  const onLogoContainerClick = () => {
+    navigate("/");
+  };
+
   return (
     <header className="input-collectors">
       <div className="output-generators">
@@ -46,7 +60,12 @@ const FrameComponent7 = () => {
             />
             <div className="bag-wrappers">
               <div className="bags">
-                <img className="vector-icons" alt="" src="/vector-1.svg" />
+                <img
+                  className="vector-icons"
+                  alt=""
+                  src="/vector-1.svg"
+                  onClick={onCartClick}
+                />
                 <div className="bag-childs" />
               </div>
             </div>
@@ -64,11 +83,17 @@ const FrameComponent7 = () => {
                 width: 96,
                 height: 49,
               }}
+              onClick={onSignInClick}
             >
               Sign In
             </Button>
           </div>
-          <img className="image-1-icons" alt="" src="/image-1@2x.png" />
+          <img
+            className="image-1-icons"
+            alt=""
+            src="/image-1@2x.png"
+            onClick={onLogoContainerClick}
+          />
         </div>
         <div className="compare-prices-wrappers">
           <h3 className="compare-pricess">{`Compare Prices `}</h3>
@@ -76,6 +101,6 @@ const FrameComponent7 = () => {
       </div>
     </header>
   );
-  };
+};
 
 export default FrameComponent7;

@@ -229,13 +229,14 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: var(--padding-9xs) 0px 0px;
+  margin-top: 4px;
 }
 .data-splitters {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: var(--gap-mid);
+  /* gap: var(--gap-mid); */
 }
 .condition-checkers {
   display: flex;
@@ -248,6 +249,7 @@
 }
 .rectangle-groups {
   width: 380px;
+  height: 250px;
   border-radius: var(--br-26xls);
   background-color: var(--color-gainsboro-100);
   display: flex;
@@ -263,6 +265,7 @@
   color: var(--color-black);
   font-family: var(--font-poppins);
   border-radius: 20px;
+  margin-top: 50px;
 }
 .form-control-wrapper {
   width: 100%;

@@ -1,14 +1,11 @@
-import {
-  TextField,
-  Button,
-  Snackbar,
-  IconButton,
-} from "@mui/material";
+import { TextField, Button, Snackbar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios"; // Import Axios
-import Footer from '../components/Footer';
-import GoogleSignIn from '../pages/googleSignIn';
+import Footer from "../components/Footer";
+import GoogleSignIn from "../pages/googleSignIn";
+import "./Register.css";
+import Cookies from "js-cookie";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,26 +17,89 @@ const Register = () => {
     password: "",
   });
 
-  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
+  const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbars
+  const [errorMessage, setErrorMessage] = useState(""); // State to store error message
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("jwt"));
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const validPassword = (field) => {
+    let hasSixChar = field.length >= 6;
+    let hasLowerChar = /(.*[a-z].*)/.test(field);
+    let hasUpperChar = /(.*[A-Z].*)/.test(field);
+    let hasNumber = /(.*[0-9].*)/.test(field);
+    let hasSpecialChar = /[^A-Za-z0-9]/.test(field);
+    if (
+      !hasSixChar ||
+      !hasLowerChar ||
+      !hasUpperChar ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      return "The password must have: at least 6 characters and include at least one each: a-z, A-Z, 0-9, and special characters.";
+    } else return "";
+  };
+
+  const validEmail = (field) => {
+    // email validation
+    let emailValid = field.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    if (!emailValid) {
+      return "Invalid email address!";
+    } else {
+      return "";
+    }
+  };
+
+  const validPhone = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^[0-9]{10}$/);
+    if (!phoneValid) {
+      return "Invalid phone number! Please enter the number without dashes (-) and spaces.";
+    } else {
+      return "";
+    }
+  };
+
+  const validUsername = (field) => {
+    // username validation
+    let usernameValid = field.match(/^[a-zA-Z0-9]+$/);
+    if (!usernameValid) {
+      return "The username must contain at least one of each a-z, A-Z, and 0-9. It cannot contain any special characters.";
+    } else return "";
+  };
+
+  const validateFName = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "First Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateLName = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "Last Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
 
   const handleSignInSuccess = (response) => {
-    console.log("Google Sign-in Response:", response);
-    // Send the response to the server
-    axios.post("http://localhost:8080/googleSuccessfullSignIn", response)
-      .then((response) => {
-        console.log("Google Sign-in Successful:", response);
-        setOpenSnackbar(true); // Open Snackbar on successful Google sign-in
+    axios
+      .post("http://localhost:8080/googleSuccessfullSignIn", response)
+      .then((responseFromBackend) => {
+        console.log("Login Successful:", responseFromBackend);
+        // Set the JWT token in the browser's cookies
+        document.cookie = Cookies.set("jwt", responseFromBackend.data.jwt);
+        setOpenSnackbar(true); // Open Snackbar on successful registration
+        setIsLoggedIn(true);
         setTimeout(() => {
-          navigate("/"); // Redirect to home page after a delay
+          navigate("/");
         }, 2000);
       })
       .catch((error) => {
-        console.error("Google Sign-in Failed:", error);
+        console.error("Signup Failed:", error);
         if (error.response) {
           console.error("Response Data:", error.response.data);
         }
@@ -56,8 +116,12 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormSubmitted(true);
     try {
-      const response = await axios.post("http://localhost:8080/register", formData);
+      const response = await axios.post(
+        "http://localhost:8080/register",
+        formData
+      );
       console.log("Signup Successful:", response.data);
       setOpenSnackbar(true); // Open Snackbar on successful registration
       setTimeout(() => {
@@ -65,6 +129,7 @@ const Register = () => {
       }, 2000);
     } catch (error) {
       console.error("Signup Failed:", error);
+
       if (error.response) {
         console.error("Response Data:", error.response.data);
       }
@@ -126,23 +191,25 @@ const Register = () => {
                   <div className="delivery-info" />
                 </div>
               </div>
-              <Button
-                className="sign-in"
-                disableElevation={true}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  color: "#fdfbfa",
-                  fontSize: "14",
-                  background: "#202020",
-                  borderRadius: "10px",
-                  "&:hover": { background: "#202020" },
-                  width: 96,
-                  height: 49,
-                }}
-              >
-                Sign In
-              </Button>
+              <div className="sign-in-button" onClick={onAlreadyHaveAnClick}>
+                <Button
+                  className="sign-in"
+                  disableElevation={true}
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    color: "#fdfbfa",
+                    fontSize: "14",
+                    background: "#202020",
+                    borderRadius: "10px",
+                    "&:hover": { background: "#202020" },
+                    width: 96,
+                    height: 49,
+                  }}
+                >
+                  Sign In
+                </Button>
+              </div>
             </div>
             <img
               className="image-1-icon"
@@ -156,7 +223,7 @@ const Register = () => {
               <h3 className="register1">Register</h3>
             </header>
             <div className="phone-number-label">
-              <form className="email-label" onSubmit={handleSubmit}>
+              <form className="email-label2" onSubmit={handleSubmit}>
                 <div className="email-label-child" />
                 <div className="password-label">
                   <div className="confirm-password-label">
@@ -170,6 +237,13 @@ const Register = () => {
                         value={formData.firstname}
                         placeholder="First Name"
                         required
+                        error={
+                          formSubmitted &&
+                          validateFName(formData.firstname) != ""
+                        }
+                        helperText={
+                          formSubmitted ? validateFName(formData.firstname) : ""
+                        }
                         onChange={handleChange}
                         variant="outlined"
                         sx={{
@@ -188,6 +262,13 @@ const Register = () => {
                         value={formData.lastname}
                         required
                         placeholder="Last Name"
+                        error={
+                          formSubmitted &&
+                          validateLName(formData.lastname) != ""
+                        }
+                        helperText={
+                          formSubmitted ? validateLName(formData.lastname) : ""
+                        }
                         onChange={handleChange}
                         variant="outlined"
                         sx={{
@@ -201,79 +282,119 @@ const Register = () => {
                         }}
                       />
                     </div>
-                    <TextField
-                      className="phone-number"
-                      placeholder="Phone Number"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      variant="outlined"
-                      sx={{
-                        "& fieldset": { borderColor: "#1ac84b" },
-                        "& .MuiInputBase-root": {
-                          height: "54px",
-                          backgroundColor: "#fff",
-                          borderRadius: "10px",
-                        },
-                        "& .MuiInputBase-input": { color: "#808080" },
-                      }}
-                    />
-                    <div className="phone-number-wrapper">
-                      <TextField
-                        className="phone-number1"
-                        placeholder="Email"
-                        name="email"
-                        value={formData.email}
-                        required
-                        onChange={handleChange}
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "54px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
+                    <div class="other-info">
+                      <div className="phone-number-wrapper">
+                        <TextField
+                          className="phone-number"
+                          placeholder="Phone Number"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          error={
+                            formSubmitted && validPhone(formData.phone) != ""
+                          }
+                          helperText={
+                            formSubmitted ? validPhone(formData.phone) : ""
+                          }
+                          variant="outlined"
+                          sx={{
+                            "& fieldset": { borderColor: "#1ac84b" },
+                            "& .MuiInputBase-root": {
+                              width: "650px",
+                              height: "54px",
+                              backgroundColor: "#fff",
+                              borderRadius: "10px",
+                            },
+                            "& .MuiInputBase-input": { color: "#808080" },
+                          }}
+                        />
+                      </div>
+                      <div className="phone-number-wrapper">
+                        <TextField
+                          className="phone-number1"
+                          placeholder="Email"
+                          name="email"
+                          value={formData.email}
+                          required
+                          error={
+                            formSubmitted && validEmail(formData.email) != ""
+                          }
+                          helperText={
+                            formSubmitted ? validEmail(formData.email) : ""
+                          }
+                          onChange={handleChange}
+                          variant="outlined"
+                          sx={{
+                            "& fieldset": { borderColor: "#1ac84b" },
+                            "& .MuiInputBase-root": {
+                              height: "54px",
+                              backgroundColor: "#fff",
+                              borderRadius: "10px",
+                            },
+                            "& .MuiInputBase-input": { color: "#808080" },
+                          }}
+                        />
+                      </div>
+                      <div className="phone-number-wrapper">
+                        <TextField
+                          className="phone-number2"
+                          name="username"
+                          value={formData.username}
+                          placeholder="Username"
+                          error={
+                            formSubmitted &&
+                            validUsername(formData.username) != ""
+                          }
+                          helperText={
+                            formSubmitted
+                              ? validUsername(formData.username)
+                              : ""
+                          }
+                          onChange={handleChange}
+                          variant="outlined"
+                          sx={{
+                            "& fieldset": { borderColor: "#1ac84b" },
+                            "& .MuiInputBase-root": {
+                              height: "54px",
+                              backgroundColor: "#fff",
+                              borderRadius: "10px",
+                            },
+                            "& .MuiInputBase-input": { color: "#808080" },
+                          }}
+                        />
+                      </div>
+                      <div className="phone-number-wrapper">
+                        <TextField
+                          className="phone-number3"
+                          name="password"
+                          value={formData.password}
+                          placeholder="Password"
+                          type="password"
+                          onChange={handleChange}
+                          error={
+                            formSubmitted &&
+                            validPassword(formData.password) != ""
+                          }
+                          helperText={
+                            formSubmitted
+                              ? validPassword(formData.password)
+                              : ""
+                          }
+                          variant="outlined"
+                          sx={{
+                            "& fieldset": { borderColor: "#1ac84b" },
+                            "& .MuiInputBase-root": {
+                              width: "650px",
+                              height: "54px",
+                              backgroundColor: "#fff",
+                              borderRadius: "10px",
+                            },
+                            "& .MuiInputBase-input": { color: "#808080" },
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="phone-number-container">
-                      <TextField
-                        className="phone-number2"
-                        name="username"
-                        value={formData.username}
-                        placeholder="Username"
-                        onChange={handleChange}
-                        variant="outlined"
-                        sx={{
-                          "& fieldset": { borderColor: "#1ac84b" },
-                          "& .MuiInputBase-root": {
-                            height: "54px",
-                            backgroundColor: "#fff",
-                            borderRadius: "10px",
-                          },
-                          "& .MuiInputBase-input": { color: "#808080" },
-                        }}
-                      />
-                    </div>
-                    <TextField
-                      className="phone-number3"
-                      name="password"
-                      value={formData.password}
-                      placeholder="Password"
-                      onChange={handleChange}
-                      variant="outlined"
-                      sx={{
-                        "& fieldset": { borderColor: "#1ac84b" },
-                        "& .MuiInputBase-root": {
-                          height: "54px",
-                          backgroundColor: "#fff",
-                          borderRadius: "10px",
-                        },
-                        "& .MuiInputBase-input": { color: "#808080" },
-                      }}
-                    />
+
                     <div
                       className="already-have-an-container"
                       onClick={onAlreadyHaveAnClick}
@@ -284,24 +405,29 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="sign-in-parent">
-                  <Button
-                    type="submit"
-                    className="sign-in1"
-                    disableElevation={true}
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                      color: "#fff",
-                      fontSize: "14",
-                      background: "#307651",
-                      borderRadius: "10px",
-                      "&:hover": { background: "#307651" },
-                      width: 103,
-                      height: 49,
-                    }}
-                  >
-                    Sign Up
-                  </Button>
+                  <div /*onClick = {onLogoContainerClick}*/>
+                    <Button
+                      type="submit"
+                      className="sign-in1"
+                      disableElevation={true}
+                      variant="contained"
+                      sx={{
+                        textTransform: "none",
+                        color: "#fff",
+                        fontSize: "14",
+                        background: "#307651",
+                        borderRadius: "10px",
+                        "&:hover": { background: "#307651" },
+                        width: 103,
+                        height: 49,
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </div>
+                </div>
+                <div className="google-sign-in">
+                  <GoogleSignIn onGoogleSignInSuccess={handleSignInSuccess} />
                 </div>
               </form>
             </div>
@@ -316,9 +442,14 @@ const Register = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message="Registration successful. Redirecting to login..."
+        message="Registration successful!"
         action={
-          <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleCloseSnackbar}
+          >
             X
           </IconButton>
         }

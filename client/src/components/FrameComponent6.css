@@ -1,13 +1,29 @@
-.frame-child3s {
+.frame-childs-redirect {
   align-self: stretch;
   width: 100px;
   position: relative;
-  border-radius: var(--br-12xl);
+  /* border-radius: var(--br-12xl);
   background-color: var(--neutral-white);
-  border: 2px solid var(--color-gray-400);
+  border: 2px solid var(--color-gray-400); */
   box-sizing: border-box;
-  display: none;
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
+  padding-left: 0;
+}
+.progress-circles {
+  padding: 10px 10px 0 30px;
+}
+.uber-eatss {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: smaller !important;
+  text-transform: capitalize;
+  font-weight: 500;
+  font-family: inherit;
+  flex-shrink: 0;
+  z-index: 3;
 }
 .frame-child4s {
   position: absolute;
@@ -159,6 +175,23 @@
   gap: var(--gap-mini-3);
   max-width: 100%;
 }
+.frame-divs-redirect {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  padding-left: 0px;
+}
+.frame-wrapperss {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  right: 10px;
+  position: relative;
+  top: -30px;
+}
 .frame-wrapper9s {
   width: 424px;
   display: flex;
@@ -215,6 +248,28 @@
   width: 82px;
   height: 36px;
   z-index: 2;
+}
+.uber-eats-parents2 {
+  position: absolute;
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+}
+.group-parents-uber {
+  align-self: stretch;
+  height: 76px;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-icons-redirect {
+  max-height: 30px;
+  width: auto;
+  margin-left: 170px;
 }
 .doordashes {
   margin: 0;
@@ -397,12 +452,16 @@
 }
 .rectangle-parents {
   padding: 0;
-  width: 100px;
+  max-width: 970px !important;
+  margin-right: 200px;
+}
+.spinners {
+  margin-left: -70px;
 }
 .frame-containers {
-  margin-left: -50px;
+  margin-left: -80px;
   flex-direction: column;
-  margin-top: -10px;
+  margin-right: var(--padding-xl);
 }
 .weather-displays {
   margin-top: 10px;
@@ -413,14 +472,39 @@
   margin-bottom: 5px;
   border-radius: var(--br-7xs);
 }
+.view-all-deals-link {
+  text-decoration: none;
+}
+
+.view-all-deals-button2 {
+  cursor: pointer;
+}
+
+.view-all-dealss {
+  margin: 0;
+  font-size: 20px;
+  color: #808080;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.view-all-deals-link:hover .view-all-deals-button {
+  text-decoration: underline;
+}
 @media screen and (max-width: 1325px) {
   .group-divs {
     flex-wrap: wrap;
+  }
+  .frame-containers {
+    margin-left: 100px;
   }
 }
 @media screen and (max-width: 1125px) {
   .sequence-controllers {
     min-width: 100%;
+  }
+  .frame-containers {
+    margin-left: 100px;
   }
 }
 @media screen and (max-width: 800px) {
@@ -431,12 +515,17 @@
   .sequence-controllers {
     gap: var(--gap-3xl);
   }
+  .frame-containers {
+    margin-left: 100px;
+  }
 }
 @media screen and (max-width: 450px) {
   .dilac-vegan-vietnameses {
     font-size: var(--font-size-lgi);
   }
-
+  .frame-containers {
+    margin-left: 100px;
+  }
   .good-for-dinner-wrappers {
     flex: 1;
   }

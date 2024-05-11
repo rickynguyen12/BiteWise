@@ -10,11 +10,32 @@
     min-width: 126px;
 }
 
+.checkout-container{
+  width: 100%;
+  position: relative;
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-41xl) 0px 0px;
+  box-sizing: border-box;
+  gap: 20px;
+  letter-spacing: normal;
+  min-height: 100vh;
+}
+
 .subtract-icon {
     height: 20.9px;
     width: 23.1px;
     position: relative;
     border-radius: var(--br-lg);
+}
+
+.section1{
+    margin: auto;
+    font-family: "Poppins", sans-serif;
+    width: 90%;
 }
 
 .logo {
@@ -215,6 +236,7 @@
 }
 
 .first-name-parent {
+    height: fit-content;
     align-self: stretch;
     display: flex;
     flex-direction: row;
@@ -335,6 +357,7 @@
 .sign-in1 {
     height: 49px;
     width: 200px;
+    margin-left: 20px;
 }
 
 .sign-in-parent {
@@ -413,20 +436,6 @@
     font-family: var(--font-poppins);
 }
 
-.register {
-    width: 100%;
-    position: relative;
-    background-color: var(--color-white);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-41xl) 0px 0px;
-    box-sizing: border-box;
-    gap: 289px;
-    letter-spacing: normal;
-}
 
 .delivery-payment-header{
     display: flex;
@@ -484,7 +493,7 @@
     flex-direction: column;
     background: #F8F8F8;
     width: 400px;
-    min-height: 200px;
+    height: fit-content;
     border-radius: 15px;
     padding: 25px;
 }
@@ -494,6 +503,78 @@
     font-size: 22px;
     font-weight: 400;
 }
+
+.cart-item{
+    max-width: 100%;
+    max-height: 20%;
+    display: flex;
+}
+
+.order-info{
+    display: flexbox;
+    font-size: 14px;
+}
+
+.quantity-btns{
+    width: 105px;
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+}
+
+.item-quantity{
+    width: 30px;
+    text-align: center;
+    height: 'fit-content';
+    margin-top: 7px;
+}
+
+.item-name{
+    font-size: 12px;
+}
+
+.subtotal-div{
+    max-height: 200px;
+}
+
+.item-total-div{
+    font-size: 14px;
+    display: flex;
+    color:#7a7979;
+}
+
+.label{
+    height: fit-content;
+}
+
+.value{
+    height: fit-content;
+    margin-left: 220px;
+}
+
+.taxprice-val{
+    margin-left: 255px;
+}
+
+.total-price-div{
+    font-size: 20px;
+    display: flex;
+    color: black;
+}
+
+.total-value{
+    margin-left: 220px;
+}
+
+.delivery-label{
+    width: fit-content;
+}
+
+.delivery-val{
+    margin-left: 212px;
+}
+
+
 
 
 @media screen and (max-width: 975px) {

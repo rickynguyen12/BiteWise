@@ -10,6 +10,7 @@
   padding: var(--padding-41xl) 0px 0px;
   box-sizing: border-box;
   letter-spacing: normal;
+  min-height: 100vh;
 }
 .dashboard1 {
   margin: 0;
@@ -41,6 +42,10 @@
 }
 .dashboard-inner {
   margin-bottom: 70px;
+}
+.dashboard-footer {
+  margin-top: auto;
+  width: 100%;
 }
 .parent {
   align-self: stretch;

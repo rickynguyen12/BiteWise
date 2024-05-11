@@ -9,7 +9,7 @@ const OwnerDashboardComponent = ({ ownerDetails }) => {
         <Link to="/owner-orders" className="dashboard-option">
           <div className="option-content">
             <img alt="" src="/orders.png" className="icon" />
-            Orders
+            <h3>Orders</h3>
           </div>
         </Link>
         <Link
@@ -18,13 +18,19 @@ const OwnerDashboardComponent = ({ ownerDetails }) => {
         >
           <div className="option-content">
             <img alt="" src="/edit-menu.png" className="icon" />
-            Edit Menu
+            <h3>Edit Menu</h3>
           </div>
         </Link>
         <Link to="/owner-edit-profile" className="dashboard-option">
           <div className="option-content">
             <img alt="" src="/edit-profile.png" className="icon" />
-            Edit Business Profile
+            <h3>Edit Business Profile</h3>
+          </div>
+        </Link>
+        <Link to="/owner-view-profile" className="dashboard-option">
+          <div className="option-content">
+            <img alt="" src="/view-profile.png" className="icon" />
+            <h3>View Business Profile</h3>
           </div>
         </Link>
       </div>

@@ -1,7 +1,11 @@
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./FrameComponent6.css";
+import { useNavigate } from "react-router-dom";
+import "@lottiefiles/lottie-player";
 
 const FrameComponent6a = ({
+  id,
   name,
   circleImage,
   distance,
@@ -10,13 +14,34 @@ const FrameComponent6a = ({
   features,
   icon,
   deliveryService,
-  deliveryFee,
+  deliveryFees,
   estimatedTime,
-  numOfDeals,
+  routeIndex,
 }) => {
+  const navigate = useNavigate();
+  const deliveryFee = `$${Math.min(...deliveryFees)}`
+  routeIndex = deliveryFees.indexOf(Math.min(...deliveryFees))
+  const routing = ["UberEats-", "GrubHub-", "DoorDash-", "Postmates-"];
+  const serviceName = ["Uber Eats", "GrubHub", "DoorDash", "Postmates"];
+  deliveryService = serviceName[routeIndex]
+  const navigateCheckout = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/place_order/${routing[routeIndex]}${name}`);
+      if(response) {
+        const redirectURL = await response.text();
+        window.location.href = redirectURL;
+      }
+      else {
+        throw new Error("Error placing order")
+      }
+    } catch(error) {
+      console.log('Error rerouting to outside service: ', error)
+    }
+  };
+
   return (
     <div className="rectangle-parents">
-      <div className="frame-childs" />
+      <div className="frame-childs-redirect" />
       <div className="spinners">
         <div className="progress-circles">
           <div className="weather-displays">
@@ -46,19 +71,19 @@ const FrameComponent6a = ({
         </div>
       </div>
       <div className="frame-containers">
-        <div className="vector-wrappers">
-          <img className="frame-items" alt="" src="/line-5.svg" />
-        </div>
-        <div className="frame-wrappers">
-          <div className="frame-divs">
-            <div className="group-parents">
-              <img className="group-icons" alt="" src={icon} />
-              <div className="uber-eats-parents">
+        {/* <div className="vector-wrappers">
+          <img className="frame-items" alt="" src="/line-5.png" />
+        </div> */}
+        <div className="frame-wrapperss">
+          <div className="frame-divs-redirect">
+            <div className="group-parents-uber">
+              <div className="uber-eats-parents2">
                 <h1 className="uber-eatss">{deliveryService}</h1>
                 <div className="best-deal-wrappers">
                   <h3 className="best-deals">Best Deal</h3>
                 </div>
               </div>
+              <img className="group-icons-redirect" alt="" src={icon} />
             </div>
             <div className="frame-wrapper1s">
               <div className="frame-parent1s">
@@ -90,14 +115,17 @@ const FrameComponent6a = ({
                 "&:hover": { background: "#3b9566" },
                 height: 43,
               }}
+              onClick={navigateCheckout}
             >
               Place Order
             </Button>
-            <div className="view-all-deals-5-wrappers">
-              <div className="view-all-dealss">
-                View All Deals ({numOfDeals})
+            <Link to={`/view-all-deals?merchant=${id}`}  className="view-all-deals-link">
+              <div className="view-all-deals-button2">
+                <h2 className="view-all-dealss">
+                  View All Deals
+                </h2>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

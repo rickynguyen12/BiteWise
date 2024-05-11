@@ -15,7 +15,9 @@ const OwnerDashboard = () => {
           <OwnerDashboardComponent />
         </section>
       </div>
-      <Footer propHeight="20.9px" propHeight1="24px" />
+      <div className="dashboard-footer">
+        <Footer propHeight="20.9px" propHeight1="24px" />
+      </div>
     </div>
   );
 };

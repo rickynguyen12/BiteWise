@@ -1,56 +1,105 @@
+// FoodItemPage.js
+
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
-import { menuData } from "./MenuData";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./FoodItemPage.css";
+import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const FoodItemPage = () => {
-  const location = useLocation();
-
-  const { restaurantName, restaurantInfo } = location.state || {};
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [merchantData, setSearchResults] = useState({
+    merchant: null,
+    menuItems: [],
+  });
+  const [uniqueCategories, setUniqueCategories] = useState(new Set());
+  const searchMerchant = searchParams.get("merchant");
 
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const navigate = useNavigate();
+  
+  const goToCart = () => {
+    navigate("/cart", { state: { selectedItems } });
+  };
+
+  useEffect(() => {
+    localStorage.removeItem("cart");
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/get-merch-info",
+          {
+            params: {
+              query: searchMerchant,
+            }
+          }
+        );
+        setSearchResults(response.data);
+        setSelectedCategory(response.data.menuItems[0].category);
+        const categoriesSet = new Set();
+        response.data.menuItems.forEach((item) => {
+          categoriesSet.add(item.category);
+        });
+        setUniqueCategories(categoriesSet);
+      } catch (error) {
+        console.error("Error sending search request:", error);
+      }
+    };
+
+    if (searchMerchant) {
+      fetchData();
+    }
+  }, [searchMerchant]);
 
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const [menuItems, setMenuItems] = useState([]);
-
   useEffect(() => {
-    setMenuItems(menuData[restaurantName] || []);
-    setSelectedCategory(menuData[restaurantName][0]?.name || []);
-  }, [restaurantName]);
+    const storedCartItems = JSON.parse(localStorage.getItem("cart"));
+    if (storedCartItems) {
+      setSelectedItems(storedCartItems);
+    }
+  }, []);
 
-  const addToCart = (item, category) => {
+  const addToCart = (item, category, restaurantName) => {
     const existingItem = selectedItems.findIndex(
       (selectedItem) =>
         selectedItem.id === item.id && selectedItem.category === category
     );
     if (existingItem !== -1) {
       const updated = [...selectedItems];
-      selectedItems[existingItem].quantity += 1;
+      updated[existingItem].quantity += 1;
       setSelectedItems(updated);
+      localStorage.setItem("cart", JSON.stringify(updated));
     } else {
-      setSelectedItems([...selectedItems, { ...item, quantity: 1, category }]);
+      const updatedItems = [
+        ...selectedItems,
+        { ...item, quantity: 1, category, restaurantName },
+      ];
+      setSelectedItems(updatedItems);
+      localStorage.setItem("cart", JSON.stringify(updatedItems));
     }
   };
 
   const removeFromCart = (itemId, category) => {
-    const updated = selectedItems.map((item) => {
-      if (
-        item.id === itemId &&
-        item.category === category &&
-        item.quantity > 0
-      ) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
+    const updated = selectedItems
+      .map((item) => {
+        if (
+          item.id === itemId &&
+          item.category === category &&
+          item.quantity > 0
+        ) {
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          return item;
+        }
+      })
+      .filter((item) => item.quantity > 0);
     setSelectedItems(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
   };
-
-  const goToComparePrices = () => {};
 
   return (
     <div className="food-item">
@@ -59,168 +108,126 @@ const FoodItemPage = () => {
         <div className="restaurant-info">
           <img
             className="restaurant-photo"
-            src={restaurantInfo.rectangle26}
-            alt={restaurantInfo.davidAndEmilysPatisserie}
+            src={
+              merchantData &&
+              merchantData.merchant &&
+              merchantData.merchant.logo_url
+            }
+            alt="A placeholder Description"
           />
           <div className="restaurant-details">
             <div className="restaurant-name">
-              <h2>{restaurantInfo.davidAndEmilysPatisserie}</h2>
+              <h2>
+                {merchantData &&
+                  merchantData.merchant &&
+                  merchantData.merchant.merchantname}
+              </h2>
             </div>
             <div className="french-patisserie">
-              <p>{restaurantInfo.frenchPatisserie}</p>
-            </div>
-            <div className="info-container">
-              <div className="rating">
-                <img
-                  alt=""
-                  src="/vector-2.svg"
-                  style={{
-                    filter:
-                      "brightness(0) saturate(100%) invert(38%) sepia(99%) saturate(6100%) hue-rotate(134deg) brightness(90%) contrast(88%)",
-                  }}
-                />
-                <p>{restaurantInfo.prop}</p>
-              </div>
-              <div className="delivery-time">
-                <p>{restaurantInfo.mins} Delivery Time</p>
-              </div>
-              <div className="cost">
-                <p>{restaurantInfo.prop1}</p>
-              </div>
-            </div>
-            <div className="frame-wrapper">
-              <div className="frame-parent5">
-                <TextField
-                  className="frame-textfield"
-                  placeholder="Search for other food items"
-                  variant="outlined"
-                  sx={{
-                    "& fieldset": { borderColor: "#808080" },
-                    "& .MuiInputBase-root": {
-                      height: "49px",
-                      backgroundColor: "#fff",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                    },
-                    "& .MuiInputBase-input": { color: "#808080" },
-                  }}
-                />
-                <Button
-                  className="sign-in5"
-                  disableElevation={true}
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    color: "#000",
-                    fontSize: "14",
-                    background: "#fff",
-                    borderRadius: "10px",
-                    "&:hover": { background: "#29a679" },
-                    width: 129,
-                    height: 49,
-                  }}
-                >
-                  <img
-                    alt=""
-                    src="/star_fav.png"
-                    style={{
-                      width: "15px",
-                      height: "15px",
-                      marginRight: "8px",
-                    }}
-                  />
-                  Favorite
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="offer">
-            <h3>Offers</h3>
-            <div className="offer-details">
-              <img
-                alt=""
-                src="/offer.png"
-                style={{
-                  width: "15px",
-                  height: "15px",
-                  marginRight: "8px",
-
-                  filter:
-                    "brightness(0) saturate(100%) invert(38%) sepia(99%) saturate(6100%) hue-rotate(134deg) brightness(90%) contrast(88%)",
-                }}
-              />
-              <p>{restaurantInfo.offer}</p>
+              <p>
+                {merchantData &&
+                  merchantData.merchant &&
+                  `${merchantData.merchant.streetAddress} ${merchantData.merchant.city}, ${merchantData.merchant.state}`}
+              </p>
             </div>
           </div>
         </div>
       </section>
       <div className="menu">
         <div className="menu-category">
-          {menuItems.map((category) => (
-            <div
-              key={category.name}
-              className={`category ${
-                selectedCategory === category.name ? "selected" : ""
-              }`}
-              onClick={() => setSelectedCategory(category.name)}
-            >
-              {category.name}
-            </div>
-          ))}
+          {merchantData &&
+            merchantData.menuItems &&
+            Array.from(uniqueCategories).map((category) => (
+              <div
+                key={category}
+                className={`category ${
+                  selectedCategory === category ? "selected" : ""
+                }`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </div>
+            ))}
         </div>
         <div className="menu-items">
-          {selectedCategory &&
-            menuItems
-              .find((category) => category.name === selectedCategory)
-              ?.items?.map((item) => (
-                <div className="menu-item" key={item.id}>
+          {merchantData.menuItems.map((menuItem) => {
+            if (menuItem.category === selectedCategory) {
+              return (
+                <div className="menu-item" key={menuItem.id}>
                   <div className="item-info">
-                    <h3>{item.name}</h3>
-                    <p>{item.description}</p>
+                    <h3>{menuItem.name}</h3>
+                    <p>{menuItem.description}</p>
                   </div>
                   <button
                     className="add-button"
-                    onClick={() => addToCart(item, item.category)}
+                    onClick={() =>
+                      addToCart(
+                        menuItem,
+                        menuItem.category,
+                        merchantData.merchant.merchantname
+                      )
+                    }
                   >
                     Add +
                   </button>
                 </div>
-              ))}
+              );
+            }
+          })}
         </div>
         <div className="cart">
-          <h2>Cart</h2>
+          <h2>My Bag</h2>
           <p>
             from{" "}
             <div className="cart-name">
-              {restaurantInfo.davidAndEmilysPatisserie}
+              {merchantData &&
+                merchantData.merchant &&
+                merchantData.merchant.merchantname}
             </div>
           </p>
           <div className="cart-items">
-            {selectedItems.map((item, index) => (
-              <div key={index} className="cart-item">
-                <div className="cart-item-info">
-                  <h3>{item.name}</h3>
-                </div>
-                <div className="cart-item-quantity">
-                  <button
-                    className="quantity-button"
-                    onClick={() => removeFromCart(item.id, item.category)}
-                  >
-                    –
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    className="quantity-button"
-                    onClick={() => addToCart(item, item.category)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
+            {selectedItems.map((item, index) => {
+              if (item.quantity > 0) {
+                return (
+                  <div key={index} className="cart-item">
+                    <div className="cart-item-info">
+                      <h3>{item.name}</h3>
+                    </div>
+                    <div className="cart-item-quantity">
+                      <button
+                        className="quantity-button"
+                        onClick={() =>
+                          removeFromCart(
+                            item.id,
+                            item.category,
+                            merchantData.merchant.restaurant_id
+                          )
+                        }
+                      >
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        className="quantity-button"
+                        onClick={() =>
+                          addToCart(
+                            item,
+                            item.category,
+                            merchantData.merchant.restaurant_id
+                          )
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })}
           </div>
-          <button onClick={goToComparePrices} className="compare-prices">
-            Go To Compare Prices
+          <button onClick={goToCart} className="compare-prices">
+            Add to Cart
           </button>
         </div>
       </div>

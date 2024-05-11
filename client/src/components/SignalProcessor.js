@@ -6,8 +6,16 @@ import {
   Button,
 } from "@mui/material";
 import "./SignalProcessor.css";
+import { useState } from 'react';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignalProcessor = () => {
+  const [searchInput, setSearchInput] = useState('');
+  const navigate = useNavigate()
+  const handleSearch = async () => {
+    navigate(`/searched-results?query=${encodeURIComponent(searchInput)}`);
+  };
   return (
     <section className="signal-processor">
       <div className="frame-parent3">
@@ -30,10 +38,12 @@ const SignalProcessor = () => {
           </div>
           <div className="frame-wrapper">
             <div className="frame-parent5">
-              <TextField
+              <TextField // Text field to type search
                 className="frame-textfield"
                 placeholder="Enter an item or restaurant"
                 variant="outlined"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)} // Add an onChange handler to update searchInput
                 sx={{
                   "& fieldset": { borderColor: "#808080" },
                   "& .MuiInputBase-root": {
@@ -45,10 +55,11 @@ const SignalProcessor = () => {
                   "& .MuiInputBase-input": { color: "#808080" },
                 }}
               />
-              <Button
+              <Button // Search button
                 className="sign-in5"
                 disableElevation={true}
                 variant="contained"
+                onClick={handleSearch}
                 sx={{
                   textTransform: "none",
                   color: "#fdfbfa",

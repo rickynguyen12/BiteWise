@@ -20,3 +20,6 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.option-content h3 {
+  margin: 0;
+}
