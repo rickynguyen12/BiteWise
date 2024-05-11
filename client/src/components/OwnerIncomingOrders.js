@@ -21,10 +21,10 @@ const OwnerIncomingOrders = ({ orders, onAccept, onReject }) => {
               ))}
             </ul>
           </div>
-          {order.status === "Waiting" && (
+          {order.status === "Pending" && (
             <div className="buttons">
               <Button
-                onClick={() => onReject(order.id)}
+                onClick={() => onReject(order.orderNumber)}
                 className="reject-button"
                 startIcon={
                   <img
@@ -38,7 +38,7 @@ const OwnerIncomingOrders = ({ orders, onAccept, onReject }) => {
                 variant="outlined"
               ></Button>
               <Button
-                onClick={() => onAccept(order.id)}
+                onClick={() => onAccept(order.orderNumber)}
                 className="accept-button"
                 startIcon={
                   <img
