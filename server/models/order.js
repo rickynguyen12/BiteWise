@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
   orderNumber: {
     type: Number,
+    value : Math.floor(Math.random() * 300) + 1,
     required: false,
     unique: true,
   },
   merchant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Merchant",
+    required: false,
   },
   items: [
     {
@@ -29,6 +31,18 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  restaurant_id: {
+    type: Number,
+    required: true,
+  },
+  username: {
+    type: String,
+    trim: true,
+    required: true,
+    maxlength: 32,
+    unique: true,
+    lowercase: true,
+  }
 });
 
 orderSchema.pre("save", function (next) {
