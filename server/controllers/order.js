@@ -1,3 +1,4 @@
+import e from 'express';
 import Order from '../models/order.js';
 
 const createOrder = async (req, res) => {
@@ -68,8 +69,27 @@ const rejectOrder = async (req, res) => {
 };
 
 
+const getOrders = async (req, res) => {
+    const { restaurantId } = req.params;
+    try {
+        Order.find({ 
+            restaurant_id: restaurantId, 
+        })
+        .then(orders => {
+            res.json({ orders }); // Send JSON response with orders array
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        res.status(200)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 export { deleteOrder };
 export { createOrder };
 export { rejectOrder };
 export { acceptOrder };
+export { getOrders };

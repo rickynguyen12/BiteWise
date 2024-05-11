@@ -1,5 +1,6 @@
 import express from 'express';
 import { acceptOrder, rejectOrder, deleteOrder, createOrder } from '../controllers/order.js';
+import { getOrders } from '../controllers/order.js';
 
 const router = express.Router();
 
@@ -12,4 +13,6 @@ router.delete('/delete/:orderNumber', deleteOrder);
 router.put('/accept/:orderNumber', acceptOrder);
 
 router.put('/reject/:orderNumber', rejectOrder);
+
+router.get('/:restaurantId', getOrders);
 export default router;
