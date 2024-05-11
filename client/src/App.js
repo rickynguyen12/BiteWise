@@ -27,6 +27,7 @@ import IAOrderConfirmation from "./components/IAOrderConfirmation";
 import OwnerViewProfile from "./pages/OwnerViewProfile";
 import UserViewProfile from "./pages/UserViewProfile";
 import { MenuItemProvider } from "./components/MenuItemContext";
+import UserOrders from "./pages/UserOrders";
 
 function App() {
   const action = useNavigationType();
@@ -120,6 +121,7 @@ function App() {
         <Route path="/in-app-order-confirm" element={<IAOrderConfirmation />} />
         <Route path="/owner-view-profile" element={<OwnerViewProfile />} />
         <Route path="/user-view-profile" element={<UserViewProfile />} />
+        <Route path="/user-orders" element={<UserOrders />} />
       </Routes>
     </MenuItemProvider>
   );
