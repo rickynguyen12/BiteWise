@@ -92,6 +92,7 @@
   color: #333;
 }
 .menu-item {
+  max-width: 750px;
   margin-bottom: 10px;
   flex-direction: row;
   gap: 50px;

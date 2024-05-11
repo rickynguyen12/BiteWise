@@ -16,15 +16,15 @@ const restaurants = {
 
     //Mountain Mike's
     "UberEats-MountainMike's": "https://www.ubereats.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
-    "Doordash-Mountain Mike's": "https://www.doordash.com/store/25672403/?cursor=eyJzdG9yZV9wcmltYXJ5X3ZlcnRpY2FsX2lkcyI6WzFdfQ==&pickup=false",
-    "Grubhub-Mountain Mike's": "https://www.grubhub.com/restaurant/mountain-mikes-pizza-29-s-third-st-san-jose/6803144",
-    "Postmates-Mountain Mike's": "https://postmates.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
+    "Doordash-MountainMike's": "https://www.doordash.com/store/25672403/?cursor=eyJzdG9yZV9wcmltYXJ5X3ZlcnRpY2FsX2lkcyI6WzFdfQ==&pickup=false",
+    "Grubhub-MountainMike's": "https://www.grubhub.com/restaurant/mountain-mikes-pizza-29-s-third-st-san-jose/6803144",
+    "Postmates-MountainMike's": "https://postmates.com/store/mountain-mikes-pizza-29-s-third-street/HAjXMv7kWBSkQpx6t4zt9w?diningMode=DELIVERY",
 
     //El Abuelo Taqueria
     "UberEats-ElAbueloTaqueria": "https://www.ubereats.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
     "Doordash-ElAbueloTaqueria": "https://www.doordash.com/store/taqueria-el-abuelo-san-jose-724437/?event_type=autocomplete&pickup=false",
-    "Grubhub-El Abuelo Taqueria": "https://www.grubhub.com/restaurant/taqueria-el-abuelo-1005-lincoln-ave-san-jose/322256",
-    "Postmates-El Abuelo Taqueria": "https://postmates.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION",
+    "Grubhub-ElAbueloTaqueria": "https://www.grubhub.com/restaurant/taqueria-el-abuelo-1005-lincoln-ave-san-jose/322256",
+    "Postmates-ElAbueloTaqueria": "https://postmates.com/store/el-abuelo-taqueria/TRTRz2WfQsigdVC-He9rUg?diningMode=DELIVERY&sc=SEARCH_SUGGESTION",
     
     // La-victoria-taqueria
     "UberEats-LaVictoriaTaqueria": "https://www.ubereats.com/store/la-victoria-taqueria-4th-gish-st/73BsHi43R8WBDRD1BetvwA?diningMode=DELIVERY",
@@ -45,11 +45,12 @@ router.get('/place_order/:restaurantName', (req, res) => {
     console.log("restaurantName: ", restaurantName)
     // Check if the restaurant exists 
     if (restaurants.hasOwnProperty(restaurantName)) {
-        console.log("routing to: ", restaurants[restaurantName])
-        res.status(200).send(restaurants[restaurantName]);
+        console.log("redirecting to: ", restaurants[restaurantName])
+        res.redirect(restaurants[restaurantName]); 
     } else {
         res.status(404).json({ error: "Restaurant not found" });
     }
 });
+
 
 export default router;

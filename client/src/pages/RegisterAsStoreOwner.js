@@ -31,6 +31,89 @@ const RegisterAsStoreOwner = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
 
+  const validPassword = (field) => {
+    let hasSixChar = field.length >= 6;
+    let hasLowerChar = /(.*[a-z].*)/.test(field);
+    let hasUpperChar = /(.*[A-Z].*)/.test(field);
+    let hasNumber = /(.*[0-9].*)/.test(field);
+    let hasSpecialChar = /[^A-Za-z0-9]/.test(field);
+    if (
+      !hasSixChar ||
+      !hasLowerChar ||
+      !hasUpperChar ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      return "The password must have: at least 6 characters and include at least one each: a-z, A-Z, 0-9, and special characters.";
+    } else return "";
+  };
+
+  const validEmail = (field) => {
+    // email validation
+    let emailValid = field.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    if (!emailValid) {
+      return "Invalid email address!";
+    } else {
+      return "";
+    }
+  };
+
+  const validPhone = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^[0-9]{10}$/);
+    if (!phoneValid) {
+      return "Must be 10 digits, excluding dashes and spaces.";
+    } else {
+      return "";
+    }
+  };
+
+  const validUsername = (field) => {
+    // username validation
+    let usernameValid = field.match(/^[a-zA-Z0-9]+$/);
+    if (!usernameValid) {
+      return "The username must contain at least one of each a-z, A-Z, and 0-9. It cannot contain any special characters.";
+    } else return "";
+  };
+
+  const validateFName = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "First Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+
+  const validateCity = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "City can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateState = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "State can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateLName = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "Last Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateAddress = (field) => {
+    if (/[^a-zA-Z0-9\s#]+/.test(field))
+      return "Address can only contain letters (a-z A-Z) or numbers only!";
+    else return "";
+  };
+
+  const validateZipCode = (field) => {
+    if (/[^0-9-\s]+/.test(field))
+      return "Zip Code can only contain numbers only!";
+    else return "";
+  };
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -101,6 +184,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="Business Name"
                         onChange={handleChange}
                         name='merchantname'
+                        error={validateFName(formData.merchantname)}
+                        helperText={validateFName(formData.merchantname)}
                         value={formData.merchantname}
                         variant="outlined"
                         sx={{
@@ -120,6 +205,8 @@ const RegisterAsStoreOwner = () => {
                         name='phone'
                         onChange={handleChange}
                         value={formData.phone}
+                        error={validPhone(formData.phone)}
+                        helperText={validPhone(formData.phone)}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -139,6 +226,8 @@ const RegisterAsStoreOwner = () => {
                       name='streetAddress'
                       onChange={handleChange}
                       value={formData.streetAddress}
+                      error={validateAddress(formData.streetAddress)}
+                      helperText={validateAddress(formData.streetAddress)}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -158,6 +247,8 @@ const RegisterAsStoreOwner = () => {
                           placeholder="City"
                           name='city'
                           onChange={handleChange}
+                          error={validateCity(formData.city)}
+                          helperText={validateCity(formData.city)}
                           variant="outlined"
                           value={formData.city}
                           sx={{
@@ -177,6 +268,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="State"
                         name='state'
                         onChange={handleChange}
+                        error={validateState(formData.state)}
+                        helperText={validateState(formData.state)}
                         variant="outlined"
                         value={formData.state}
                         sx={{
@@ -197,6 +290,8 @@ const RegisterAsStoreOwner = () => {
                         name='zipCode'
                         onChange={handleChange}
                         variant="outlined"
+                        error={validateZipCode(formData.zipCode)}
+                        helperText={validateZipCode(formData.zipCode)}
                         value={formData.zipCode}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -217,6 +312,8 @@ const RegisterAsStoreOwner = () => {
                       name='category'
                       onChange={handleChange}
                       variant="outlined"
+                      error={validateFName(formData.category)}
+                      helperText={validateFName(formData.category)}
                       value={formData.category}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -225,8 +322,10 @@ const RegisterAsStoreOwner = () => {
                           backgroundColor: "#fff",
                           borderRadius: "10px",
                           fontSize: "14px",
+                          
                         },
                         "& .MuiInputBase-input": { color: "#808080" },
+                        marginBottom: '20px'
                       }}
                     />
                     <TextField
@@ -297,6 +396,8 @@ const RegisterAsStoreOwner = () => {
                         placeholder="Username"
                         name='username'
                         onChange={handleChange}
+                        error={validUsername(formData.username)}
+                        helperText={validUsername(formData.username)}
                         value={formData.username}
                         variant="outlined"
                         sx={{
@@ -315,6 +416,8 @@ const RegisterAsStoreOwner = () => {
                       placeholder="Email"
                       name='email'
                       onChange={handleChange}
+                      error={validEmail(formData.email)}
+                      helperText={validEmail(formData.email)}
                       value={formData.email}
                       variant="outlined"
                       sx={{
@@ -334,6 +437,8 @@ const RegisterAsStoreOwner = () => {
                       variant="outlined"
                       onChange={handleChange}
                       name="password"
+                      error={validPassword(formData.password)}
+                      helperText={validPassword(formData.password)}
                       value={formData.password}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },

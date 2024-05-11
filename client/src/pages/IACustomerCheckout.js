@@ -41,7 +41,7 @@ const IACustomerCheckout = () => {
     setItemTotal(totalPrice.toFixed(2));
     setTaxPrice(taxes.toFixed(2));
     setSubtotal(subtotal.toFixed(2));
-  }, [cartData.cartItems]);
+  }, [cartData]);
 
   useEffect(() => {
     const cartFromStorage = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -52,7 +52,7 @@ const IACustomerCheckout = () => {
     e.preventDefault();
     if(validateFName(formData.fname) != "" ||
     validateFName(formData.lname) != "" ||
-    validateState(formData.state) ||
+    validateState(formData.state) != "" ||
     validateAddress(formData.address1) != "" ||
     validateAddress(formData.address2) != "" ||
     validateCity(formData.city) != "" ||
@@ -60,7 +60,8 @@ const IACustomerCheckout = () => {
   ){
     return false;
   } else {
-    localStorage.setItem('cartItems', []);
+    localStorage.setItem('cartItems', JSON.stringify([]));
+    localStorage.setItem('cart', JSON.stringify([]));
     navigate("/in-app-order-confirm");
   }
   };
@@ -469,7 +470,7 @@ const IACustomerCheckout = () => {
                 <div className="order-info">
                   <p className="item-name">{item.name}</p>
                   <p className="cart-item-price">
-                    ${item.price * item.quantity}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
                 <div className="quantity-btns">

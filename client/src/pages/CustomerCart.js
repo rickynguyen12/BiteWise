@@ -103,7 +103,8 @@ const CustomerCart = () => {
         ))}
 
         <div className="compare-prices-container">
-          <Button className="compare-prices" onClick={handleCheckout}>
+          <Button className="compare-prices" onClick={handleCheckout}
+          disabled={cartData.length === 0}>
             Proceed to Checkout
           </Button>
         </div>
