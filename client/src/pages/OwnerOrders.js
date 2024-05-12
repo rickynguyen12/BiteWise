@@ -101,6 +101,24 @@ const OwnerOrders = () => {
     }
   };
 
+  const handleCompleteOrder = async (orderId) => {
+    try {
+      console.log("Accepting order:", orderId);
+      // Make PUT request to update order status to 'Rejected'
+      await axios.put(`http://localhost:8080/orders/complete/${orderId}`);
+      // If the request is successful, update the order status locally
+      setIncomingOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.orderNumber === orderId ? { ...order, status: "Completed" } : order
+        )
+      );
+      // Reload the database table by fetching updated orders
+      window.location.reload();
+    } catch (error) {
+      console.error("Error accepting order:", error);
+    }
+  };
+
   return (
     <div className="owner-orders">
       <FrameComponent4 />
@@ -117,6 +135,7 @@ const OwnerOrders = () => {
             orders={incomingOrders}
             onAccept={handleAcceptOrder}
             onReject={handleRejectOrder}
+            onComplete={handleCompleteOrder}
           />
         </div>
       </div>
