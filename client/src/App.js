@@ -27,6 +27,8 @@ import IAOrderConfirmation from "./components/IAOrderConfirmation";
 import OwnerViewProfile from "./pages/OwnerViewProfile";
 import UserViewProfile from "./pages/UserViewProfile";
 import { MenuItemProvider } from "./components/MenuItemContext";
+import UserOrders from "./pages/UserOrders";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   const action = useNavigationType();
@@ -100,6 +102,7 @@ function App() {
         />
         <Route path="/food-item-page" element={<FoodItemPage />} />
         <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
         <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
         <Route path="/in-app-checkout" element={<IACustomerCheckout />} />
@@ -120,6 +123,7 @@ function App() {
         <Route path="/in-app-order-confirm" element={<IAOrderConfirmation />} />
         <Route path="/owner-view-profile" element={<OwnerViewProfile />} />
         <Route path="/user-view-profile" element={<UserViewProfile />} />
+        <Route path="/user-orders" element={<UserOrders />} />
       </Routes>
     </MenuItemProvider>
   );

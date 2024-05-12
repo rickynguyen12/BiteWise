@@ -129,45 +129,43 @@ const FrameComponent5 = () => {
           </div>
           <form className="frame-form">
             <div className="frame-child9">
-              <Button
-                className="user-merch-btns"
-                disableElevation={true}
-                onClick={handleUser}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  color: userClicked ? "#307651" : "#fff",
-                  fontSize: "14",
-                  background: userClicked ? "white" : "#307651",
-                  border: userClicked ? "1px black solid" : "none",
-                  borderRadius: "10px",
-                  "&:hover": { background: "#e4e8e1", color: "#307651" },
-                  height: 49,
-                }}
-              >
-                User
-              </Button>
-              <Button
-                className="user-merch-btns"
-                disableElevation={true}
-                onClick={handleMerchant}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  color: ownerClicked ? "#307651" : "#fff",
-                  fontSize: "14",
-                  background: ownerClicked ? "white" : "#307651",
-                  border: ownerClicked ? "1px black solid" : "none",
-                  borderRadius: "10px",
-                  "&:hover": {
-                    background: "#e4e8e1",
-                    color: "#307651",
-                  },
-                  height: 49,
-                }}
-              >
-                Merchant
-              </Button>
+            <Button
+              className="user-merch-btns"
+              disableElevation={true}
+              onClick={handleUser}
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                color: userClicked ? "#fff" : "#307651",
+                fontSize: "14",
+                background: userClicked ? "#307651" : "white",
+                border: userClicked ? "none" : "1px solid black",
+                borderRadius: "10px",
+                "&:hover": { background: "#307651", color: "#fff" },
+                height: 49,
+              }}
+            >
+              User
+            </Button>
+            <Button
+              className="user-merch-btns"
+              disableElevation={true}
+              onClick={handleMerchant}
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                color: ownerClicked ? "#fff" : "#307651",
+                fontSize: "14",
+                background: ownerClicked ? "#307651" : "white",
+                border: ownerClicked ? "none" : "1px solid black",
+                borderRadius: "10px",
+                "&:hover": { background: "#307651", color: "#fff" },
+                height: 49,
+              }}
+            >
+              Merchant
+            </Button>
+
             </div>
             <div className="inputs-wrapper">
               <TextField
