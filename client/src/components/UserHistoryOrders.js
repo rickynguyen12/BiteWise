@@ -31,7 +31,7 @@ return (
                         </td>
                         <td>{order.status}</td>
                         <td>
-                            {order.status === "Pending" || order.status === "pending" && (
+                            {(order.status === "Pending" || order.status === "pending") && (
                                 <Button variant="contained" color="error">
                                     Cancel Order
                                 </Button>
