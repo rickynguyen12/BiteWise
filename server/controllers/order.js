@@ -2,11 +2,17 @@ import e from 'express';
 import Order from '../models/order.js';
 
 const createOrder = async (req, res) => {
+    console.log(req.body);
     try {
-        const newOrder = new Order(req.body);
+        const newOrder = new Order({
+            restaurant_id: req.body.body.restaurant_id,
+            username: req.body.body.username,
+            items: req.body.body.items
+        });
         await newOrder.save();
         res.status(201).json(newOrder);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };

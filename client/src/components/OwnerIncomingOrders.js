@@ -2,10 +2,11 @@ import React from "react";
 import { Button } from "@mui/material";
 import "./OwnerIncomingOrders.css";
 
-const OwnerIncomingOrders = ({ orders, onAccept, onReject }) => {
+const OwnerIncomingOrders = ({ orders, onAccept, onReject, onComplete }) => {
+  const pendingOrders = orders.filter(order => order.status !== 'Completed');
   return (
     <div className="incoming-orders">
-      {orders.map((order) => (
+      {pendingOrders.map((order) => (
         <div key={order.id} className="order-card">
           <h3>Order #{order.orderNumber}</h3>
           <p>
@@ -57,19 +58,28 @@ const OwnerIncomingOrders = ({ orders, onAccept, onReject }) => {
             <div className="buttons">
               <Button
                 className="accept-button-after"
-                startIcon={
-                  <img
-                    width="30px"
-                    height="30px"
-                    src={"/accept.png"}
-                    alt="accept"
-                  />
-                }
                 disableElevation={true}
                 variant="outlined"
               >
                 Accepted
               </Button>
+              <Button
+                onClick={() => onComplete(order.orderNumber)}
+                className="complete-order-button"
+                disableElevation={true}
+                variant="outlined"
+                startIcon={
+                  <img
+                    width="25px"
+                    height="25px"
+                    src={"/accept.png"}
+                    alt="accept"
+                  />
+                }
+              >
+                Complete
+              </Button>
+              
             </div>
           )}
           {order.status === "Rejected" && (

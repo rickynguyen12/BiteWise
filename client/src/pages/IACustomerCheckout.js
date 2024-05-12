@@ -14,6 +14,7 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./IACustomerCheckout.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import axios from "axios";
 
 const IACustomerCheckout = () => {
   const taxRate = 0.0875;
@@ -62,6 +63,19 @@ const IACustomerCheckout = () => {
     ) {
       return false;
     } else {
+
+      const itemsIDS = cartData.map((item) => {
+        return item._id;
+      });
+
+      const response = await axios.post('http://localhost:8080/orders/create', {
+        body: {
+          restaurant_id: cartData[0].restaurant_id,
+          username: localStorage.getItem('username'),
+          items: itemsIDS,
+        }
+      });
+
       localStorage.setItem("cartItems", JSON.stringify([]));
       localStorage.setItem("cart", JSON.stringify([]));
       navigate("/in-app-order-confirm");
