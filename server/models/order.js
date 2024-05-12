@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
   orderNumber: {
     type: Number,
-    value : Math.floor(Math.random() * 300) + 1,
+    value : Number,
     required: false,
     unique: true,
   },
@@ -54,16 +54,21 @@ const orderSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
-    maxlength: 32,
     unique: false,
+    maxlength: 32,
     lowercase: true,
   }
-});
+});;
 
-orderSchema.pre("save", function (next) {
-  // Generate a random order number only if it's not already provided
+orderSchema.pre("save", async function (next) {
+  // Generate a unique order number if it's not already provided
   if (!this.orderNumber) {
-    this.orderNumber = Math.floor(Math.random() * 300) + 1;
+    // Find the highest existing order number
+    const highestOrder = await this.constructor.findOne({}, { orderNumber: 1 }, { sort: { orderNumber: -1 } });
+    const maxOrderNumber = highestOrder ? highestOrder.orderNumber : 0;
+    
+    // Generate a unique order number
+    this.orderNumber = maxOrderNumber + 1;
   }
   next();
 });
