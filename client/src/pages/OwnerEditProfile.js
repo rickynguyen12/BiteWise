@@ -299,6 +299,25 @@ const OwnerEditProfile = () => {
                     >
                       Update
                     </Button>
+                    <Button
+                      className="sign-in3"
+                      disableElevation={true}
+                      variant="contained"
+                      // onClick={handleClick}
+                      sx={{
+                        textTransform: "none",
+                        color: "#fff",
+                        fontSize: "14",
+                        background: "#c62828",
+                        borderRadius: "10px",
+                        margin: "0 0 0 30px",
+                        "&:hover": { background: "#c62828" },
+                        width: 143,
+                        height: 49,
+                      }}
+                    >
+                      Close Business
+                    </Button>
                   </div>
                 </div>
               </form>
