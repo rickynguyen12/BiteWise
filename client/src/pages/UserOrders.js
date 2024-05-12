@@ -43,7 +43,7 @@ const UserOrders = () => {
         { name: "Combo Pizza", quantity: 2 },
         { name: "Chicken Wings", quantity: 1 },
       ],
-      status: "Completed",
+      status: "Pending",
     },
   ]);
 
