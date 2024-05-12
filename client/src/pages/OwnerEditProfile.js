@@ -311,7 +311,7 @@ const OwnerEditProfile = () => {
                         background: "#c62828",
                         borderRadius: "10px",
                         margin: "0 0 0 30px",
-                        "&:hover": { background: "#2f7c31" },
+                        "&:hover": { background: "#c62828" },
                         width: 143,
                         height: 49,
                       }}
