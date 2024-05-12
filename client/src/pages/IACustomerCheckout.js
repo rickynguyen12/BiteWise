@@ -14,6 +14,8 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./IACustomerCheckout.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import axios from "axios";
+
 
 const IACustomerCheckout = () => {
   const taxRate = 0.0875;
@@ -30,6 +32,7 @@ const IACustomerCheckout = () => {
   const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
+    console.log("Cart Data from UseEffect func:", cartData);
     let totalPrice = 0.0;
     cartData.forEach((item) => {
       totalPrice += item.quantity * item.price;
@@ -44,29 +47,53 @@ const IACustomerCheckout = () => {
   }, [cartData]);
 
   useEffect(() => {
+    console.log("Cart Data from UseEffect func:", cartData);
     const cartFromStorage = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartData(cartFromStorage);
     localStorage.removeItem("cart");
   }, []);
 
+const completeCheckout = async () => {
+      try {
+          console.log('Checking out...');
+          const cart = JSON.parse(localStorage.getItem("cartItems")); 
+          const restaurant_id = localStorage.getItem("restaurant_id");
+          const username = localStorage.getItem("username");
+          const order = {
+              items: cart,
+              restaurant_id: restaurant_id,
+              username: username,
+          };
+          const response = await axios.post('http://localhost:8080/orders/create', order);
+          console.log('Order created:', response.data);
+      } catch (error) {
+          console.error('Error Checking out:', error);
+      }
+  }
+
   const handleSubmit = async (e) => {
+    console.log("Form submitted");
     e.preventDefault();
     if (
-      validateFName(formData.fname) != "" ||
-      validateFName(formData.lname) != "" ||
-      validateState(formData.state) != "" ||
-      validateAddress(formData.address1) != "" ||
-      validateAddress(formData.address2) != "" ||
-      validateCity(formData.city) != "" ||
-      validateZipCode(formData.zipCode) != ""
+      validateFName(formData.fname) !== "" ||
+      validateFName(formData.lname) !== "" ||
+      validateState(formData.state) !== "" ||
+      validateAddress(formData.address1) !== "" ||
+      validateAddress(formData.address2) !== "" ||
+      validateCity(formData.city) !== "" ||
+      validateZipCode(formData.zipCode) !== ""
     ) {
+      console.log("Invalid form data")
       return false;
     } else {
+      completeCheckout();
       localStorage.setItem("cartItems", JSON.stringify([]));
       localStorage.setItem("cart", JSON.stringify([]));
       navigate("/in-app-order-confirm");
     }
   };
+
+  
 
   // validation functions
   const validateFName = (field) => {

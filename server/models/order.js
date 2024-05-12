@@ -14,9 +14,24 @@ const orderSchema = new mongoose.Schema({
   },
   items: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MenuItem",
-    },
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "MenuItem", // Reference to the MenuItem collection
+        required: true
+      },
+      quantity: {
+        type: Number,
+        required: true
+      },
+      id: {
+        type: Number,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+    }
   ],
   status: {
     type: String,
