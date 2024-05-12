@@ -6,10 +6,13 @@ import "./OwnerEditProfile.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const OwnerEditProfile = () => {
-  const user = localStorage.getItem('username');
-  const navigate = useNavigate()
+  // const user = localStorage.getItem("username");
+  const user = localStorage.getItem("email");
+  const navigate = useNavigate();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const [name, setItemName] = useState("");
   const [phone, setPhone] = useState("");
@@ -18,79 +21,116 @@ const OwnerEditProfile = () => {
   const [state, setState] = useState("");
   const [zipCode, setZip] = useState("");
   const [category, setCategory] = useState("");
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
 
-  const handleNameChange = event => {
+  const handleNameChange = (event) => {
     setItemName(event.target.value);
-  }
+  };
 
-  const handlePhoneChange = event => {
+  const handlePhoneChange = (event) => {
     setPhone(event.target.value);
-  }
+  };
 
-  const handleStreetChange = event => {
+  const handleStreetChange = (event) => {
     setStreet(event.target.value);
-  }
-  const handleCityChange = event => {
+  };
+  const handleCityChange = (event) => {
     setCity(event.target.value);
-  }
-  const handleStateChange = event => {
+  };
+  const handleStateChange = (event) => {
     setState(event.target.value);
-  }
-  const handleZipChange = event => {
+  };
+  const handleZipChange = (event) => {
     setZip(event.target.value);
-  }
-  const handleEmailChange = event => {
+  };
+  const handleEmailChange = (event) => {
     setEmail(event.target.value);
-  }
+  };
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   const [merchant, setMerchant] = useState();
 
   const handleClick = async () => {
-    if(merchant) {
+    if (merchant) {
       try {
-        const response = await axios
-          .put(`http://localhost:8080/merchant/updateInfo/${merchant.restaurant_id}`, {
-            // having item_id be blank
-            merchantname: name, // Pass 'name' to the backend
-            phone: phone, // Similarly, you can pass 'price', 'description', 'category' as needed
+        const response = await axios.put(
+          `http://localhost:8080/merchant/updateInfo/${merchant.restaurant_id}`,
+          {
+            merchantname: name,
+            phone: phone,
             streetAddress: street,
             city: city,
             state: state,
             zipCode: zipCode,
             category: category,
-            email: category
-          })
-        navigate("/owner-dashboard")
-      } catch(error) {
-        console.log(error)
+            email: email,
+          }
+        );
+        navigate("/owner-dashboard");
+      } catch (error) {
+        console.log(error);
+      }
     }
+  };
+
+  const handleCloseClick = async () => {
+    if (merchant) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8080/merchant/remove/${merchant.restaurant_id}`
+        );
+        setOpenSnackbar(true);
+
+        // Clear user data from localStorage
+        localStorage.removeItem("username");
+        localStorage.removeItem("restaurant_id");
+        localStorage.removeItem("email");
+        localStorage.removeItem("isOwner");
+        localStorage.removeItem("isLoggedIn");
+
+        Cookies.remove("jwt");
+
+        navigate("/login");
+      } catch (error) {
+        console.error("Logout Failed:", error);
+      }
     }
-  }
+  };
 
   useEffect(() => {
     async function getOwnerProfile() {
       if (user) {
         try {
-          const response = await axios.get("http://localhost:8080/search-user", {
-            params: {
-              query: user}
-          })
+          // const response = await axios.get(
+          //   "http://localhost:8080/search-user",
+          //   {
+          //     params: {
+          //       query: user,
+          //     },
+          //   }
+          // );
+          const merchant_email = localStorage.getItem("email");
+          const response = await axios.get(
+            `http://localhost:8080/merchant/details/${merchant_email}`
+          );
+
           setMerchant(response.data);
-          setItemName(response.data.merchantname)
-          setPhone(response.data.phone)
-          setStreet(response.data.streetAddress)
-          setCity(response.data.city)
-          setState(response.data.state)
-          setZip(response.data.zipCode)
-          setCategory(response.data.category)
-          setEmail(response.data.email)
-        } catch(error) {
-            console.log(error)
+          setItemName(response.data.merchantname);
+          setPhone(response.data.phone);
+          setStreet(response.data.streetAddress);
+          setCity(response.data.city);
+          setState(response.data.state);
+          setZip(response.data.zipCode);
+          setCategory(response.data.category);
+          setEmail(response.data.email);
+        } catch (error) {
+          console.log(error);
         }
       }
     }
-    if(user) {
+    if (user) {
       getOwnerProfile();
     }
   }, [user]);
@@ -131,7 +171,7 @@ const OwnerEditProfile = () => {
 
                     <div className="frame-container">
                       <TextField
-                        className="frame-child"
+                        className="frame-child-name"
                         placeholder="Business Name"
                         value={name}
                         onChange={handleNameChange}
@@ -243,7 +283,7 @@ const OwnerEditProfile = () => {
                       className="city-input1"
                       placeholder="Category"
                       value={category}
-                      onChange={handleEmailChange}
+                      onChange={handleCategoryChange}
                       variant="outlined"
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
@@ -276,10 +316,8 @@ const OwnerEditProfile = () => {
                   </div>
                 </div>
                 <div className="frame-divv">
-                  <div className="frame-parent12">
-                  </div>
-                  <div className="phone-number-email-parent">
-                  </div>
+                  <div className="frame-parent12"></div>
+                  <div className="phone-number-email-parent"></div>
                   <div className="sign-in-wrapper">
                     <Button
                       className="sign-in3"
@@ -303,7 +341,7 @@ const OwnerEditProfile = () => {
                       className="sign-in3"
                       disableElevation={true}
                       variant="contained"
-                      // onClick={handleClick}
+                      onClick={handleCloseClick}
                       sx={{
                         textTransform: "none",
                         color: "#fff",

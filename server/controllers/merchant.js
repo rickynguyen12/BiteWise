@@ -147,6 +147,44 @@ const getMerchantDetails = async (req, res) => {
   }
 };
 
+const getAllMerchantDetails = async (req, res) => {
+  const merchant_email = req.params.merchant_email;
+  try {
+    const merchant = await Merchant.findOne({ email: merchant_email });
+    if (!merchant) {
+      return res.status(404).json({ message: "Merchant not found" });
+    }
+
+    const {
+      merchantname,
+      phone,
+      username,
+      email,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      category,
+      restaurant_id,
+    } = merchant;
+
+    res.json({
+      username,
+      merchantname,
+      email,
+      phone,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      category,
+      restaurant_id,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const deleteRestaurant = async (req, res) => {
   const { restaurant_id } = req.params;
   try {
@@ -166,4 +204,5 @@ export { homepage };
 export { logout };
 export { updateMerchant };
 export { getMerchantDetails };
+export { getAllMerchantDetails };
 export { deleteRestaurant };
