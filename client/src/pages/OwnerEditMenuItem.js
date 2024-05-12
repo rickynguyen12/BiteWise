@@ -11,7 +11,6 @@ const OwnerEditMenuItem = () => {
   const [ownerDetails, setOwnerDetails] = useState([]);
 
   const item_info = JSON.parse(localStorage.getItem("item_info"));
-  localStorage.removeItem("item_info");
   const [updatedItemDetails, setUpdatedItemDetails] = useState({
     newName: item_info.name,
     newPrice: item_info.price,
@@ -19,7 +18,8 @@ const OwnerEditMenuItem = () => {
     newCategory: item_info.category,
   });
 
-  const handleUpdateItem = async () => {
+  const handleUpdateItem = async (e) => {
+    e.preventDefault();
     const { newName, newPrice, newDescription, newCategory } =
       updatedItemDetails;
     try {
@@ -49,6 +49,17 @@ const OwnerEditMenuItem = () => {
       [name]: value,
     });
   };
+
+  const validPrice = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^\d+(\.\d{1,2})?$/);
+    if (!phoneValid) {
+      return "Numerical input only!";
+    } else {
+      return "";
+    }
+  };
+
 
   return (
     <div className="register-as-store-owner">
@@ -91,6 +102,8 @@ const OwnerEditMenuItem = () => {
                         variant="outlined"
                         name="newPrice"
                         value={updatedItemDetails.newPrice}
+                        error={validPrice(updatedItemDetails.newPrice)}
+                        helperText={validPrice(updatedItemDetails.newPrice)}
                         onChange={handleInputChange}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },

@@ -128,8 +128,12 @@ const getMerchantDetails = async (req, res) => {
     const {
       merchantname,
       phone,
+      city,
+      state,
+      zipCode,
       username,
       email,
+      category,
       streetAddress,
       restaurant_id,
     } = merchant;
@@ -137,6 +141,10 @@ const getMerchantDetails = async (req, res) => {
     res.json({
       username,
       merchantname,
+      city,
+      category,
+      state,
+      zipCode,
       email,
       phone,
       streetAddress,

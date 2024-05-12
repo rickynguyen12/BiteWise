@@ -9,22 +9,68 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const OwnerEditProfile = () => {
-  // const user = localStorage.getItem("username");
-  const user = localStorage.getItem("email");
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const [name, setItemName] = useState("");
   const [phone, setPhone] = useState("");
   const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZip] = useState("");
-  const [category, setCategory] = useState("");
-  const [email, setEmail] = useState("");
+  const [mcity, setMCity] = useState("");
+  const [mstate, setMState] = useState("");
+  const [mzipCode, setMZip] = useState("");
+  const [mcategory, setMCategory] = useState("");
+  const [memail, setMEmail] = useState("");
+
+  const validEmail = (field) => {
+    // email validation
+    let emailValid = field.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    if (!emailValid) {
+      return "Invalid email address!";
+    } else {
+      return "";
+    }
+  };
+
+  const validPhone = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^[0-9]{10}$/);
+    if (!phoneValid) {
+      return "Must be 10 digits, excluding dashes and spaces.";
+    } else {
+      return "";
+    }
+  };
+
+  const validateCity = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "City can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateState = (field) => {
+    if (/[^a-zA-Z\s]+/.test(field))
+      return "State can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateAddress = (field) => {
+    if (/[^a-zA-Z0-9\s#]+/.test(field))
+      return "Address can only contain letters (a-z A-Z) or numbers only!";
+    else return "";
+  };
+
+  const validateZipCode = (field) => {
+    if (/[^0-9-\s]+/.test(field))
+      return "Zip Code can only contain numbers only!";
+    else return "";
+  };
 
   const handleNameChange = (event) => {
     setItemName(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    setMCategory(event.target.value);
   };
 
   const handlePhoneChange = (event) => {
@@ -35,105 +81,104 @@ const OwnerEditProfile = () => {
     setStreet(event.target.value);
   };
   const handleCityChange = (event) => {
-    setCity(event.target.value);
+    setMCity(event.target.value);
   };
   const handleStateChange = (event) => {
-    setState(event.target.value);
+    setMState(event.target.value);
   };
   const handleZipChange = (event) => {
-    setZip(event.target.value);
+    setMZip(event.target.value);
   };
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+    setMEmail(event.target.value);
   };
 
-  const [merchant, setMerchant] = useState();
-
-  const handleClick = async () => {
-    if (merchant) {
-      try {
-        const response = await axios.put(
-          `http://localhost:8080/merchant/updateInfo/${merchant.restaurant_id}`,
-          {
-            merchantname: name,
-            phone: phone,
-            streetAddress: street,
-            city: city,
-            state: state,
-            zipCode: zipCode,
-            category: category,
-            email: email,
-          }
-        );
-        navigate("/owner-dashboard");
-      } catch (error) {
-        console.log(error);
-      }
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const restaurant_id = localStorage.getItem("restaurant_id");
+      const response = await axios.put(
+        `http://localhost:8080/merchant/updateInfo/${restaurant_id}`,
+        {
+          merchantname: name,
+          phone: phone,
+          streetAddress: street,
+          city: mcity,
+          state: mstate,
+          zipCode: mzipCode,
+          category: mcategory,
+          email: memail,
+        }
+      );
+      navigate("/owner-dashboard");
+    } catch (error) {
+      console.log(error);
     }
+
+    return true;
   };
 
   const handleCloseClick = async () => {
-    if (merchant) {
-      try {
-        const response = await axios.delete(
-          `http://localhost:8080/merchant/remove/${merchant.restaurant_id}`
-        );
-        setOpenSnackbar(true);
+    try {
+      const restaurant_id = localStorage.getItem("restaurant_id");
+      const response = await axios.delete(
+        `http://localhost:8080/merchant/remove/${restaurant_id}`
+      );
+      setOpenSnackbar(true);
 
-        // Clear user data from localStorage
-        localStorage.removeItem("username");
-        localStorage.removeItem("restaurant_id");
-        localStorage.removeItem("email");
-        localStorage.removeItem("isOwner");
-        localStorage.removeItem("isLoggedIn");
+      // Clear user data from localStorage
+      localStorage.removeItem("username");
+      localStorage.removeItem("restaurant_id");
+      localStorage.removeItem("email");
+      localStorage.removeItem("isOwner");
+      localStorage.removeItem("isLoggedIn");
 
-        Cookies.remove("jwt");
+      Cookies.remove("jwt");
 
-        navigate("/login");
-      } catch (error) {
-        console.error("Logout Failed:", error);
-      }
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout Failed:", error);
     }
   };
 
   useEffect(() => {
     async function getOwnerProfile() {
-      if (user) {
-        try {
-          // const response = await axios.get(
-          //   "http://localhost:8080/search-user",
-          //   {
-          //     params: {
-          //       query: user,
-          //     },
-          //   }
-          // );
-          const merchant_email = localStorage.getItem("email");
-          const response = await axios.get(
-            `http://localhost:8080/merchant/details/${merchant_email}`
-          );
+      try {
+        const merchant_email = localStorage.getItem("email");
+        const response = await axios.get(
+          `http://localhost:8080/merchant/${merchant_email}`
+        );
 
-          setMerchant(response.data);
-          setItemName(response.data.merchantname);
-          setPhone(response.data.phone);
-          setStreet(response.data.streetAddress);
-          setCity(response.data.city);
-          setState(response.data.state);
-          setZip(response.data.zipCode);
-          setCategory(response.data.category);
-          setEmail(response.data.email);
-        } catch (error) {
-          console.log(error);
-        }
+        const {
+          username,
+          merchantname,
+          city,
+          state,
+          zipCode,
+          email,
+          phone,
+          category,
+          streetAddress,
+          restaurant_id,
+        } = response.data;
+
+        console.log(response.data);
+
+        setItemName(merchantname);
+        setPhone(phone);
+        setStreet(streetAddress);
+        setMCity(city);
+        setMState(state);
+        setMZip(zipCode);
+        setMCategory(category);
+        setMEmail(email);
+      } catch (error) {
+        console.error(error);
       }
     }
-    if (user) {
-      getOwnerProfile();
-    }
-  }, [user]);
+
+    getOwnerProfile();
+  }, []);
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -174,6 +219,7 @@ const OwnerEditProfile = () => {
                         className="frame-child-name"
                         placeholder="Business Name"
                         value={name}
+                        required
                         onChange={handleNameChange}
                         variant="outlined"
                         sx={{
@@ -191,6 +237,9 @@ const OwnerEditProfile = () => {
                         className="frame-item"
                         placeholder="Business Phone Number"
                         value={phone}
+                        required
+                        error={validPhone(phone)}
+                        helperText={validPhone(phone)}
                         onChange={handlePhoneChange}
                         variant="outlined"
                         sx={{
@@ -209,6 +258,9 @@ const OwnerEditProfile = () => {
                       className="city-input"
                       placeholder="Street Address"
                       value={street}
+                      required
+                      error={validateAddress(street)}
+                      helperText={validateAddress(street)}
                       onChange={handleStreetChange}
                       variant="outlined"
                       sx={{
@@ -227,7 +279,10 @@ const OwnerEditProfile = () => {
                         <TextField
                           className="subtract-icon2"
                           placeholder="City"
-                          value={city}
+                          value={mcity}
+                          required
+                          error={validateCity(mcity)}
+                          helperText={validateCity(mcity)}
                           onChange={handleCityChange}
                           variant="outlined"
                           sx={{
@@ -245,7 +300,10 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="delivery-info-label"
                         placeholder="State"
-                        value={state}
+                        value={mstate}
+                        required
+                        error={validateState(mstate)}
+                        helperText={validateState(mstate)}
                         onChange={handleStateChange}
                         variant="outlined"
                         sx={{
@@ -263,8 +321,11 @@ const OwnerEditProfile = () => {
                       <TextField
                         className="delivery-info-label1"
                         placeholder="Zip code"
-                        value={zipCode}
+                        value={mzipCode}
+                        required
                         onChange={handleZipChange}
+                        error={validateZipCode(mzipCode)}
+                        helperText={validateZipCode(mzipCode)}
                         variant="outlined"
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
@@ -282,7 +343,8 @@ const OwnerEditProfile = () => {
                     <TextField
                       className="city-input1"
                       placeholder="Category"
-                      value={category}
+                      value={mcategory}
+                      required
                       onChange={handleCategoryChange}
                       variant="outlined"
                       sx={{
@@ -299,7 +361,10 @@ const OwnerEditProfile = () => {
                     <TextField
                       className="phone-number-email1"
                       placeholder="Email"
-                      value={email}
+                      value={memail}
+                      required
+                      error={validEmail(memail)}
+                      helperText={validEmail(memail)}
                       onChange={handleEmailChange}
                       variant="outlined"
                       sx={{
@@ -324,6 +389,7 @@ const OwnerEditProfile = () => {
                       disableElevation={true}
                       variant="contained"
                       onClick={handleClick}
+                      type="submit"
                       sx={{
                         textTransform: "none",
                         color: "#fff",
