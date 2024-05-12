@@ -5,9 +5,9 @@ const createOrder = async (req, res) => {
     console.log(req.body);
     try {
         const newOrder = new Order({
-            restaurant_id: req.body.body.restaurant_id,
-            username: req.body.body.username,
-            items: req.body.body.items
+            restaurant_id: req.body.restaurant_id,
+            username: req.body.username,
+            items: req.body.items
         });
         await newOrder.save();
         res.status(201).json(newOrder);
