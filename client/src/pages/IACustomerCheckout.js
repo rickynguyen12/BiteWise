@@ -57,7 +57,7 @@ const completeCheckout = async () => {
       try {
           console.log('Checking out...');
           const cart = JSON.parse(localStorage.getItem("cartItems")); 
-          const restaurant_id = localStorage.getItem("restaurant_id");
+          const restaurant_id = cart[0].restaurant_id;
           const username = localStorage.getItem("username");
           const order = {
               items: cart,

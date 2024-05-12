@@ -7,6 +7,7 @@ const createOrder = async (req, res) => {
         await newOrder.save();
         res.status(201).json(newOrder);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
