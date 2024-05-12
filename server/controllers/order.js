@@ -31,12 +31,14 @@ const deleteOrder = async (req, res) => {
 };
 
 const acceptOrder = async (req, res) => {
-    const { orderNumber } = req.params.orderNumber;
+    console.log(req.params);
+    const { orderNumber } = req.params;
     try {
         // Find the order by orderNumber
         const order = await Order.findOne({ orderNumber });
 
         if (!order) {
+            console.log('Order not found for orderNumber: ', orderNumber);
             return res.status(404).json({ message: 'Order not found' });
         }
 
@@ -53,7 +55,8 @@ const acceptOrder = async (req, res) => {
 };
 
 const rejectOrder = async (req, res) => {
-    const { orderNumber } = req.params.orderNumber;
+    console.log(req.params);
+    const { orderNumber } = req.params;
     try {
         // Find the order by orderNumber
         const order = await Order.findOne({ orderNumber });
