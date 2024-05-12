@@ -65,13 +65,27 @@ const OwnerEditMenu = () => {
 
   const handleDeleteItemClick = async (restaurant_id, itemId) => {
     try {
+      console.log("restaryant: ", restaurant_id);
+      console.log("item: ", itemId);
       await axios.delete(
         `http://localhost:8080/menu/remove/${restaurant_id}/${itemId}`
       );
+
       const response = await axios.get(
         `http://localhost:8080/menu/get/${restaurant_id}`
       );
-      setMenuData(response.data);
+      if (response.data.length === 0) {
+        console.log("Menu will be empty after deletion.");
+
+        setMenuData([]);
+        setCategories([]);
+      } else {
+        setMenuData(response.data);
+        const updatedCategories = Array.from(
+          new Set(menuData.map((item) => item.category))
+        );
+        setCategories(updatedCategories);
+      }
     } catch (error) {
       console.error("Error deleting menu item:", error);
     }
