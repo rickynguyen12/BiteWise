@@ -28,6 +28,7 @@ import OwnerViewProfile from "./pages/OwnerViewProfile";
 import UserViewProfile from "./pages/UserViewProfile";
 import { MenuItemProvider } from "./components/MenuItemContext";
 import UserOrders from "./pages/UserOrders";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   const action = useNavigationType();
@@ -101,6 +102,7 @@ function App() {
         />
         <Route path="/food-item-page" element={<FoodItemPage />} />
         <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/owner-edit-profile" element={<OwnerEditProfile />} />
         <Route path="/owner-edit-menu" element={<OwnerEditMenu />} />
         <Route path="/in-app-checkout" element={<IACustomerCheckout />} />

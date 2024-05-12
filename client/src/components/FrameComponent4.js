@@ -104,7 +104,7 @@ const FrameComponent4 = () => {
                 onClick={() => {
                   isMerchant === "true"
                     ? navigate("/owner-dashboard")
-                    : navigate("/user-view-profile");
+                    : navigate("/user-dashboard");
                 }}
                 sx={{
                   marginRight: "12px",
