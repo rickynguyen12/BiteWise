@@ -8,22 +8,30 @@ import "./OwnerEditMenu.css";
 import axios from "axios";
 
 const OwnerEditMenu = () => {
-  //const [ownerDetails, setOwnerDetails] = useState([]);
-
   const [menuData, setMenuData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  const restaurantId = localStorage.getItem("restaurant_id");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const restaurantId = 493; // Replace with your actual restaurant ID
         const response = await axios.get(
-          `https://localhost:8080/menu/get/${restaurantId}`
+          `http://localhost:8080/menu/get/${restaurantId}`
         );
-        setMenuData(response.data.menuItems);
-        setSelectedCategory(response.data.menuItems[0]?.category || "");
+
+        console.log(response.data);
+
+        const uniqueCategories = Array.from(
+          new Set(response.data.map((item) => item.category))
+        );
+
+        setCategories(uniqueCategories);
+        setMenuData(response.data);
+        setSelectedCategory(menuData[0]?.category || "");
       } catch (error) {
         console.error("Error fetching menu data:", error);
       }
@@ -32,28 +40,56 @@ const OwnerEditMenu = () => {
     fetchMenuData();
   }, []);
 
-  //temp hardcoded owner details
-  //const ownerMenuData = menuData[ownerDetails.restaurantName];
-
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   menuData[ownerDetails.restaurantName][0]?.name || []
-  // );
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
-  //const navigate = useNavigate();
-
-  const handleEditItemClick = (itemId) => {
-    navigate(`/owner-edit-item`); // need to update to /owner-edit-item/itemId to retrieve correct item details
+  const handleEditItemClick = (
+    restaurantId,
+    itemId,
+    name,
+    description,
+    price,
+    category
+  ) => {
+    localStorage.setItem(
+      "item_info",
+      JSON.stringify({ name, description, price, category })
+    );
+    navigate(`/owner-edit-item/${restaurantId}/${itemId}`);
   };
 
-  const handleAddClick = () => {
-    navigate(`/owner-add-to-menu`);
+  const handleAddClick = (restaurantId) => {
+    navigate(`/owner-add-to-menu`, { state: { restaurantId } });
   };
 
-  const handleDeleteItemClick = (itemId) => {};
+  const handleDeleteItemClick = async (restaurant_id, itemId) => {
+    try {
+      console.log("restaryant: ", restaurant_id);
+      console.log("item: ", itemId);
+      await axios.delete(
+        `http://localhost:8080/menu/remove/${restaurant_id}/${itemId}`
+      );
+
+      const response = await axios.get(
+        `http://localhost:8080/menu/get/${restaurant_id}`
+      );
+      if (response.data.length === 0) {
+        console.log("Menu will be empty after deletion.");
+
+        setMenuData([]);
+        setCategories([]);
+      } else {
+        setMenuData(response.data);
+        const updatedCategories = Array.from(
+          new Set(menuData.map((item) => item.category))
+        );
+        setCategories(updatedCategories);
+      }
+    } catch (error) {
+      console.error("Error deleting menu item:", error);
+    }
+  };
 
   return (
     <div className="edit-menu">
@@ -66,10 +102,12 @@ const OwnerEditMenu = () => {
       <div className="edit-menu-page">
         <div className="menu-categories">
           <div className="menu-details">
-            <h2>{menuData.restaurantName}</h2>
+            {menuData.length > 0 && (
+              <h2>Restaurant ID: {menuData[0].restaurant_id}</h2>
+            )}
             <div className="add-new">
               <Button
-                onClick={handleAddClick}
+                onClick={() => handleAddClick(menuData[0]?.restaurant_id)}
                 variant="contained"
                 className="add-menu-button"
                 sx={{
@@ -81,15 +119,15 @@ const OwnerEditMenu = () => {
             </div>
           </div>
           <div className="restaurant-menu">
-            {menuData.map((categoryData) => (
+            {categories.map((categoryData) => (
               <button
-                key={categoryData.name}
+                key={categoryData}
                 className={`category-button ${
-                  selectedCategory === categoryData.name ? "active" : ""
+                  selectedCategory === categoryData ? "active" : ""
                 }`}
-                onClick={() => handleCategoryClick(categoryData.name)}
+                onClick={() => handleCategoryClick(categoryData)}
               >
-                {categoryData.name}
+                {categoryData}
               </button>
             ))}
           </div>
@@ -99,8 +137,8 @@ const OwnerEditMenu = () => {
           {selectedCategory && (
             <div>
               {menuData
-                .find((category) => category.name === selectedCategory)
-                .items.map((item) => (
+                .filter((category) => category.category === selectedCategory)
+                .map((item) => (
                   <div key={item.id} className="menu-item">
                     <div className="item-details">
                       <h3>{item.name}</h3>
@@ -108,14 +146,25 @@ const OwnerEditMenu = () => {
                     </div>
                     <div className="two-buttons">
                       <Button
-                        onClick={() => handleEditItemClick(item.id)}
+                        onClick={() =>
+                          handleEditItemClick(
+                            item.restaurant_id,
+                            item.id,
+                            item.name,
+                            item.description,
+                            item.price,
+                            item.category
+                          )
+                        }
                         variant="contained"
                         className="edit-button"
                       >
                         Edit Item
                       </Button>
                       <Button
-                        onClick={() => handleDeleteItemClick(item.id)}
+                        onClick={() =>
+                          handleDeleteItemClick(item.restaurant_id, item.id)
+                        }
                         variant="contained"
                         className="delete-button"
                       >

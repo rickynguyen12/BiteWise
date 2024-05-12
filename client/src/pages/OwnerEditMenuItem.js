@@ -1,4 +1,5 @@
 import { TextField, Button } from "@mui/material";
+import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import React, { useState, useEffect } from "react";
@@ -6,17 +7,60 @@ import "./RegisterAsStoreOwner.css";
 import axios from "axios";
 
 const OwnerEditMenuItem = () => {
+  const { restaurantId, itemId } = useParams();
   const [ownerDetails, setOwnerDetails] = useState([]);
-  useEffect(() => {
-    async function updateMenuItems() {
-      const response = await axios
-        .put("https://localhost:8080/menu/update/:restaurant_id/:id")
-        .then((res) => {
-          setOwnerDetails([...res.data]);
-        });
+
+  const item_info = JSON.parse(localStorage.getItem("item_info"));
+  const [updatedItemDetails, setUpdatedItemDetails] = useState({
+    newName: item_info.name,
+    newPrice: item_info.price,
+    newDescription: item_info.description,
+    newCategory: item_info.category,
+  });
+
+  const handleUpdateItem = async (e) => {
+    e.preventDefault();
+    const { newName, newPrice, newDescription, newCategory } =
+      updatedItemDetails;
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/menu/update/${restaurantId}/${itemId}`,
+        {
+          name: newName,
+          price: newPrice,
+          description: newDescription,
+          category: newCategory,
+        }
+      );
+      const updatedItem = response.data;
+
+      setOwnerDetails([...ownerDetails, updatedItem]);
+
+      console.log("Data updated:", updatedItem);
+      window.location.href = `/owner-edit-menu`;
+    } catch (error) {
+      console.error("Error updating menu items:", error);
     }
-    updateMenuItems();
-  }, []);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedItemDetails({
+      ...updatedItemDetails,
+      [name]: value,
+    });
+  };
+
+  const validPrice = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^\d+(\.\d{1,2})?$/);
+    if (!phoneValid) {
+      return "Numerical input only!";
+    } else {
+      return "";
+    }
+  };
+
+
   return (
     <div className="register-as-store-owner">
       <section className="store-registration">
@@ -38,6 +82,9 @@ const OwnerEditMenuItem = () => {
                         className="frame-item"
                         placeholder="Item Name"
                         variant="outlined"
+                        name="newName"
+                        value={updatedItemDetails.newName}
+                        onChange={handleInputChange}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -53,6 +100,11 @@ const OwnerEditMenuItem = () => {
                         className="frame-item"
                         placeholder="Price"
                         variant="outlined"
+                        name="newPrice"
+                        value={updatedItemDetails.newPrice}
+                        error={validPrice(updatedItemDetails.newPrice)}
+                        helperText={validPrice(updatedItemDetails.newPrice)}
+                        onChange={handleInputChange}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -69,6 +121,9 @@ const OwnerEditMenuItem = () => {
                       className="city-input2"
                       placeholder="Description"
                       variant="outlined"
+                      name="newDescription"
+                      value={updatedItemDetails.newDescription}
+                      onChange={handleInputChange}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -84,6 +139,9 @@ const OwnerEditMenuItem = () => {
                       className="city-input2"
                       placeholder="Category"
                       variant="outlined"
+                      name="newCategory"
+                      value={updatedItemDetails.newCategory}
+                      onChange={handleInputChange}
                       sx={{
                         "& fieldset": { borderColor: "#1ac84b" },
                         "& .MuiInputBase-root": {
@@ -112,6 +170,7 @@ const OwnerEditMenuItem = () => {
                       width: 143,
                       height: 49,
                     }}
+                    onClick={handleUpdateItem}
                   >
                     Update
                   </Button>

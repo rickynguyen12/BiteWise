@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
@@ -12,10 +12,12 @@ import session from "express-session";
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
 import cors from "cors";
-import { searchMerchants } from "./searchFoods.js";
+import { getOneMerchant, searchMerchants } from "./searchFoods.js";
 import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
+import Merchants from "./models/merchant.js";
+import Order from "./models/order.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -88,6 +90,17 @@ router.get("/search-query", async (req, res) => {
   }
 });
 
+router.get("/get-orders", async (req, res) => {
+  try {
+    const { query } = req.query; // Should be username
+    const userOrders = await Order.find({username: query})
+    res.status(200).send([...userOrders])
+  } catch (error) {
+    console.error("Error getting user orders");
+    res.status(500).send("Internal Service Error")
+  }
+})
+
 router.get("/get-merch-info", async (req, res) => {
   try {
     const { query } = req.query;
@@ -121,6 +134,40 @@ router.get("/checkout-merchants", async (req, res) => {
   }
 });
 
+router.get("/get-merchant", async (req, res) => {
+  try {
+    const { query } = req.query;
+    const returnMerchant = await getOneMerchant(query);
+    res.status(200).send(returnMerchant);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+router.get("/get-merchant", async (req, res) => {
+  try {
+    const { query } = req.query;
+    const returnMerchant = await getOneMerchant(query);
+    res.status(200).send(returnMerchant);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+router.get("/search-user", async (req, res) => {
+  try {
+    const { query } = req.query; // Assuming the request body contains a 'query' property
+
+    const returnMerchants = await Merchants.findOne({ username: query });
+
+    res.status(200).send(returnMerchants);
+  } catch (error) {
+    console.error("Error handling search query:", error);
+    res.status(500).send("Internal server error");
+  }
+});
 app.use("/", router);
 //-------------------ROUTES-------------------//
 import userRoutes from "./routes/user.js";

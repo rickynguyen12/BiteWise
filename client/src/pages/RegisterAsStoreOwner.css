@@ -214,6 +214,7 @@
   justify-content: center;
   padding: 0px 0px var(--padding-9xs);
   gap: var(--gap-smi);
+  margin-bottom: 20px;
 }
 .city-input {
   border: none;
@@ -225,6 +226,7 @@
   font-size: var(--font-size-sm);
   color: var(--color-gray-100);
   z-index: 1;
+  margin-bottom: 20px;
 }
 .subtract-icon2 {
   border: none;
@@ -278,6 +280,7 @@
   justify-content: flex-start;
   padding: 0px 0px var(--padding-5xs);
   gap: 19px;
+  margin-bottom: 20px;
 }
 .city-input1 {
   border: none;
@@ -399,7 +402,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px 0px 14px;
-  gap: var(--gap-4xs);
+  gap: 20px;
 }
 .sign-in3 {
   height: 49px;

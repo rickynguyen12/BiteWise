@@ -1,13 +1,22 @@
 import { useMemo } from "react";
 import "./PostmatesLogo.css";
-import { useNavigate } from "react-router-dom";
 import "@lottiefiles/lottie-player";
 
-const PostmatesLogo = ({ postmates, group, sVG, prop, min, propPadding }) => {
-  const navigate = useNavigate();
+const PostmatesLogo = ({ postmates, group, sVG, prop, min, propPadding, url }) => {
 
-  const navigateCheckout = () => {
-    navigate("/in-app-checkout");
+  const navigateCheckout = async () => {
+    try {
+      const response = await fetch(url);
+      if(response) {
+        const redirectURL = await response.text();
+        window.location.href = redirectURL;
+      }
+      else {
+        throw new Error("Error placing order")
+      }
+    } catch(error) {
+      console.log('Error rerouting to outside service: ', error)
+    }
   };
   const postmatesLogoStyle = useMemo(() => {
     return {
