@@ -54,7 +54,15 @@ BiteWise is a web application designed to help users find the best deals on thei
 
 4. Run the application:
 
+   frontend:
    ```
+   cd client
+   npm start
+   ```
+
+   backend:
+   ```
+   cd server
    npm start
    ```
 
@@ -72,5 +80,3 @@ BiteWise is a web application designed to help users find the best deals on thei
 For inquiries, please contact us at support@bitewise.com.
 
 ---
-
-Feel free to customize it further based on your project's specific details and requirements!
