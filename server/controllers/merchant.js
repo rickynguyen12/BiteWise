@@ -203,7 +203,9 @@ const deleteRestaurant = async (req, res) => {
     res.status(200).json({ message: "Merchant deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
-    
+  }
+}  
+
 const validate = async (req, res) => {
   try {
     // Check if the JWT token is present
@@ -239,4 +241,3 @@ export { getMerchantDetails };
 export { getAllMerchantDetails };
 export { deleteRestaurant };
 export { validate };
-

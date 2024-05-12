@@ -9,6 +9,7 @@ import { homepage } from "../controllers/merchant.js";
 import { login } from "../controllers/merchant.js";
 import { logout } from "../controllers/merchant.js";
 import { updateMerchant } from "../controllers/merchant.js";
+import { validate } from "../controllers/merchant.js";
 import {
   getMerchantDetails,
   getAllMerchantDetails,
