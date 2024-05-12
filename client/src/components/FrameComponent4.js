@@ -33,7 +33,7 @@ const FrameComponent4 = () => {
       console.log("Login Successful:", response.data);
       setOpenSnackbar(true);
 
-      if (isMerchant == "true") {
+      if (isMerchant === 'false') {
         localStorage.removeItem("username");
       } else {
         localStorage.removeItem("restaurant_id");
