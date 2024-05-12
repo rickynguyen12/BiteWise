@@ -36,6 +36,20 @@ const removeMenuItem = async (req, res) => {
   }
 };
 
+const removeAllMenuItems = async (req, res) => {
+  const { restaurant_id } = req.params;
+
+  try {
+    await Menu.deleteMany({ restaurant_id });
+
+    res.status(200).json({ message: "All menu items removed successfully." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error removing menu items.", error: error.message });
+  }
+};
+
 // update menu item
 const updateMenuItem = async (req, res) => {
   const { restaurant_id, id } = req.params;
@@ -65,11 +79,11 @@ const getMenuItems = async (req, res) => {
     // Find all menu items with the given restaurant ID
     const menuItems = await Menu.find({ restaurant_id });
 
-    if (menuItems.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No menu items found for the restaurant" });
-    }
+    // if (menuItems.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "No menu items found for the restaurant" });
+    // }
 
     //res.json({ menuItems });
     res.status(200).send(menuItems);
@@ -78,4 +92,10 @@ const getMenuItems = async (req, res) => {
   }
 };
 
-export { addMenuItem, removeMenuItem, updateMenuItem, getMenuItems };
+export {
+  addMenuItem,
+  removeMenuItem,
+  removeAllMenuItems,
+  updateMenuItem,
+  getMenuItems,
+};

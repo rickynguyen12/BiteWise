@@ -97,7 +97,7 @@ const OwnerEditProfile = () => {
     e.preventDefault();
     try {
       const restaurant_id = localStorage.getItem("restaurant_id");
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:8080/merchant/updateInfo/${restaurant_id}`,
         {
           merchantname: name,
@@ -121,12 +121,14 @@ const OwnerEditProfile = () => {
   const handleCloseClick = async () => {
     try {
       const restaurant_id = localStorage.getItem("restaurant_id");
-      const response = await axios.delete(
+      await axios.delete(
+        `http://localhost:8080/menu/removeAll/${restaurant_id}`
+      );
+      await axios.delete(
         `http://localhost:8080/merchant/remove/${restaurant_id}`
       );
       setOpenSnackbar(true);
 
-      // Clear user data from localStorage
       localStorage.removeItem("username");
       localStorage.removeItem("restaurant_id");
       localStorage.removeItem("email");
@@ -150,7 +152,6 @@ const OwnerEditProfile = () => {
         );
 
         const {
-          username,
           merchantname,
           city,
           state,
@@ -159,7 +160,6 @@ const OwnerEditProfile = () => {
           phone,
           category,
           streetAddress,
-          restaurant_id,
         } = response.data;
 
         console.log(response.data);
