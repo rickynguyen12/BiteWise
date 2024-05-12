@@ -19,6 +19,7 @@ import axios from "axios";
 const IACustomerCheckout = () => {
   const taxRate = 0.0875;
   const deliveryFee = 5.5;
+  const empty = 0;
   const years = [
     2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034,
   ];
@@ -116,6 +117,18 @@ const completeCheckout = async () => {
   const validateLName = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
       return "Last Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateCCNum = (field) => {
+    if (/[^0-9\s]+/.test(field))
+      return "Can only contain numbers (0-9) only!";
+    else return "";
+  };
+
+  const validateCVVNum = (field) => {
+    if (/[^0-9]+/.test(field))
+      return "Can only contain numbers (0-9) only!";
     else return "";
   };
 
@@ -366,6 +379,8 @@ const completeCheckout = async () => {
                   placeholder="Credit Card Number (xxxx xxxx xxxx xxxx)"
                   variant="outlined"
                   name="ccnum"
+                  error={validateCCNum(formData.ccnum)}
+                  helperText={validateCCNum(formData.ccnum)}
                   onChange={handleChange}
                   required
                   sx={{
@@ -451,6 +466,8 @@ const completeCheckout = async () => {
                     variant="outlined"
                     name="cvvNum"
                     onChange={handleChange}
+                    error={validateCVVNum(formData.cvvNum)}
+                    helperText={validateCVVNum(formData.cvvNum)}
                     required
                     type="password"
                     inputProps={{ maxLength: 3 }}
@@ -476,6 +493,7 @@ const completeCheckout = async () => {
                   type="submit"
                   disableElevation={true}
                   variant="contained"
+                  disabled={cartData.length === 0}
                   sx={{
                     textTransform: "none",
                     marginTop: "25px",
@@ -532,11 +550,11 @@ const completeCheckout = async () => {
               </div>
               <div className="item-total-div">
                 <p className="delivery-label">Delivery Fee </p>
-                <p className="delivery-val"> ${deliveryFee.toFixed(2)}</p>
+                <p className="delivery-val"> ${(cartData.length === 0) ? empty.toFixed(2) : deliveryFee.toFixed(2)}</p>
               </div>
               <div className="total-price-div">
                 <h4 className="total-label">Total </h4>
-                <h4 className="total-value"> ${subtotal}</h4>
+                <h4 className="total-value"> ${(cartData.length === 0) ? empty.toFixed(2) : subtotal}</h4>
               </div>
             </div>
           </div>
