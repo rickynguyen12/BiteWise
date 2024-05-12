@@ -31,7 +31,7 @@ const deleteOrder = async (req, res) => {
 };
 
 const acceptOrder = async (req, res) => {
-    const { orderNumber } = req.params;
+    const { orderNumber } = req.params.orderNumber;
     try {
         // Find the order by orderNumber
         const order = await Order.findOne({ orderNumber });
@@ -53,7 +53,7 @@ const acceptOrder = async (req, res) => {
 };
 
 const rejectOrder = async (req, res) => {
-    const { orderNumber } = req.params;
+    const { orderNumber } = req.params.orderNumber;
     try {
         // Find the order by orderNumber
         const order = await Order.findOne({ orderNumber });

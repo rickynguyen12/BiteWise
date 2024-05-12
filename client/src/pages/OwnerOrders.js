@@ -4,7 +4,8 @@ import OwnerHistoryOrders from "../components/OwnerHistoryOrders";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerOrders.css";
-import axios from 'axios';
+import axios from "axios"; // Import Axios
+
 
 const OwnerOrders = () => {
   // Hard-coded incoming and history orders for testing
@@ -31,7 +32,6 @@ const OwnerOrders = () => {
         console.error('Error fetching orders:', error);
       }
     };
-
     fetchOrders();
   }, []); // Empty dependency array to run effect only once
 

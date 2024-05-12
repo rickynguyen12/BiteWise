@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
             trim: true,
             maxlength: 10,
             required: false,
-            unique: true,
+            unique: false,
             sparse: true
         },
         orders: {

@@ -15,6 +15,7 @@ import {
   deleteRestaurant,
 } from "../controllers/merchant.js";
 
+
 // import middlewares
 import { merchantRegisterValidator } from "../middlewares/merchant.js";
 
@@ -39,5 +40,6 @@ router.put("/updateInfo/:restaurant_id", updateMerchant);
 router.get("/:merchant_email", getMerchantDetails);
 router.get("/details/:merchant_email", getAllMerchantDetails);
 router.delete("/remove/:restaurant_id/", deleteRestaurant);
+router.post("/validate", validate);
 
 export default router;

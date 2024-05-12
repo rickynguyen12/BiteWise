@@ -129,3 +129,4 @@ merchantSchema.pre("save", function (next) {
 const Merchant = mongoose.model("Merchant", merchantSchema);
 
 export default Merchant;
+export { Merchant };

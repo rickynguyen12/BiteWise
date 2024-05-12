@@ -356,6 +356,7 @@ const RegisterAsStoreOwner = () => {
                         name="firstname"
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.firstname}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -373,6 +374,7 @@ const RegisterAsStoreOwner = () => {
                         name="lastname"
                         onChange={handleChange}
                         variant="outlined"
+                        value={formData.lastname}
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
