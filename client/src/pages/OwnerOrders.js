@@ -20,14 +20,10 @@ const OwnerOrders = () => {
           orderNumber: order.orderNumber.toString(),
           date: new Date(order.createdAt).toLocaleDateString(),
           time: new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          // orderItems: order.items.map(item => ({
-          //   name: item.name, // Assuming item name is available in your data
-          //   quantity: item.quantity // Assuming item quantity is available in your data
-          // })),
-          orderItems: [
-            { name: "Caesar Salad", quantity: 1 },
-            { name: "Alfredo Pasta", quantity: 2 },
-          ],
+          orderItems: order.items.map(item => ({
+            name: item.name, // Assuming item name is available in your data
+            quantity: item.quantity // Assuming item quantity is available in your data
+          })),
           status: order.status.charAt(0).toUpperCase() + order.status.slice(1) // Capitalize status
         }));
         setIncomingOrders(orders);
@@ -47,7 +43,7 @@ const OwnerOrders = () => {
     const fetchOrders = async () => {
       try {
         const restId = localStorage.getItem("restaurant_id");
-        const response = await axios.get(`http://localhost:8080/orders/${restId}`);
+        const response = await axios.get(`http://localhost:8080/orders/history/${restId}`);
         const orders = response.data.orders.map(order => ({
           id: order._id,
           orderNumber: order.orderNumber.toString(),
@@ -85,7 +81,7 @@ const OwnerOrders = () => {
 
   const handleRejectOrder = async (orderId) => {
     try {
-      console.log("Accepting order:", orderId);
+      console.log("Rejecting order:", orderId);
       // Make PUT request to update order status to 'Rejected'
       await axios.put(`http://localhost:8080/orders/reject/${orderId}`);
       // If the request is successful, update the order status locally
@@ -97,13 +93,13 @@ const OwnerOrders = () => {
       // Reload the database table by fetching updated orders
       window.location.reload();
     } catch (error) {
-      console.error("Error accepting order:", error);
+      console.error("Error rejecting order:", error);
     }
   };
 
   const handleCompleteOrder = async (orderId) => {
     try {
-      console.log("Accepting order:", orderId);
+      console.log("Completing order:", orderId);
       // Make PUT request to update order status to 'Rejected'
       await axios.put(`http://localhost:8080/orders/complete/${orderId}`);
       // If the request is successful, update the order status locally
@@ -115,7 +111,7 @@ const OwnerOrders = () => {
       // Reload the database table by fetching updated orders
       window.location.reload();
     } catch (error) {
-      console.error("Error accepting order:", error);
+      console.error("Error completing order:", error);
     }
   };
 

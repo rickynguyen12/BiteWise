@@ -13,7 +13,8 @@ import { useNavigate } from "react-router-dom";
 import * as LottiePlayer from "@lottiefiles/lottie-player";
 import FrameComponent4 from "./FrameComponent4";
 import "./IAOrderConfirmation.css";
-
+import axios from "axios";  
+import { useEffect, useState } from "react";
 
 
 const IAOrderConfirmation = () => {
@@ -22,7 +23,6 @@ const IAOrderConfirmation = () => {
     const onLogoContainerClick = () => {
         navigate("/");
     };
-
     return (
         <div className="ia-container">
             <FrameComponent4 />
