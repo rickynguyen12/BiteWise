@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OwnerIncomingOrders from "../components/OwnerIncomingOrders";
 import OwnerHistoryOrders from "../components/OwnerHistoryOrders";
 import Footer from "../components/Footer";
@@ -9,112 +9,109 @@ import axios from "axios"; // Import Axios
 
 const OwnerOrders = () => {
   // Hard-coded incoming and history orders for testing
-  const [incomingOrders, setIncomingOrders] = useState([
-    {
-      id: 1,
-      orderNumber: "123",
-      date: "2024-04-22",
-      time: "11:00 AM",
-      orderItems: [
-        { name: "Classic Cheese Pizza", quantity: 2 },
-        { name: "Chicken Wings", quantity: 1 },
-        { name: "Smoked Salmon Salad", quantity: 1 },
-      ],
-      status: "Waiting",
-    },
-    {
-      id: 2,
-      orderNumber: "122",
-      date: "2024-04-22",
-      time: "10:30 AM",
-      orderItems: [
-        { name: "Caesar Salad", quantity: 1 },
-        { name: "Alfredo Pasta", quantity: 2 },
-      ],
-      status: "Waiting",
-    },
-    {
-      id: 3,
-      orderNumber: "121",
-      date: "2024-04-22",
-      time: "10:20 AM",
-      orderItems: [
-        { name: "Combo Pizza", quantity: 2 },
-        { name: "Chicken Wings", quantity: 1 },
-      ],
-      status: "Waiting",
-    },
-  ]);
+  const [incomingOrders, setIncomingOrders] = useState([]);
 
-  const [historyOrders, setHistoryOrders] = useState([
-    {
-      id: 3,
-      orderNumber: "120",
-      date: "2024-04-21",
-      time: "12:10 PM",
-      customerName: "Alice Johnson",
-      status: "Completed",
-    },
-    {
-      id: 4,
-      orderNumber: "119",
-      date: "2024-04-21",
-      time: "12:00 PM",
-      customerName: "Bob Brown",
-      status: "Cancelled",
-    },
-    {
-      id: 5,
-      orderNumber: "118",
-      date: "2024-04-21",
-      time: "11:45 AM",
-      customerName: "Jack Jo",
-      status: "Completed",
-    },
-  ]);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const restId = localStorage.getItem("restaurant_id");
+        const response = await axios.get(`http://localhost:8080/orders/${restId}`)
+        const orders = response.data.orders.map(order => ({
+          id: order._id,
+          orderNumber: order.orderNumber.toString(),
+          date: new Date(order.createdAt).toLocaleDateString(),
+          time: new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          orderItems: order.items.map(item => ({
+            name: item.name, // Assuming item name is available in your data
+            quantity: item.quantity // Assuming item quantity is available in your data
+          })),
+          status: order.status.charAt(0).toUpperCase() + order.status.slice(1) // Capitalize status
+        }));
+        setIncomingOrders(orders);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+    fetchOrders();
+  }, []); // Empty dependency array to run effect only once
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // const handleAcceptOrder = (orderId) => {
-  //   console.log("Accepted order:", orderId);
-  //   // Update order status to 'Accepted'
-  //   setIncomingOrders((prevOrders) =>
-  //     prevOrders.map((order) =>
-  //       order.id === orderId ? { ...order, status: "Accepted" } : order
-  //     )
-  //   );
-  // };
+  const [historyOrders, setHistoryOrders] = useState([]);
+
+  useEffect(() => {
+    console.log("Fetching orders...");
+    const fetchOrders = async () => {
+      try {
+        const restId = localStorage.getItem("restaurant_id");
+        const response = await axios.get(`http://localhost:8080/orders/history/${restId}`);
+        const orders = response.data.orders.map(order => ({
+          id: order._id,
+          orderNumber: order.orderNumber.toString(),
+          date: new Date(order.createdAt).toLocaleDateString(),
+          time: new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          customerName: order.username,
+          status: order.status.charAt(0).toUpperCase() + order.status.slice(1) // Capitalize status
+        }));
+        setHistoryOrders(orders);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchOrders();
+  }, []); // Empty dependency array to run effect only once
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.post(
-        `http://localhost:8080/accept/${orderId}`
+      console.log("Accepting order:", orderId);
+      // Make PUT request to update order status to 'Accepted'
+      await axios.put(`http://localhost:8080/orders/accept/${orderId}`);
+      // If the request is successful, update the order status locally
+      setIncomingOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.orderNumber === orderId ? { ...order, status: "Accepted" } : order
+        )
       );
-      console.log("Order Accepted:", response.data);
+      // Reload the database table by fetching updated orders
+      window.location.reload();
     } catch (error) {
-      console.error("Error Accepting Order:", error);
+      console.error("Error accepting order:", error);
     }
   };
 
-  // const handleRejectOrder = (orderId) => {
-  //   // Implement logic to reject the order
-  //   console.log("Rejected order:", orderId);
-  //   // Update order status to 'Rejected'
-  //   setIncomingOrders((prevOrders) =>
-  //     prevOrders.map((order) =>
-  //       order.id === orderId ? { ...order, status: "Rejected" } : order
-  //     )
-  //   );
-  // };
-
   const handleRejectOrder = async (orderId) => {
     try {
-      const response = await axios.post(
-        `http://localhost:8080/reject/${orderId}`
+      console.log("Rejecting order:", orderId);
+      // Make PUT request to update order status to 'Rejected'
+      await axios.put(`http://localhost:8080/orders/reject/${orderId}`);
+      // If the request is successful, update the order status locally
+      setIncomingOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.orderNumber === orderId ? { ...order, status: "Rejected" } : order
+        )
       );
-      console.log("Order Rejected:", response.data);
+      // Reload the database table by fetching updated orders
+      window.location.reload();
     } catch (error) {
-      console.error("Error Rejecting Order:", error);
+      console.error("Error rejecting order:", error);
+    }
+  };
+
+  const handleCompleteOrder = async (orderId) => {
+    try {
+      console.log("Completing order:", orderId);
+      // Make PUT request to update order status to 'Rejected'
+      await axios.put(`http://localhost:8080/orders/complete/${orderId}`);
+      // If the request is successful, update the order status locally
+      setIncomingOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.orderNumber === orderId ? { ...order, status: "Completed" } : order
+        )
+      );
+      // Reload the database table by fetching updated orders
+      window.location.reload();
+    } catch (error) {
+      console.error("Error completing order:", error);
     }
   };
 
@@ -134,6 +131,7 @@ const OwnerOrders = () => {
             orders={incomingOrders}
             onAccept={handleAcceptOrder}
             onReject={handleRejectOrder}
+            onComplete={handleCompleteOrder}
           />
         </div>
       </div>

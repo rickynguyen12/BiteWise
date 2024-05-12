@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   try {
-    // Check if username already exists
-    const {username, password} = req.body;
     const userNameExists = await Merchant.findOne({
       username: req.body.username,
     });
@@ -47,11 +45,11 @@ const homepage = async (req, res) => {
 
 const login = async (req, res) => {
   // find the user based on email
-  const { email, password } = req.body;
-
+  const merchant_email = req.body.email;
+  const password = req.body.password;
   try {
-    const merchant = await Merchant.findOne({ email });
-
+    const merchant = await Merchant.findOne({ email: merchant_email });
+    console.log(merchant);
     // if no user found
     if (!merchant) {
       return res.status(400).json({
@@ -75,10 +73,12 @@ const login = async (req, res) => {
     res.cookie("jwt", token, { expire: new Date() + 9999, httpOnly: true });
 
     // return the response with user
-    const { username } = merchant;
+    const merchEmail = merchant.email;
+    const { restaurant_id } = merchant;
     return res.json({
-      message: "Login Successfull",
-      username,
+      message: "Login Successful",
+      email: merchEmail,
+      restaurant_id,
     });
   } catch (err) {
     console.error("Error during login:", err);
@@ -117,28 +117,94 @@ const updateMerchant = async (req, res) => {
   }
 };
 
-//get Merchant details
 const getMerchantDetails = async (req, res) => {
-  const { email } = req.params;
-
+  const merchant_email = req.params.merchant_email;
   try {
-    const merchant = await Merchant.findOne({ email });
+    const merchant = await Merchant.findOne({ email: merchant_email });
     if (!merchant) {
       return res.status(404).json({ message: "Merchant not found" });
     }
 
-    const { merchantname, phone, username } = merchant;
+    const {
+      merchantname,
+      phone,
+      city,
+      state,
+      zipCode,
+      username,
+      email,
+      category,
+      streetAddress,
+      restaurant_id,
+    } = merchant;
+
+    res.json({
+      username,
+      merchantname,
+      city,
+      category,
+      state,
+      zipCode,
+      email,
+      phone,
+      streetAddress,
+      restaurant_id,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getAllMerchantDetails = async (req, res) => {
+  const merchant_email = req.params.merchant_email;
+  try {
+    const merchant = await Merchant.findOne({ email: merchant_email });
+    if (!merchant) {
+      return res.status(404).json({ message: "Merchant not found" });
+    }
+
+    const {
+      merchantname,
+      phone,
+      username,
+      email,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      category,
+      restaurant_id,
+    } = merchant;
 
     res.json({
       username,
       merchantname,
       email,
       phone,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      category,
+      restaurant_id,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const deleteRestaurant = async (req, res) => {
+  const { restaurant_id } = req.params;
+  try {
+    const deletedMerchant = await Merchant.findOneAndDelete({ restaurant_id });
+    if (!deletedMerchant) {
+      return res.status(404).json({ message: "Merchant not found" });
+    }
+    res.status(200).json({ message: "Merchant deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}  
 
 const validate = async (req, res) => {
   try {
@@ -162,6 +228,7 @@ const validate = async (req, res) => {
     return res
       .status(401)
       .json({ error: "Unauthorized: JWT token is invalid" });
+
   }
 };
 
@@ -171,4 +238,6 @@ export { homepage };
 export { logout };
 export { updateMerchant };
 export { getMerchantDetails };
+export { getAllMerchantDetails };
+export { deleteRestaurant };
 export { validate };

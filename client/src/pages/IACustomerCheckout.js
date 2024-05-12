@@ -14,10 +14,12 @@ import FrameComponent4 from "../components/FrameComponent4";
 import "./IACustomerCheckout.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import axios from "axios";
 
 const IACustomerCheckout = () => {
   const taxRate = 0.0875;
   const deliveryFee = 5.5;
+  const empty = 0;
   const years = [
     2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034,
   ];
@@ -30,6 +32,7 @@ const IACustomerCheckout = () => {
   const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
+    console.log("Cart Data from UseEffect func:", cartData);
     let totalPrice = 0.0;
     cartData.forEach((item) => {
       totalPrice += item.quantity * item.price;
@@ -41,33 +44,56 @@ const IACustomerCheckout = () => {
     setItemTotal(totalPrice.toFixed(2));
     setTaxPrice(taxes.toFixed(2));
     setSubtotal(subtotal.toFixed(2));
-  }, [cartData.cartItems]);
+  }, [cartData]);
 
   useEffect(() => {
+    console.log("Cart Data from UseEffect func:", cartData);
     const cartFromStorage = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartData(cartFromStorage);
+    localStorage.removeItem("cart");
   }, []);
 
-  const handleSubmit = async (e) => {
-    /**
-         * {
-            _id: ObjectId,
-            userId: ObjectId, // stored in local storage or cookies
-            restaurantId: ObjectId, // stored in local storage or cookies after displaying
-            items: [String], // add item name for each cart data
-            status: String,  // n/a
-            totalPrice: Number, // totalprice
-            paymentMethod: String, // credit card
-            confirmationNumber: String, // generate random
-            deliveryDetails: Object, // message
-            createdAt: Date, // date
-            }
+const completeCheckout = async () => {
+      try {
+          console.log('Checking out...');
+          const cart = JSON.parse(localStorage.getItem("cartItems")); 
+          const restaurant_id = cart[0].restaurant_id;
+          const username = localStorage.getItem("username");
+          const order = {
+              items: cart,
+              restaurant_id: restaurant_id,
+              username: username,
+          };
+          const response = await axios.post('http://localhost:8080/orders/create', order);
+          console.log('Order created:', response.data);
+      } catch (error) {
+          console.error('Error Checking out:', error);
+      }
+  }
 
-         */
+  const handleSubmit = async (e) => {
+    console.log("Form submitted");
     e.preventDefault();
-    console.log(formData);
-    navigate("/in-app-order-confirm");
+    if (
+      validateFName(formData.fname) !== "" ||
+      validateFName(formData.lname) !== "" ||
+      validateState(formData.state) !== "" ||
+      validateAddress(formData.address1) !== "" ||
+      validateAddress(formData.address2) !== "" ||
+      validateCity(formData.city) !== "" ||
+      validateZipCode(formData.zipCode) !== ""
+    ) {
+      console.log("Invalid form data")
+      return false;
+    } else {
+      completeCheckout();
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      localStorage.setItem("cart", JSON.stringify([]));
+      navigate("/in-app-order-confirm");
+    }
   };
+
+  
 
   // validation functions
   const validateFName = (field) => {
@@ -91,6 +117,18 @@ const IACustomerCheckout = () => {
   const validateLName = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
       return "Last Name can only contain letters (a-z A-Z) only!";
+    else return "";
+  };
+
+  const validateCCNum = (field) => {
+    if (/[^0-9\s]+/.test(field))
+      return "Can only contain numbers (0-9) only!";
+    else return "";
+  };
+
+  const validateCVVNum = (field) => {
+    if (/[^0-9]+/.test(field))
+      return "Can only contain numbers (0-9) only!";
     else return "";
   };
 
@@ -124,6 +162,7 @@ const IACustomerCheckout = () => {
       .filter(Boolean);
 
     setCartData(updatedCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   };
 
   const [formData, setFormData] = useState({
@@ -340,6 +379,8 @@ const IACustomerCheckout = () => {
                   placeholder="Credit Card Number (xxxx xxxx xxxx xxxx)"
                   variant="outlined"
                   name="ccnum"
+                  error={validateCCNum(formData.ccnum)}
+                  helperText={validateCCNum(formData.ccnum)}
                   onChange={handleChange}
                   required
                   sx={{
@@ -425,6 +466,8 @@ const IACustomerCheckout = () => {
                     variant="outlined"
                     name="cvvNum"
                     onChange={handleChange}
+                    error={validateCVVNum(formData.cvvNum)}
+                    helperText={validateCVVNum(formData.cvvNum)}
                     required
                     type="password"
                     inputProps={{ maxLength: 3 }}
@@ -450,6 +493,7 @@ const IACustomerCheckout = () => {
                   type="submit"
                   disableElevation={true}
                   variant="contained"
+                  disabled={cartData.length === 0}
                   sx={{
                     textTransform: "none",
                     marginTop: "25px",
@@ -473,7 +517,7 @@ const IACustomerCheckout = () => {
                 <div className="order-info">
                   <p className="item-name">{item.name}</p>
                   <p className="cart-item-price">
-                    ${item.price * item.quantity}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
                 <div className="quantity-btns">
@@ -506,11 +550,11 @@ const IACustomerCheckout = () => {
               </div>
               <div className="item-total-div">
                 <p className="delivery-label">Delivery Fee </p>
-                <p className="delivery-val"> ${deliveryFee.toFixed(2)}</p>
+                <p className="delivery-val"> ${(cartData.length === 0) ? empty.toFixed(2) : deliveryFee.toFixed(2)}</p>
               </div>
               <div className="total-price-div">
                 <h4 className="total-label">Total </h4>
-                <h4 className="total-value"> ${subtotal}</h4>
+                <h4 className="total-value"> ${(cartData.length === 0) ? empty.toFixed(2) : subtotal}</h4>
               </div>
             </div>
           </div>

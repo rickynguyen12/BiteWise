@@ -1,35 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./OwnerViewProfile.css";
+import axios from "axios";
 
 const OwnerViewProfile = () => {
   // Assuming you have owner details stored in state
   const [ownerDetails, setOwnerDetails] = useState({
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    email: ''
+    Username: "",
+    Merchantname: "",
+    Email: "",
+    Phone: "",
+    StreetAddress: "",
+    Restaurant_id: 0,
   });
 
   // State to manage the visibility of owner details
   const [showDetails, setShowDetails] = useState(true);
 
   // Function to fetch owner details, you may need to implement it according to your backend logic
-  const fetchOwnerDetails = () => {
-    // Fetch owner details from backend or any data source
-    // Update the owner details state with fetched data
-    const fetchedOwnerDetails = {
-      merchantName: "Bob's Burgers",
-      phoneNumber: '123-456-7890',
-      email: 'john.doe@example.com'
-    };
-    setOwnerDetails(fetchedOwnerDetails);
-  };
-
-  // Fetch owner details on component mount
   useEffect(() => {
+    const fetchOwnerDetails = async (e) => {
+      try {
+        const merchant_email = localStorage.getItem("email");
+        const response = await axios.get(
+          `http://localhost:8080/merchant/${merchant_email}`
+        );
+
+        const {
+          username,
+          merchantname,
+          email,
+          phone,
+          streetAddress,
+          restaurant_id,
+        } = response.data;
+
+        setOwnerDetails({
+          Username: username,
+          Merchantname: merchantname,
+          Email: email,
+          Phone: phone,
+          StreetAddress: streetAddress,
+          Restaurant_id: restaurant_id,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchOwnerDetails();
   }, []);
 
@@ -51,10 +71,31 @@ const OwnerViewProfile = () => {
               {/* Owner Details */}
               <div className="owner-details-content17">
                 <h2 className="owner-details17">Owner Details</h2>
-                <div style={{ display: showDetails ? 'block' : 'none' }}>
-                  <p><strong>Business Name:</strong> {ownerDetails.merchantName}</p>
-                  <p><strong>Phone Number:</strong> {ownerDetails.phoneNumber}</p>
-                  <p><strong>Email:</strong> {ownerDetails.email}</p>
+                <div
+                  style={{
+                    display: showDetails ? "block" : "none",
+                    fontSize: "24px",
+                  }}
+                >
+                  <p>
+                    <strong>Restaurant ID:</strong> {ownerDetails.Restaurant_id}
+                  </p>
+                  <p>
+                    <strong>Username:</strong> {ownerDetails.Username}
+                  </p>
+                  <p>
+                    <strong>Business Name:</strong> {ownerDetails.Merchantname}
+                  </p>
+                  <p>
+                    <strong>Phone Number:</strong> {ownerDetails.Phone}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {ownerDetails.Email}
+                  </p>
+                  <p>
+                    <strong>Street Address:</strong>{" "}
+                    {ownerDetails.StreetAddress}
+                  </p>
                 </div>
               </div>
               {/* End Owner Details */}

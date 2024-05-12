@@ -1,15 +1,10 @@
-import {
-  TextField,
-  Button,
-  Snackbar,
-  IconButton,
-} from "@mui/material";
+import { TextField, Button, Snackbar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./FrameComponent5.css";
 import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import IsLoggedInLogic from "./isLoggedIn";
-import Cookies from 'js-cookie'; // Import the 'js-cookie' package
+import Cookies from "js-cookie"; // Import the 'js-cookie' package
 import FrameComponent4 from "./FrameComponent4";
 
 const FrameComponent5 = () => {
@@ -19,6 +14,7 @@ const FrameComponent5 = () => {
   const [userClicked, setUserClicked] = useState(true);
   const [ownerClicked, setOwnerClicked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  
   const navigate = useNavigate();
 
   const onLogoContainerClick = () => {
@@ -34,7 +30,7 @@ const FrameComponent5 = () => {
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleCloseSnackbar = () => {
@@ -54,25 +50,38 @@ const FrameComponent5 = () => {
 
     try {
       const response = await axios.post(
-        isMerchant ? "http://localhost:8080/merchant/login" : "http://localhost:8080/login",
-        formData);
-        console.log("Login Successful:", response.data.message);
-        // Set the JWT token in the browser's cookies
-        document.cookie = Cookies.set('jwt', response.data.jwt);
+        isMerchant
+          ? "http://localhost:8080/merchant/login"
+          : "http://localhost:8080/login",
+        formData
+      );
+      console.log("Login Successful:", response.data.message);
+      // Set the JWT token in the browser's cookies
+      document.cookie = Cookies.set("jwt", response.data.jwt);
 
+      if (!isMerchant) {
         // storing username in localStorage
-        localStorage.setItem('username', response.data.username);
-        setOpenSnackbar(true);
-        setIsLoggedIn(true);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("isOwner", false);
+      } else {
+        // storing username in localStorage
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("restaurant_id", response.data.restaurant_id);
+        localStorage.setItem("isOwner", true);
+      }
+      localStorage.setItem("isLoggedIn", true);
+
+      setOpenSnackbar(true);
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
-      if(error.response && error.response.status == 400){
-        const {error: errorMessage} = error.response.data
+      if (error.response && error.response.status === 400) {
+        const { error: errorMessage } = error.response.data;
         setErrorMsg(errorMessage);
       } else {
-        setErrorMsg('We encountered an unexpected error.');
+        setErrorMsg("We encountered an unexpected error.");
       }
     }
   };
@@ -89,11 +98,10 @@ const FrameComponent5 = () => {
     setIsMerchant(true);
   };
 
-
   const handleLogout = async () => {
     try {
       const response = await axios.get("http://localhost:8080/logout");
-      console.log("Login Successful:", response.data);
+      console.log("Logout Successful:", response.data);
       setOpenSnackbar(true);
       setIsLoggedIn(false);
       setTimeout(() => {
@@ -107,7 +115,7 @@ const FrameComponent5 = () => {
   return (
     <div className="logo-area-parent">
       <div className="logo-area">
-      <FrameComponent4 />  
+        <FrameComponent4 />
       </div>
       <div className="frame-wrapper5">
         <header className="sign-in-container">
@@ -128,12 +136,12 @@ const FrameComponent5 = () => {
                 variant="contained"
                 sx={{
                   textTransform: "none",
-                  color: userClicked ? "#307651": "#fff",
+                  color: userClicked ? "#fff" : "#307651",
                   fontSize: "14",
-                  background: userClicked ? 'white' : "#307651",
-                  border: userClicked ? '1px black solid' : 'none',
+                  background: userClicked ? "#307651" : "white",
+                  border: userClicked ? "none" : "1px solid black",
                   borderRadius: "10px",
-                  "&:hover": { background: "#e4e8e1", color: '#307651' },
+                  "&:hover": { background: "#307651", color: "#fff" },
                   height: 49,
                 }}
               >
@@ -146,15 +154,12 @@ const FrameComponent5 = () => {
                 variant="contained"
                 sx={{
                   textTransform: "none",
-                  color: ownerClicked ? "#307651": "#fff",
+                  color: ownerClicked ? "#fff" : "#307651",
                   fontSize: "14",
-                  background: ownerClicked ? 'white' : "#307651",
-                  border: ownerClicked ? '1px black solid' : 'none',
+                  background: ownerClicked ? "#307651" : "white",
+                  border: ownerClicked ? "none" : "1px solid black",
                   borderRadius: "10px",
-                  "&:hover": { 
-                    background: "#e4e8e1", 
-                    color: '#307651'
-                  },
+                  "&:hover": { background: "#307651", color: "#fff" },
                   height: 49,
                 }}
               >
@@ -165,9 +170,9 @@ const FrameComponent5 = () => {
               <TextField
                 className="inputs"
                 placeholder="Email"
-                name = "email"
+                name="email"
                 value={formData.email}
-                error={(errorMsg != "") ? errorMsg : ""}
+                error={errorMsg != "" ? errorMsg : ""}
                 onChange={handleChange}
                 required
                 variant="outlined"
@@ -184,12 +189,12 @@ const FrameComponent5 = () => {
             </div>
             <TextField
               className="frame-child10"
-              name = "password"
+              name="password"
               value={formData.password}
               onChange={handleChange}
-              error={(errorMsg != "") ? errorMsg : ""}
+              error={errorMsg != "" ? errorMsg : ""}
               helperText={errorMsg}
-              type='password'
+              type="password"
               required
               placeholder="Password"
               variant="outlined"
@@ -250,7 +255,12 @@ const FrameComponent5 = () => {
         onClose={handleCloseSnackbar}
         message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
         action={
-          <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleCloseSnackbar}
+          >
             X
           </IconButton>
         }

@@ -11,7 +11,8 @@ const FrameComponent1 = () => {
     const fetchMerchants = async () => {
       try {
         const response = await axios.get("http://localhost:8080/search-query");
-        setMerchants(response.data);
+        console.log(response.data);
+        setMerchants(response.data.merchantNames);
       } catch (error) {
         console.error("Error fetching merchants:", error);
       }
@@ -24,11 +25,18 @@ const FrameComponent1 = () => {
     return <div>Loading...</div>;
   }
 
-  const merchantsArray = Object.entries(merchants); // Convert object to array of entries
-  const slicedMerchants =
-    merchantsArray.length > 0
-      ? Object.fromEntries(merchantsArray.slice(0, 4))
-      : {};
+  const uniqueInAppMerchants = {};
+
+  let count = 0;
+  for (const merchant of merchants) {
+    if (!uniqueInAppMerchants[merchant.merchantname]) {
+      uniqueInAppMerchants[merchant.merchantname] = merchant;
+      count++;
+    }
+    if (count === 4) {
+      break;
+    }
+  }
 
   return (
     <section className="homepage-inner">
@@ -37,23 +45,21 @@ const FrameComponent1 = () => {
           <h3 className="nearby-restaurants">In App Restaurants</h3>
           <div className="group-div">
             <div className="frame-parent8">
-              {Object.entries(slicedMerchants.merchants.slice(0, 4)).map(
-                ([key, merchant]) => (
-                  <div className="frame-component-container" key={key}>
-                    <FrameComponent3
-                      rectangle26="/rectangle-26@2x.png"
-                      davidAndEmilysPatisserie={merchant.merchantname}
-                      frenchPatisserie={merchant.category}
-                      restaurantId={merchant.restaurant_id}
-                      prop="4.2"
-                      mins="15 mins"
-                      prop1="$$"
-                      offer="15% off"
-                      imgSrc={merchant && merchant.logo_url}
-                    />
-                  </div>
-                )
-              )}
+              {Object.entries(uniqueInAppMerchants).map(([key, merchant]) => (
+                <div className="frame-component-container" key={key}>
+                  <FrameComponent3
+                    rectangle26="/rectangle-26@2x.png"
+                    davidAndEmilysPatisserie={merchant.merchantname}
+                    frenchPatisserie={merchant.category}
+                    restaurantId={merchant.restaurant_id}
+                    prop="4.2"
+                    mins="15 mins"
+                    prop1="$$"
+                    offer="15% off"
+                    imgSrc={merchant && merchant.logo_url}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -62,18 +68,18 @@ const FrameComponent1 = () => {
           <div className="group-div">
             <div className="frame-parent12">
               <FrameComponent2
-                rectangle26="/rectangle-26-3@2x.png"
-                notYourMothersFalafel="Desi Express"
-                faasosWrapsRolls={`Authentic Indian Cuisine`}
+                rectangle26="/rectangle-26-3@2x22.png"
+                notYourMothersFalafel="Kovai Cafe"
+                faasosWrapsRolls={`indian`}
                 prop="$10 off"
                 mins="20 Mins"
                 rating="4.1"
                 cost="$$"
               />
               <FrameComponent2
-                rectangle26="/rectangle-26-4@2x.png"
-                notYourMothersFalafel="Halal Shack"
-                faasosWrapsRolls={`Healthy Halal Food ToGo`}
+                rectangle26="/rectangle-26-4@2x2.png"
+                notYourMothersFalafel="Mountain Mike's"
+                faasosWrapsRolls={`Pizza`}
                 prop="15% off"
                 mins="20 Mins"
                 rating="4.0"
@@ -82,18 +88,18 @@ const FrameComponent1 = () => {
             </div>
             <div className="frame-parent13">
               <FrameComponent2
-                rectangle26="/rectangle-26-5@2x.png"
-                notYourMothersFalafel="Chipotle Mexican Grill"
-                faasosWrapsRolls="Burritos, Tacos & more"
+                rectangle26="/rectangle-26-5@2x2.png"
+                notYourMothersFalafel="La Victoria Taqueria"
+                faasosWrapsRolls="mexican"
                 prop="5% off"
                 mins="25 Mins"
                 rating="4.3"
                 cost="$$"
               />
               <FrameComponent2
-                rectangle26="/rectangle-26-6@2x.png"
-                notYourMothersFalafel="Gong Cha - Bubble Tea & Desserts"
-                faasosWrapsRolls="boba bar"
+                rectangle26="/rectangle-26-6@2x2.png"
+                notYourMothersFalafel="Boba Loca"
+                faasosWrapsRolls="Drinks"
                 prop="$5 off"
                 mins="15 Mins"
                 rating="3.8"
