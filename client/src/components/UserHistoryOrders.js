@@ -2,9 +2,31 @@ import "./UserHistoryOrders.css";
 import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserHistoryOrders = ({ orders }) => {
     const [orderDetails, setOrderDetails] = useState([]);
+    const [deletionStatus, setDeletionStatus] = useState(null); // State to track deletion status
+    const navigate = useNavigate();
+
+    const handleClickDelete = async (orderNum) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/orders/delete/${orderNum}`);
+            if (response.status === 200) {
+                console.log("Order deleted successfully");
+                // Remove the deleted order from orderDetails
+                setOrderDetails(orderDetails.filter(order => order.orderNumber !== orderNum));
+            }
+        } catch (error) {
+            console.error("Error deleting order:", error);
+            setDeletionStatus(false);
+        }
+    };
+
+    const handClickContact = async (email) => {
+        const redirectURL = `http://mail:${email}`;
+        window.location.href = redirectURL;
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,6 +39,7 @@ const UserHistoryOrders = ({ orders }) => {
                         if (response.data) {
                             const dateObject = new Date(order.createdAt);
                             const restName = response.data.merchantname;
+                            const email = response.data.email;
                             const fullDateTime = dateObject.toLocaleString("en-US", {
                                 timeZone: "America/Los_Angeles"
                             })
@@ -29,8 +52,7 @@ const UserHistoryOrders = ({ orders }) => {
                                 itemQuan += (order.items[i].quantity + "x " + order.items[i].name + " ")
                             }
 
-
-                            return { ...order, date, restName, time, itemQuan};
+                            return { ...order, date, restName, time, itemQuan, email };
                         }
                         return null;
                     });
@@ -46,7 +68,7 @@ const UserHistoryOrders = ({ orders }) => {
         if (orders) {
             fetchData();
         }
-    }, [orders]);
+    }, [orders, deletionStatus]); // Include deletionStatus in dependency array
 
     return (
         <div className="history-orders">
@@ -60,6 +82,7 @@ const UserHistoryOrders = ({ orders }) => {
                         <th>Order Details</th>
                         <th>Status</th>
                         <th>Actions</th>
+                        <th>Contact</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,10 +96,23 @@ const UserHistoryOrders = ({ orders }) => {
                             <td>{order.status}</td>
                             <td>
                                 {(order.status === "Pending" || order.status === "pending") && (
-                                    <Button variant="contained" color="error">
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() => handleClickDelete(order.orderNumber)}
+                                    >
                                         Cancel Order
                                     </Button>
                                 )}
+                            </td>
+                            <td>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => handClickContact(order.email)}
+                                >
+                                    Contact
+                                </Button>
                             </td>
                         </tr>
                     ))}
