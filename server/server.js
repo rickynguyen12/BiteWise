@@ -17,6 +17,7 @@ import { searchFoods } from "./searchFoods.js";
 import { getMerchantInfo } from "./searchFoods.js";
 import { checkoutMerchants } from "./searchFoods.js";
 import Merchants from "./models/merchant.js";
+import Order from "./models/order.js";
 
 // get the directory name
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -88,6 +89,17 @@ router.get("/search-query", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+
+router.get("/get-orders", async (req, res) => {
+  try {
+    const { query } = req.query; // Should be username
+    const userOrders = await Order.find({username: query})
+    res.status(200).send([...userOrders])
+  } catch (error) {
+    console.error("Error getting user orders");
+    res.status(500).send("Internal Service Error")
+  }
+})
 
 router.get("/get-merch-info", async (req, res) => {
   try {

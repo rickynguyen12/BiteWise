@@ -1,51 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserHistoryOrders from "../components/UserHistoryOrders";
 import Footer from "../components/Footer";
 import FrameComponent4 from "../components/FrameComponent4";
 import "./UserOrders.css";
+import axios from "axios";
 
 const UserOrders = () => {
   // Hard-coded history orders for testing
 
-  const [historyOrders, setHistoryOrders] = useState([
-    {
-      id: 3,
-      orderNumber: "120",
-      date: "2024-04-21",
-      time: "12:10 PM",
-      restaurantName: "Kovai Cafe",
-      orderDetails: [
-        { name: "Classic Cheese Pizza", quantity: 2 },
-        { name: "Chicken Wings", quantity: 1 },
-        { name: "Smoked Salmon Salad", quantity: 1 },
-      ],
-      status: "Completed",
-    },
-    {
-      id: 4,
-      orderNumber: "119",
-      date: "2024-04-21",
-      time: "12:00 PM",
-      restaurantName: "TASTY",
-      orderDetails: [
-        { name: "Caesar Salad", quantity: 1 },
-        { name: "Alfredo Pasta", quantity: 2 },
-      ],
-      status: "Cancelled",
-    },
-    {
-      id: 5,
-      orderNumber: "118",
-      date: "2024-04-21",
-      time: "11:45 AM",
-      restaurantName: "Jill's",
-      orderDetails: [
-        { name: "Combo Pizza", quantity: 2 },
-        { name: "Chicken Wings", quantity: 1 },
-      ],
-      status: "Pending",
-    },
-  ]);
+  const [historyOrders, setHistoryOrders] = useState([]);
+  const username = localStorage.getItem("username")
+
+  useEffect( () => {
+    const fetchData = async () => {
+      try{
+        const response = await axios.get("http://localhost:8080/get-orders", {
+          params: {
+            query: localStorage.getItem("username")}
+          });
+        if(response) {
+          console.log("History Orders:", response.data);
+          setHistoryOrders(response.data)
+        }
+      } catch(error) {
+        console.error("Failed getting Menu Items:", error);
+      }
+    }
+    if(username) {
+      fetchData()
+    }
+  }, [username]);
 
   return (
     <div className="owner-orders">
