@@ -4,6 +4,7 @@ import FrameComponent3 from "./FrameComponent3";
 import FrameComponent2 from "./FrameComponent2";
 import "./FrameComponent1.css";
 
+// In App Restaurants on Home Page JS
 const FrameComponent1 = () => {
   const [merchants, setMerchants] = useState([]);
 

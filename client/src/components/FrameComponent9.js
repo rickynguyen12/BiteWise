@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import "./FrameComponent9.css";
 import "@lottiefiles/lottie-player";
 
+// Used for Uber Eats Label + Compare Prices
 const FrameComponent9 = ({ grubHub, group, prop, min, propPadding, url }) => {;
 
   const navigateCheckout = async () => {
@@ -23,19 +24,6 @@ const FrameComponent9 = ({ grubHub, group, prop, min, propPadding, url }) => {;
       padding: propPadding,
     };
   }, [propPadding]);
-
-  // const frameDiv1Style = useMemo(() => {
-  //   return {
-  //     width: propWidth,
-  //     gap: propGap,
-  //   };
-  // }, [propWidth, propGap]);
-
-  // const grubHubStyle = useMemo(() => {
-  //   return {
-  //     flex: propFlex1,
-  //   };
-  // }, [propFlex1]);
 
   return (
     <div className="frame-outside" style={frameDivStyle}>

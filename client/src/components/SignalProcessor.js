@@ -10,6 +10,7 @@ import { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// Used for Homepage
 const SignalProcessor = () => {
   const [searchInput, setSearchInput] = useState('');
   const navigate = useNavigate()

@@ -1,3 +1,4 @@
+// Used for Redirect to Food Delivery Page and Uber Eats Label
 export function generateUniqueArray(number) {
   const array = [];
 

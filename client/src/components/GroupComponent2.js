@@ -8,11 +8,9 @@ import {
   InputAdornment,
 } from "@mui/material";
 import "./GroupComponent2.css";
-import Stars from "./Stars";
-import Price from "./Price";
 import React, { useState } from "react";
-import Checkboxes from "./Checkboxes";
 
+// Used for Redirect Page
 const GroupComponent2 = ({onSortChange}) => {
   const [deliverySelected, setDeliverySelected] = useState(false);
   const [pickupSelected, setPickupSelected] = useState(false);

@@ -1,8 +1,6 @@
 import FrameComponent4 from "../components/FrameComponent4";
 import SignalProcessor from "../components/SignalProcessor";
 import FrameComponent1 from "../components/FrameComponent1";
-import GroupComponent from "../components/GroupComponent";
-import FrameComponent from "../components/FrameComponent";
 import Footer from "../components/Footer";
 import "./Homepage.css";
 

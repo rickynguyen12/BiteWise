@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./FrameComponent3.css";
 
+// Used for In App Restaurants on Home Page
 const FrameComponent3 = ({
   rectangle26,
   davidAndEmilysPatisserie,
@@ -82,25 +83,7 @@ const FrameComponent3 = ({
             <div className="french-patisserie" style={frenchPatisserieStyle}>
               {frenchPatisserie}
             </div>
-            {/* <div className="input-processor">
-              <img className="output-handler-icon" alt="" src="/vector-2.svg" />
-              <div className="div" style={divStyle}>
-                {prop}
-              </div>
-            </div> */}
           </div>
-          {/* <div className="frame-parent6">
-            <div className="group-parent">
-              <img className="group-icon" alt="" src="/group.svg" />
-              <div className="mins">{mins}</div>
-            </div>
-            <div className="vector-parent">
-              <img className="vector-icon2" alt="" src="/vector-3.svg" />
-              <div className="div1" style={div1Style}>
-                {prop1}
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </Link>

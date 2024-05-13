@@ -7,6 +7,7 @@ import IsLoggedInLogic from "./isLoggedIn";
 import Cookies from "js-cookie"; // Import the 'js-cookie' package
 import FrameComponent4 from "./FrameComponent4";
 
+// Sign in Page
 const FrameComponent5 = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -253,7 +254,7 @@ const FrameComponent5 = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
+        message={isLoggedIn ? "Login Successful." : "Logout Successful"}
         action={
           <IconButton
             size="small"

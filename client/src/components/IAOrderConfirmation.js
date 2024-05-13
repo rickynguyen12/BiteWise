@@ -1,22 +1,10 @@
-import {
-    Select,
-    MenuItem,
-    TextField,
-    InputAdornment,
-    Icon,
-    IconButton,
-    Button,
-} from "@mui/material";
 import Footer from "../components/Footer";
 import "../pages/IACustomerCheckout.css";
 import { useNavigate } from "react-router-dom";
-import * as LottiePlayer from "@lottiefiles/lottie-player";
 import FrameComponent4 from "./FrameComponent4";
 import "./IAOrderConfirmation.css";
-import axios from "axios";  
-import { useEffect, useState } from "react";
 
-
+// Order Confirmation Page
 const IAOrderConfirmation = () => {
     const navigate = useNavigate();
 
