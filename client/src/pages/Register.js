@@ -116,6 +116,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormSubmitted(true);
+
     if((validEmail(formData.email) !== "") ||
       (validPassword(formData.password) !== "") ||
       (validPhone(formData.phone) !== "") ||
@@ -124,7 +126,6 @@ const Register = () => {
       (validateLName(formData.lastname) !== "")){
         return ;
     }
-    setFormSubmitted(true);
     try {
       const response = await axios.post(
         "http://localhost:8080/register",
