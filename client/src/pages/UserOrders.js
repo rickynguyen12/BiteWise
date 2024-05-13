@@ -40,7 +40,9 @@ const UserOrders = () => {
             <img alt="" src="/history.png" className="icon" />
             <h3>History</h3>
           </div>
-          <UserHistoryOrders orders={historyOrders} />
+          <div className="contain">
+            <UserHistoryOrders orders={historyOrders} />
+          </div>
         </div>
       </div>
       <div className="footer-div">
