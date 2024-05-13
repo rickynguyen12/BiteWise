@@ -34,7 +34,21 @@ const OwnerAddToMenu = () => {
     setCategory(event.target.value);
   };
 
-  const handleClick = async () => {
+  const validPrice = (field) => {
+    // phone validation
+    let phoneValid = field.match(/^\d+(\.\d{1,2})?$/);
+    if (!phoneValid && (field != "")) {
+      return "Numerical input only!";
+    } else {
+      return "";
+    }
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if(validPrice(price)){
+      return ;
+    }
     if (restaurantId) {
       try {
         const response = await axios.post(
@@ -66,7 +80,7 @@ const OwnerAddToMenu = () => {
               <h2 className="register-business">Add To Menu</h2>
             </header>
             <div className="phone-number-input">
-              <form className="state-zipcode-fields">
+              <form className="state-zipcode-fields" onSubmit={handleClick}>
                 <div className="state-input">
                   <div className="zipcode-input">
                     <div className="email-input-field">
@@ -78,6 +92,7 @@ const OwnerAddToMenu = () => {
                         className="frame-item"
                         placeholder="Item Name"
                         value={name}
+                        required
                         onChange={handleNameChange}
                         variant="outlined"
                         sx={{
@@ -95,6 +110,9 @@ const OwnerAddToMenu = () => {
                         className="frame-item"
                         placeholder="Price"
                         value={price}
+                        required
+                        error={validPrice(price)}
+                        helperText={validPrice(price)}
                         onChange={handlePriceChange}
                         variant="outlined"
                         sx={{
@@ -113,6 +131,7 @@ const OwnerAddToMenu = () => {
                       className="city-input2"
                       placeholder="Description"
                       value={description}
+                      required
                       onChange={handleDescriptionChange}
                       variant="outlined"
                       sx={{
@@ -130,6 +149,7 @@ const OwnerAddToMenu = () => {
                       className="city-input2"
                       placeholder="Category"
                       variant="outlined"
+                      required
                       value={category}
                       onChange={handleCategoryChange}
                       sx={{
@@ -161,7 +181,7 @@ const OwnerAddToMenu = () => {
                         width: 143,
                         height: 49,
                       }}
-                      onClick={handleClick}
+                      type='submit'
                     >
                       Add Item
                     </Button>

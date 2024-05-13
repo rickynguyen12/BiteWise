@@ -22,6 +22,11 @@ const OwnerEditMenuItem = () => {
     e.preventDefault();
     const { newName, newPrice, newDescription, newCategory } =
       updatedItemDetails;
+
+    if(validPrice(updatedItemDetails.newPrice) != ""){
+      return ;
+    }
+    
     try {
       const response = await axios.put(
         `http://localhost:8080/menu/update/${restaurantId}/${itemId}`,
@@ -71,7 +76,7 @@ const OwnerEditMenuItem = () => {
               <h2 className="register-business">Edit Item</h2>
             </header>
             <div className="phone-number-input">
-              <form className="state-zipcode-fields">
+              <form className="state-zipcode-fields" onSubmit={handleUpdateItem}>
                 <div className="state-input">
                   <div className="zipcode-input">
                     <div className="email-input-field">
@@ -170,7 +175,7 @@ const OwnerEditMenuItem = () => {
                       width: 143,
                       height: 49,
                     }}
-                    onClick={handleUpdateItem}
+                    type='submit'
                   >
                     Update
                   </Button>

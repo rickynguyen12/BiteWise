@@ -30,6 +30,24 @@ const RegisterAsStoreOwner = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
 
+  const validateInputs = () => {
+    if((validEmail(formData.email) != "") ||
+      (validPassword(formData.password) != "") ||
+     (validPhone(formData.phone) != "") ||
+     (validUsername(formData.username) != "")||
+      (validateAddress(formData.streetAddress)  != "") ||
+      (validateCity(formData.city)  != "") ||
+      (validateFName(formData.merchantname)  != "") ||
+      (validateState(formData.state)  != "") ||
+      (validateZipCode(formData.zipCode)  != "") ||
+      (validateFName(formData.category)  != "")
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const validPassword = (field) => {
     let hasSixChar = field.length >= 6;
     let hasLowerChar = /(.*[a-z].*)/.test(field);
@@ -50,7 +68,7 @@ const RegisterAsStoreOwner = () => {
   const validEmail = (field) => {
     // email validation
     let emailValid = field.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-    if (!emailValid) {
+    if (!emailValid && (field != "")) {
       return "Invalid email address!";
     } else {
       return "";
@@ -70,26 +88,26 @@ const RegisterAsStoreOwner = () => {
   const validUsername = (field) => {
     // username validation
     let usernameValid = field.match(/^[a-zA-Z0-9]+$/);
-    if (!usernameValid) {
+    if (!usernameValid && (field != "")) {
       return "The username must contain at least one of each a-z, A-Z, and 0-9. It cannot contain any special characters.";
     } else return "";
   };
 
   const validateFName = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
-      return "First Name can only contain letters (a-z A-Z) only!";
+      return "This field can only contain letters!";
     else return "";
   };
 
   const validateCity = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
-      return "City can only contain letters (a-z A-Z) only!";
+      return "City can only contain letters!";
     else return "";
   };
 
   const validateState = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
-      return "State can only contain letters (a-z A-Z) only!";
+      return "State can only contain letters!";
     else return "";
   };
 
@@ -101,13 +119,13 @@ const RegisterAsStoreOwner = () => {
 
   const validateAddress = (field) => {
     if (/[^a-zA-Z0-9\s#]+/.test(field))
-      return "Address can only contain letters (a-z A-Z) or numbers only!";
+      return "Address can only contain letters or numbers!";
     else return "";
   };
 
   const validateZipCode = (field) => {
     if (/[^0-9-\s]+/.test(field))
-      return "Zip Code can only contain numbers only!";
+      return "Zip Code can only contain numbers!";
     else return "";
   };
 
@@ -121,7 +139,9 @@ const RegisterAsStoreOwner = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    
+    if(!validateInputs) return ;
+
     setFormSubmitted(true);
     try {
       const response = await axios.post(
@@ -185,6 +205,7 @@ const RegisterAsStoreOwner = () => {
                         helperText={validateFName(formData.merchantname)}
                         value={formData.merchantname}
                         variant="outlined"
+                        required
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -205,6 +226,7 @@ const RegisterAsStoreOwner = () => {
                         error={validPhone(formData.phone)}
                         helperText={validPhone(formData.phone)}
                         variant="outlined"
+                        required
                         sx={{
                           "& fieldset": { borderColor: "#1ac84b" },
                           "& .MuiInputBase-root": {
@@ -222,6 +244,7 @@ const RegisterAsStoreOwner = () => {
                       placeholder="Street Address"
                       name="streetAddress"
                       onChange={handleChange}
+                      required
                       value={formData.streetAddress}
                       error={validateAddress(formData.streetAddress)}
                       helperText={validateAddress(formData.streetAddress)}
@@ -243,6 +266,7 @@ const RegisterAsStoreOwner = () => {
                           className="subtract-icon2"
                           placeholder="City"
                           name="city"
+                          required
                           onChange={handleChange}
                           error={validateCity(formData.city)}
                           helperText={validateCity(formData.city)}
@@ -264,6 +288,7 @@ const RegisterAsStoreOwner = () => {
                         className="delivery-info-label"
                         placeholder="State"
                         name="state"
+                        required
                         onChange={handleChange}
                         error={validateState(formData.state)}
                         helperText={validateState(formData.state)}
@@ -285,6 +310,7 @@ const RegisterAsStoreOwner = () => {
                         className="delivery-info-label1"
                         placeholder="Zip code"
                         name="zipCode"
+                        required
                         onChange={handleChange}
                         variant="outlined"
                         error={validateZipCode(formData.zipCode)}
@@ -307,6 +333,7 @@ const RegisterAsStoreOwner = () => {
                       className="city-input1"
                       placeholder="Category"
                       name="category"
+                      required
                       onChange={handleChange}
                       variant="outlined"
                       error={validateFName(formData.category)}
@@ -328,6 +355,7 @@ const RegisterAsStoreOwner = () => {
                       className="city-input1"
                       placeholder="Logo Image URL"
                       name="logo_url"
+                      required
                       onChange={handleChange}
                       variant="outlined"
                       value={formData.logo_url}
@@ -354,6 +382,7 @@ const RegisterAsStoreOwner = () => {
                         className="phone-number-input1"
                         placeholder="First Name"
                         name="firstname"
+                        required
                         onChange={handleChange}
                         variant="outlined"
                         value={formData.firstname}
@@ -371,6 +400,7 @@ const RegisterAsStoreOwner = () => {
                       <TextField
                         className="last-name-input-child"
                         placeholder="Last Name"
+                        required
                         name="lastname"
                         onChange={handleChange}
                         variant="outlined"
@@ -393,6 +423,7 @@ const RegisterAsStoreOwner = () => {
                       className="phone-number-email"
                       placeholder="Username"
                       name="username"
+                      required
                       onChange={handleChange}
                       error={validUsername(formData.username)}
                       helperText={validUsername(formData.username)}
@@ -414,6 +445,7 @@ const RegisterAsStoreOwner = () => {
                       placeholder="Email"
                       name="email"
                       onChange={handleChange}
+                      required
                       error={validEmail(formData.email)}
                       helperText={validEmail(formData.email)}
                       value={formData.email}
@@ -433,6 +465,7 @@ const RegisterAsStoreOwner = () => {
                       className="phone-number-email1"
                       placeholder="Password"
                       variant="outlined"
+                      required
                       onChange={handleChange}
                       name="password"
                       error={validPassword(formData.password)}

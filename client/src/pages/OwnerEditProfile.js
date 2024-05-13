@@ -43,13 +43,13 @@ const OwnerEditProfile = () => {
 
   const validateCity = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
-      return "City can only contain letters (a-z A-Z) only!";
+      return "City can contain a-z and A-Z only!";
     else return "";
   };
 
   const validateState = (field) => {
     if (/[^a-zA-Z\s]+/.test(field))
-      return "State can only contain letters (a-z A-Z) only!";
+      return "State can contain a-z and A-Z only!";
     else return "";
   };
 
@@ -93,8 +93,18 @@ const OwnerEditProfile = () => {
     setMEmail(event.target.value);
   };
 
-  const handleClick = async (e) => {
+  const handleEditClick = async (e) => {
     e.preventDefault();
+
+    if((validEmail(memail) != "") ||
+      (validPhone(phone) != "") ||
+      (validateAddress(street) != "") ||
+      (validateCity(mcity) != "") ||
+      (validateState(mstate) != "") ||
+      (validateZipCode(mzipCode) != "")
+    ) {
+      return ; // will not submit if input is wrong for edit
+    }
     try {
       const restaurant_id = localStorage.getItem("restaurant_id");
       await axios.put(
@@ -189,7 +199,7 @@ const OwnerEditProfile = () => {
               <h2 className="register-business">Business Profile</h2>
             </header>
             <div className="phone-number-input">
-              <form className="state-zipcode-fields">
+              <form className="state-zipcode-fields" onSubmit={handleEditClick}>
                 <div className="state-zipcode-fields-child" />
                 <div className="state-zipcode-fields-item" />
                 <div className="state-zipcode-fields-inner" />
@@ -356,6 +366,7 @@ const OwnerEditProfile = () => {
                           fontSize: "14px",
                         },
                         "& .MuiInputBase-input": { color: "#808080" },
+                        marginTop: '15px'
                       }}
                     />
                     <TextField
@@ -376,6 +387,7 @@ const OwnerEditProfile = () => {
                           fontSize: "14px",
                         },
                         "& .MuiInputBase-input": { color: "#808080" },
+                        marginTop: '15px'
                       }}
                     />
                   </div>
@@ -388,7 +400,6 @@ const OwnerEditProfile = () => {
                       className="sign-in3"
                       disableElevation={true}
                       variant="contained"
-                      onClick={handleClick}
                       type="submit"
                       sx={{
                         textTransform: "none",
