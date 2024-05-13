@@ -431,9 +431,6 @@ const Register = () => {
                 </div>
               </form>
             </div>
-            <div>
-              <GoogleSignIn handleSignInSuccess={handleSignInSuccess} />
-            </div>
           </div>
         </div>
       </section>

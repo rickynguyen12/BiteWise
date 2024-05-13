@@ -468,6 +468,7 @@ const RegisterAsStoreOwner = () => {
                       required
                       onChange={handleChange}
                       name="password"
+                      type="password"
                       error={validPassword(formData.password)}
                       helperText={validPassword(formData.password)}
                       value={formData.password}
