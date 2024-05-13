@@ -87,6 +87,7 @@ const OwnerEditMenuItem = () => {
                         className="frame-item"
                         placeholder="Item Name"
                         variant="outlined"
+                        required
                         name="newName"
                         value={updatedItemDetails.newName}
                         onChange={handleInputChange}
@@ -105,6 +106,7 @@ const OwnerEditMenuItem = () => {
                         className="frame-item"
                         placeholder="Price"
                         variant="outlined"
+                        required
                         name="newPrice"
                         value={updatedItemDetails.newPrice}
                         error={validPrice(updatedItemDetails.newPrice)}
@@ -126,6 +128,7 @@ const OwnerEditMenuItem = () => {
                       className="city-input2"
                       placeholder="Description"
                       variant="outlined"
+                      required
                       name="newDescription"
                       value={updatedItemDetails.newDescription}
                       onChange={handleInputChange}
@@ -144,6 +147,7 @@ const OwnerEditMenuItem = () => {
                       className="city-input2"
                       placeholder="Category"
                       variant="outlined"
+                      required
                       name="newCategory"
                       value={updatedItemDetails.newCategory}
                       onChange={handleInputChange}
