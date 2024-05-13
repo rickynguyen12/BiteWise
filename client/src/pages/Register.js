@@ -116,6 +116,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if((validEmail(formData.email) !== "") ||
+      (validPassword(formData.password) !== "") ||
+      (validPhone(formData.phone) !== "") ||
+      (validUsername(formData.username) !== "") ||
+      (validateFName(formData.firstname)!== "") ||
+      (validateLName(formData.lastname) !== "")){
+        return ;
+    }
     setFormSubmitted(true);
     try {
       const response = await axios.post(
