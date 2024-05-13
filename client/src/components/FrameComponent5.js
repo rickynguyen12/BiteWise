@@ -254,7 +254,7 @@ const FrameComponent5 = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
+        message={isLoggedIn ? "Login Successful." : "Logout Successful"}
         action={
           <IconButton
             size="small"
