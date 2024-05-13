@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import "./FrameComponent2.css";
 import { Link, useNavigate } from "react-router-dom";
 
+// Nearby Restaurants on Homepage
 const FrameComponent2 = ({
   rectangle26,
   notYourMothersFalafel,
@@ -64,23 +65,7 @@ const FrameComponent2 = ({
           <div className="faasos-wraps" style={faasosWrapsStyle}>
             {faasosWrapsRolls}
           </div>
-          {/* <div className="input-processor">
-            <img className="output-handler-icon" alt="" src="/vector-2.svg" />
-            <div className="div">{rating}</div>
-          </div> */}
         </div>
-        {/* <div className="antdesignstarfilled-parent">
-          <div className="antdesignstarfilled">
-            <img className="data-aggregator-icon" alt="" src="/vector-10.svg" />
-            <div className="div2" style={div2Style}>
-              {prop}
-            </div>
-          </div>
-          <div className="group-group">
-            <img className="group-icon1" alt="" src="/group.svg" />
-            <div className="mins1">{mins}</div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

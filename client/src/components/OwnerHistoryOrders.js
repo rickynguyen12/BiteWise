@@ -1,6 +1,7 @@
 import React from "react";
 import "./OwnerHistoryOrders.css";
 
+// Order History Component for Owner
 const OwnerHistoryOrders = ({ orders }) => {
   return (
     <div className="history-orders">

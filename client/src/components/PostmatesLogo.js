@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import "./PostmatesLogo.css";
 import "@lottiefiles/lottie-player";
 
+// Used for Uber Eats Label
 const PostmatesLogo = ({ postmates, group, sVG, prop, min, propPadding, url }) => {
 
   const navigateCheckout = async () => {

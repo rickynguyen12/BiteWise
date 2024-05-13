@@ -6,6 +6,7 @@ import "@lottiefiles/lottie-player";
 import axios from "axios";
 import { generateUniqueArray } from "../components/getDeliveryData";
 
+// Used for view all deals page
 const UberEatsLabel = ({ merchantID }) => {
   const [merchant, setMerchant] = useState();
   const [prices, setPrices] = useState();

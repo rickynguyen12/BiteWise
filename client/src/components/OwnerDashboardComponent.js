@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./OwnerDashboardComponent.css";
 
+// Owner Dashboard Options
 const OwnerDashboardComponent = ({ ownerDetails }) => {
   return (
     <div className="owner-dashboard">

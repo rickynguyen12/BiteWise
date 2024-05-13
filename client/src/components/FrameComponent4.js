@@ -12,6 +12,8 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+
+// Header
 const FrameComponent4 = () => {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -173,7 +175,7 @@ const FrameComponent4 = () => {
           open={openSnackbar}
           autoHideDuration={6000}
           onClose={handleCloseSnackbar}
-          message={isLoggedIn ? "Login Succesfull." : "Logout Successful"}
+          message={isLoggedIn ? "Login Successful." : "Logout Successful"}
           action={
             <IconButton
               size="small"

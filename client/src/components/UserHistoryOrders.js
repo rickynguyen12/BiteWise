@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Component to display user's order history
 const UserHistoryOrders = ({ orders }) => {
     const [orderDetails, setOrderDetails] = useState([]);
     const [deletionStatus, setDeletionStatus] = useState(null); // State to track deletion status

@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./FrameComponent6.css";
+import "./FrameComponent6a.css";
 import { useNavigate } from "react-router-dom";
 import "@lottiefiles/lottie-player";
 
+// Used for redirect to food delivery page
 const FrameComponent6a = ({
   id,
   name,
