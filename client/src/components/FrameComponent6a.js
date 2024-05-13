@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./FrameComponent6a.css";
+import "./FrameComponent6.css";
 import { useNavigate } from "react-router-dom";
 import "@lottiefiles/lottie-player";
 
