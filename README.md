@@ -47,7 +47,7 @@ BiteWise is a web application designed to help users find the best deals on thei
    Create a `.env` file in the root directory and add the following:
 
    ```
-   PORT=3000
+   PORT=8080
    MONGODB_URI=your_mongodb_uri
    JWT_SECRET=your_jwt_secret
    ```
